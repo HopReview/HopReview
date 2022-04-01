@@ -9,10 +9,15 @@
     <string name="title_profile">Profile</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_username">Username</string>
+    <string name="prompt_confirm_email">Confirm Email</string>
+    <string name="prompt_username">User Name</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_confirm_password">Confirm Password</string>
     <string name="welcome_log_in">Log In</string>
+    <string name="welcome_new_account">New Account</string>
     <string name="action_log_in">LOG IN</string>
+    <string name="action_sign_up">CREATE ACCOUNT</string>
+    <string name="say_hello">Say hello to a stress-free life</string>
     <string name="prompt_no_account_create">Don\'t have an account yet? Don\'t fret!</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="create_account">CREATE ACCOUNT</string>

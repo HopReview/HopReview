@@ -24,6 +24,12 @@
             android:exported="true"
             android:label="@string/app_title">
         </activity>
+        <activity
+            android:name=".CreateAccountActivity"
+            android:exported="false"
+            android:label="CreateAccountActivity"
+            android:parentActivityName=".LoginActivity">
+        </activity>>
     </application>
 
 </manifest>
