@@ -9,10 +9,15 @@
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/layout/fragment_dashboard.xml" value="0.8" />
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/menu/bottom_nav_menu.xml" value="0.264" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/activity_course.xml" value="0.4" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/activity_create_account.xml" value="0.8" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/frag_course.xml" value="0.152" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/panel_layout.xml" value="0.72" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2682520548502605" />
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
