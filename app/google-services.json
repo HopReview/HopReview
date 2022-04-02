@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "128929479402",
+    "project_id": "hopreview-7a22f",
+    "storage_bucket": "hopreview-7a22f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128929479402:android:c608fca89c75385ba6b593",
+        "android_client_info": {
+          "package_name": "com.example.teame_hopreview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128929479402-njpk90v5lk437sef78uqjatqvrl7fo74.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuC2FPOgAieC19awvhS5Y6WCpQh7PQesE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128929479402-njpk90v5lk437sef78uqjatqvrl7fo74.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
