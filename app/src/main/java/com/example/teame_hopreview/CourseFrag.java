@@ -20,7 +20,6 @@ public class CourseFrag extends Fragment {
     private Course course;
     Context context;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,7 +33,6 @@ public class CourseFrag extends Fragment {
 
         // get the recycler view for the list
         myList = (ListView) myView.findViewById(R.id.myList);
-
 
         return myView;
     }

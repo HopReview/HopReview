@@ -12,12 +12,10 @@ public class Course extends Profile {
     private Map<Professor, Map<String, Integer>> mixedRatings;
     private int averageRating;
 
-
     /**
      * Constructor to create a Course object
      */
     public Course() { }
-
 
     /**
      * Constructor to create a Course object
