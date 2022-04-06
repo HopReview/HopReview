@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,14 @@ public class CreateAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 checkSignUp(view);
+            }
+        });
+
+        ImageButton backBtn = (ImageButton) findViewById(R.id.back_button);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitActivity();
             }
         });
 
@@ -124,5 +133,11 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
         */
 
+    }
+
+    private void exitActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

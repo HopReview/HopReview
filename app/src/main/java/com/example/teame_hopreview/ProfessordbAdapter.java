@@ -20,6 +20,7 @@ public class ProfessordbAdapter {
     private static final String COURSE_TABLE = "courses";
     public static final String CRSE_ID = "crse_id";   // column 0
     public static final String CRSE_NAME = "crse_name";
+    public static final String CRSE_CREDS = "crse_cred";
     public static final String CRSE_DESIGNATION = "crse_designation";
     public static final String CRSE_PROFESSORS = "crse_professors";
     public static final String CRSE_SEM = "crse_semester";
@@ -81,7 +82,7 @@ public class ProfessordbAdapter {
         return result;
     }
 
-    public CourseItem getCourseItem(long ri) throws SQLException {
+    /*public CourseItem getCourseItem(long ri) throws SQLException {
         Cursor cursor = db.query(true, COURSE_TABLE, CRSE_COLS, CRSE_ID+"="+ri, null, null, null, null, null);
         if ((cursor.getCount() == 0) || !cursor.moveToFirst()) {
             throw new SQLException("No course items found for row: " + ri);
@@ -90,7 +91,7 @@ public class ProfessordbAdapter {
         int nameIndex = cursor.getColumnIndex(CRSE_NAME);
         CourseItem result = new CourseItem(cursor.getString(nameIndex), cursor.getString(2), cursor.getString(3));
         return result;
-    }
+    } */
 
 
     private static class ProfessordbHelper extends SQLiteOpenHelper {
