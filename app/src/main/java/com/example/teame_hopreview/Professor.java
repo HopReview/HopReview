@@ -12,7 +12,6 @@ public class Professor extends Profile {
     private Map<CourseItem, Map<String, Integer>> mixedRatings;
     private int averageRating;
 
-
     /**
      * Constructor to create a Professor object
      */
@@ -29,6 +28,7 @@ public class Professor extends Profile {
                      ArrayList<CourseItem> courses) {
         this.professorName = name;
         this.department = department;
+        // TODO: might remove courses parameter as requirement
         this.courses = courses;
 
         Map<String, Integer> emptyRatings = getEmptyMap();
@@ -36,8 +36,6 @@ public class Professor extends Profile {
             mixedRatings.put(crs, emptyRatings);
         }
     }
-
-
 
     /**
      * Method for getting a Professor's name
@@ -47,8 +45,6 @@ public class Professor extends Profile {
         return this.professorName;
     }
 
-
-
     /**
      * Method for getting a Professor's department
      * @return String department of the Professor
@@ -57,15 +53,11 @@ public class Professor extends Profile {
         return this.department;
     }
 
-
-
     /**
      * Method for getting the courses taught by the Professor
      * @return ArrayList representing courses taught by the Professor
      */
     public ArrayList<CourseItem> getCourses() { return this.courses; }
-
-
 
     /**
      * Method to add a specific course to a Professor's course list
@@ -78,19 +70,15 @@ public class Professor extends Profile {
         mixedRatings.put(crs, holderRatings);
     }
 
-
-
-    /**
-     * Method to remove a specific course from a Professor's course list
-     * Accordingly removes ratings for the course
-     * @param crs the Course to remove
-     */
-    public void removeCourse(CourseItem crs) {
-        courses.remove(crs);
-        mixedRatings.remove(crs);
-    }
-
-
+//    /**
+//     * Method to remove a specific course from a Professor's course list
+//     * Accordingly removes ratings for the course
+//     * @param crs the Course to remove
+//     */
+//    public void removeCourse(CourseItem crs) {
+//        courses.remove(crs);
+//        mixedRatings.remove(crs);
+//    }
 
     /**
      * Method for adding ratings from a user for a specific course taught by the professor
@@ -99,7 +87,7 @@ public class Professor extends Profile {
      * @param ratings : Map of ratings that match specific categories with their average ratings
      * @param crs : Course for which ratings will be added
      */
-    public void addRatingsForCourse(Map<String, Integer> ratings, CourseItem crs) {
+    public void addRatingsForProfessor(Map<String, Integer> ratings, CourseItem crs) {
         Map<String, Integer> currentRatings = mixedRatings.get(crs);
 
         // get rate count in order to keep track of how many ratings there have been
@@ -153,10 +141,6 @@ public class Professor extends Profile {
         updateAverageRating();
     }
 
-
-
-
-
     /**
      * Method for getting the ratings for the Professor for a specific course
      * @param crs : the specific course for which ratings are inquired
@@ -165,8 +149,6 @@ public class Professor extends Profile {
     public Map<String, Integer> getRatingsForCourse(CourseItem crs) {
         return mixedRatings.get(crs);
     }
-
-
 
     /**
      * Method for getting the average rating for the Professor across all courses
@@ -197,8 +179,6 @@ public class Professor extends Profile {
 
         averageRating = ratingSum / totRates;
     }
-
-
 
     /**
      * Helper method for creating an initialized map, for an 'empty' rating

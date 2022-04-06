@@ -9,9 +9,9 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class CoursedbAdapter {
+public class ProfessordbAdapter {
     private SQLiteDatabase db;
-    private CoursedbHelper dbHelper;
+    private ProfessordbAdapter.ProfessordbHelper dbHelper;
     private final Context context;
 
     private static final String DB_NAME = "courses.db";
@@ -31,9 +31,9 @@ public class CoursedbAdapter {
     public static final String SEM_WHEN = "sem_when";
     public static final String SEM_YEAR = "sem_year";
 
-    public CoursedbAdapter(Context ctx) {
+    public ProfessordbAdapter(Context ctx) {
         context = ctx;
-        dbHelper = new CoursedbHelper(context, DB_NAME, null, dbVersion);
+        dbHelper = new ProfessordbHelper(context, DB_NAME, null, dbVersion);
     }
 
     public void open() throws SQLiteException {
@@ -68,28 +68,6 @@ public class CoursedbAdapter {
         return db.insert(COURSE_TABLE, null, cvalues);
     }
 
-    //    public boolean removeCourse(long ri) {   // ri is the course id
-    //        return db.delete(COURSE_TABLE, "CRSE_ID="+ri, null) > 0;
-    //    }
-
-    //    public boolean updateName(long ri, String nm) {
-    //        ContentValues cvalue = new ContentValues();
-    //        cvalue.put(CRSE_NAME, nm);
-    //        return db.update(COURSE_TABLE, cvalue, CRSE_ID+"="+ri, null) > 0;
-    //    }
-
-    //    public boolean updateDesignation(long ri, String gr) {
-    //        ContentValues cvalue = new ContentValues();
-    //        cvalue.put(CRSE_DESIGNATION, gr);
-    //        return db.update(COURSE_TABLE, cvalue, CRSE_ID+"="+ri, null) > 0;
-    //    }
-
-    //    public boolean updateCredits(long ri, float cr) {
-    //        ContentValues cvalue = new ContentValues();
-    //        cvalue.put(CRSE_CREDS, cr);
-    //        return db.update(COURSE_TABLE, cvalue, CRSE_ID+"="+ri, null) > 0;
-    //    }
-
     // database query methods
     public Cursor getAllCourses() {
         return db.query(COURSE_TABLE, CRSE_COLS, null, null, null, null, null);
@@ -115,7 +93,7 @@ public class CoursedbAdapter {
     }
 
 
-    private static class CoursedbHelper extends SQLiteOpenHelper {
+    private static class ProfessordbHelper extends SQLiteOpenHelper {
 
         // SQL statement to create a new database
         // TODO: this MUST BE CHANGED! set foreign key relationship with professor
@@ -123,7 +101,7 @@ public class CoursedbAdapter {
                 + " (" + CRSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CRSE_NAME + " TEXT,"
                 + CRSE_DESIGNATION + " TEXT, " + CRSE_CREDS + " REAL," + CRSE_SEM + " TEXT);";
 
-        public CoursedbHelper(Context context, String name, SQLiteDatabase.CursorFactory fct, int version) {
+        public ProfessordbHelper(Context context, String name, SQLiteDatabase.CursorFactory fct, int version) {
             super(context, name, fct, version);
         }
 
@@ -144,5 +122,4 @@ public class CoursedbAdapter {
             onCreate(adb);
         }
     }
-
 }

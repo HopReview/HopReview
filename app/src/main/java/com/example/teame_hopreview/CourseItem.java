@@ -56,27 +56,26 @@ public class CourseItem extends Profile {
      */
     public ArrayList<Professor> getProfessors() { return this.professors; }
 
+    //    /**
+    //     * Method to add a specific professor to a Course's professor list
+    //     * Accordingly puts empty ratings for the professor
+    //     * @param prof the Professor to add
+    //     */
+    //    public void addProfessor(Professor prof) {
+    //        professors.add(prof);
+    //        Map<String, Integer> holderRatings = getEmptyMap();
+    //        mixedRatings.put(prof, holderRatings);
+    //    }
 
-    /**
-     * Method to add a specific professor to a Course's professor list
-     * Accordingly puts empty ratings for the professor
-     * @param prof the Professor to add
-     */
-    public void addProfessor(Professor prof) {
-        professors.add(prof);
-        Map<String, Integer> holderRatings = getEmptyMap();
-        mixedRatings.put(prof, holderRatings);
-    }
-
-//    /**
-//     * Method to remove a specific professor from a Course's professor list
-//     * Accordingly removes ratings for the professor
-//     * @param prof the Professor to remove
-//     */
-//    public void removeProfessor(Professor prof) {
-//        professors.remove(prof);
-//        mixedRatings.remove(prof);
-//    }
+    //    /**
+    //     * Method to remove a specific professor from a Course's professor list
+    //     * Accordingly removes ratings for the professor
+    //     * @param prof the Professor to remove
+    //     */
+    //    public void removeProfessor(Professor prof) {
+    //        professors.remove(prof);
+    //        mixedRatings.remove(prof);
+    //    }
 
     /**
      * Method for adding ratings from a user for a specific professor teaching the course
