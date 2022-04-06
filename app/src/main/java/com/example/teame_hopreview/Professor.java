@@ -8,8 +8,8 @@ import java.util.Map;
 public class Professor extends Profile {
     private String professorName;
     private String department;
-    private ArrayList<Course> courses;
-    private Map<Course, Map<String, Integer>> mixedRatings;
+    private ArrayList<CourseItem> courses;
+    private Map<CourseItem, Map<String, Integer>> mixedRatings;
     private int averageRating;
 
 
@@ -26,13 +26,13 @@ public class Professor extends Profile {
      * @param courses :  indicating the courses taught by the Professor
      */
     public Professor(String name, String department,
-                     ArrayList<Course> courses) {
+                     ArrayList<CourseItem> courses) {
         this.professorName = name;
         this.department = department;
         this.courses = courses;
 
         Map<String, Integer> emptyRatings = getEmptyMap();
-        for (Course crs : Collections.unmodifiableList(courses)) {
+        for (CourseItem crs : Collections.unmodifiableList(courses)) {
             mixedRatings.put(crs, emptyRatings);
         }
     }
@@ -63,7 +63,7 @@ public class Professor extends Profile {
      * Method for getting the courses taught by the Professor
      * @return ArrayList representing courses taught by the Professor
      */
-    public ArrayList<Course> getCourses() { return this.courses; }
+    public ArrayList<CourseItem> getCourses() { return this.courses; }
 
 
 
@@ -72,7 +72,7 @@ public class Professor extends Profile {
      * Accordingly puts empty ratings for the course
      * @param crs the Course to add
      */
-    public void addCourse(Course crs) {
+    public void addCourse(CourseItem crs) {
         courses.add(crs);
         Map<String, Integer> holderRatings = getEmptyMap();
         mixedRatings.put(crs, holderRatings);
@@ -85,7 +85,7 @@ public class Professor extends Profile {
      * Accordingly removes ratings for the course
      * @param crs the Course to remove
      */
-    public void removeCourse(Course crs) {
+    public void removeCourse(CourseItem crs) {
         courses.remove(crs);
         mixedRatings.remove(crs);
     }
@@ -99,7 +99,7 @@ public class Professor extends Profile {
      * @param ratings : Map of ratings that match specific categories with their average ratings
      * @param crs : Course for which ratings will be added
      */
-    public void addRatingsForCourse(Map<String, Integer> ratings, Course crs) {
+    public void addRatingsForCourse(Map<String, Integer> ratings, CourseItem crs) {
         Map<String, Integer> currentRatings = mixedRatings.get(crs);
 
         // get rate count in order to keep track of how many ratings there have been
@@ -162,7 +162,7 @@ public class Professor extends Profile {
      * @param crs : the specific course for which ratings are inquired
      * @return Map that represents the ratings of the Professor for that course
      */
-    public Map<String, Integer> getRatingsForCourse(Course crs) {
+    public Map<String, Integer> getRatingsForCourse(CourseItem crs) {
         return mixedRatings.get(crs);
     }
 
@@ -188,7 +188,7 @@ public class Professor extends Profile {
         Map<String, Integer> currRating;
         int ratingSum = 0;
         int totRates = 0;
-        for (Course crs : courses) {
+        for (CourseItem crs : courses) {
             currRating = mixedRatings.get(crs);
             ratingSum += (currRating.get("Workload") + currRating.get("Fun")
                     + currRating.get("Grading") + currRating.get("Knowledge"));
