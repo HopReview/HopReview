@@ -5,19 +5,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Course extends Profile {
+public class CourseItem extends Profile {
     private String courseName;
     private String courseDesignation;
     private ArrayList<Professor> professors;
     private Map<Professor, Map<String, Integer>> mixedRatings;
     private int averageRating;
 
-
     /**
      * Constructor to create a Course object
      */
-    public Course() { }
-
+    public CourseItem() { }
 
     /**
      * Constructor to create a Course object
@@ -25,8 +23,8 @@ public class Course extends Profile {
      * @param courseDesignation : indicating the course designation of the Course
      * @param professors : indicating the professors teaching the Course
      */
-    public Course(String name, String courseDesignation,
-                  ArrayList<Professor> professors) {
+    public CourseItem(String name, String courseDesignation,
+                      ArrayList<Professor> professors) {
         this.courseName = name;
         this.courseDesignation = courseDesignation;
         this.professors = professors;
@@ -42,14 +40,14 @@ public class Course extends Profile {
      * Method for getting a Course's name
      * @return String name of the Course
      */
-    public String getCourseName() { return this.courseName; }
+    public String getName() { return this.courseName; }
 
 
     /**
      * Method for getting a Course's area of designation
      * @return String course designation of a Course
      */
-    public String getCourseDesignation() { return this.courseDesignation; }
+    public String getDesignation() { return this.courseDesignation; }
 
 
     /**
@@ -58,29 +56,26 @@ public class Course extends Profile {
      */
     public ArrayList<Professor> getProfessors() { return this.professors; }
 
+    //    /**
+    //     * Method to add a specific professor to a Course's professor list
+    //     * Accordingly puts empty ratings for the professor
+    //     * @param prof the Professor to add
+    //     */
+    //    public void addProfessor(Professor prof) {
+    //        professors.add(prof);
+    //        Map<String, Integer> holderRatings = getEmptyMap();
+    //        mixedRatings.put(prof, holderRatings);
+    //    }
 
-    /**
-     * Method to add a specific professor to a Course's professor list
-     * Accordingly puts empty ratings for the professor
-     * @param prof the Professor to add
-     */
-    public void addProfessor(Professor prof) {
-        professors.add(prof);
-        Map<String, Integer> holderRatings = getEmptyMap();
-        mixedRatings.put(prof, holderRatings);
-    }
-
-
-    /**
-     * Method to remove a specific professor from a Course's professor list
-     * Accordingly removes ratings for the professor
-     * @param prof the Professor to remove
-     */
-    public void removeProfessor(Professor prof) {
-        professors.remove(prof);
-        mixedRatings.remove(prof);
-    }
-
+    //    /**
+    //     * Method to remove a specific professor from a Course's professor list
+    //     * Accordingly removes ratings for the professor
+    //     * @param prof the Professor to remove
+    //     */
+    //    public void removeProfessor(Professor prof) {
+    //        professors.remove(prof);
+    //        mixedRatings.remove(prof);
+    //    }
 
     /**
      * Method for adding ratings from a user for a specific professor teaching the course
