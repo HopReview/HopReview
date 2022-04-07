@@ -17,20 +17,13 @@ public class CoursedbAdapter {
     private static final String DB_NAME = "hopreview.db";
     private static int dbVersion = 1;
 
-    private static final String COURSE_TABLE = "courses";
+    protected static final String COURSE_TABLE = "courses";
     public static final String CRSE_ID = "crse_id";   // column 0
     public static final String CRSE_NAME = "crse_name";
     public static final String CRSE_DESIGNATION = "crse_designation";
     public static final String CRSE_PROFESSORS = "crse_professors";
     public static final String CRSE_RATINGS = "crse_ratings";
-//    public static final String CRSE_SEM = "crse_semester";
-    // TODO: edit this format!
     public static final String[] CRSE_COLS = {CRSE_ID, CRSE_NAME, CRSE_DESIGNATION, CRSE_PROFESSORS, CRSE_RATINGS};
-
-    private static final String SEMESTER_TABLE = "semesters";
-    public static final String SEM_ID = "sem_id";
-    public static final String SEM_WHEN = "sem_when";
-    public static final String SEM_YEAR = "sem_year";
 
     public CoursedbAdapter(Context ctx) {
         context = ctx;
@@ -55,7 +48,6 @@ public class CoursedbAdapter {
     }
 
     // database update methods
-
     public long insertCourse(CourseItem crse) {
         // create a new row of values to insert
         ContentValues cvalues = new ContentValues();
@@ -64,7 +56,7 @@ public class CoursedbAdapter {
         cvalues.put(CRSE_DESIGNATION, crse.getDesignation());
         // TODO: edit this
 //        cvalues.put(CRSE_PROFESSORS, crse.getCredits());
-//        cvalues.put(CRSE_SEM, crse.getSemester());
+//        cvalues.put(CRSE_RATINGS, crse.getRatings());
         // add to course table in database
         return db.insert(COURSE_TABLE, null, cvalues);
     }
@@ -85,11 +77,11 @@ public class CoursedbAdapter {
     //        return db.update(COURSE_TABLE, cvalue, CRSE_ID+"="+ri, null) > 0;
     //    }
 
-    //    public boolean updateCredits(long ri, float cr) {
-    //        ContentValues cvalue = new ContentValues();
-    //        cvalue.put(CRSE_CREDS, cr);
-    //        return db.update(COURSE_TABLE, cvalue, CRSE_ID+"="+ri, null) > 0;
-    //    }
+    public boolean updateRatings(long ri, float cr) {
+        ContentValues cvalue = new ContentValues();
+        cvalue.put(CRSE_RATINGS, cr);
+        return db.update(COURSE_TABLE, cvalue, CRSE_ID+"="+ri, null) > 0;
+    }
 
     // database query methods
     public Cursor getAllCourses() {
@@ -115,7 +107,6 @@ public class CoursedbAdapter {
 //        return result;
 //    }
 
-
     private static class CoursedbHelper extends SQLiteOpenHelper {
 
         // SQL statement to create a new database
@@ -124,6 +115,8 @@ public class CoursedbAdapter {
                 + " (" + CRSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CRSE_NAME + " TEXT,"
                 + CRSE_DESIGNATION + " TEXT, " + CRSE_RATINGS + " TEXT);";
         // + CRSE_PROFESSORS + " REAL,"
+        // + PROF_ID + " INTEGER," +
+        //                " FOREIGN KEY ("+PROF_ID+") REFERENCES "+COURSE_TABLE+"("+PROF_ID+"));"
 
         public CoursedbHelper(Context context, String name, SQLiteDatabase.CursorFactory fct, int version) {
             super(context, name, fct, version);
