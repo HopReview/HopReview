@@ -17,7 +17,6 @@ public class ProfessorFrag extends Fragment {
     private MainActivity myAct;
     private Professor profItem;
     Context context;
-    protected static ProfessordbAdapter dbAdapt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,7 +1,5 @@
+// TODO: WILL NOT USE, DELETE LATER
 package com.example.teame_hopreview;
-
-import static com.example.teame_hopreview.CoursedbAdapter.COURSE_TABLE;
-import static com.example.teame_hopreview.CoursedbAdapter.CRSE_ID;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,25 +10,25 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class ProfessordbAdapter {
+public class CoursedbAdapter {
     private SQLiteDatabase db;
-    private ProfessordbAdapter.ProfessordbHelper dbHelper;
+    private CoursedbHelper dbHelper;
     private final Context context;
 
     private static final String DB_NAME = "hopreview.db";
     private static int dbVersion = 1;
 
-    protected static final String PROF_TABLE = "professors";
-    public static final String PROF_ID = "prof_id";   // column 0
-    public static final String PROF_NAME = "prof_name";
-    public static final String PROF_DEPT = "prof_dept";
-    public static final String PROF_RATINGS = "prof_ratings";
-    public static final String COURSE_ID = "course_id";
-    public static final String[] PROF_COLS = {PROF_ID, PROF_NAME, PROF_DEPT, PROF_RATINGS};
+    protected static final String COURSE_TABLE = "courses";
+    public static final String CRSE_ID = "crse_id";   // column 0
+    public static final String CRSE_NAME = "crse_name";
+    public static final String CRSE_DESIGNATION = "crse_designation";
+    public static final String CRSE_PROFESSORS = "crse_professors";
+    public static final String CRSE_RATINGS = "crse_ratings";
+    public static final String[] CRSE_COLS = {CRSE_ID, CRSE_NAME, CRSE_DESIGNATION, CRSE_PROFESSORS, CRSE_RATINGS};
 
-    public ProfessordbAdapter(Context ctx) {
+    public CoursedbAdapter(Context ctx) {
         context = ctx;
-        dbHelper = new ProfessordbHelper(context, DB_NAME, null, dbVersion);
+        dbHelper = new CoursedbHelper(context, DB_NAME, null, dbVersion);
     }
 
     public void open() throws SQLiteException {
@@ -51,16 +49,17 @@ public class ProfessordbAdapter {
     }
 
     // database update methods
-    public long insertProfessor(Professor prof) {
+    public long insertCourse(CourseItem crse) {
         // create a new row of values to insert
         ContentValues cvalues = new ContentValues();
         // assign values for each col
-        cvalues.put(PROF_NAME, prof.getProfessorName());
-        cvalues.put(PROF_DEPT, prof.getDepartment());
+        cvalues.put(CRSE_NAME, crse.getName());
+        cvalues.put(CRSE_DESIGNATION, crse.getDesignation());
         // TODO: edit this
-//        cvalues.put(PROF_COURSES, prof.getCourses());
+//        cvalues.put(CRSE_PROFESSORS, crse.getCredits());
+//        cvalues.put(CRSE_RATINGS, crse.getRatings());
         // add to course table in database
-        return db.insert(PROF_TABLE, null, cvalues);
+        return db.insert(COURSE_TABLE, null, cvalues);
     }
 
     //    public boolean removeCourse(long ri) {   // ri is the course id
@@ -81,43 +80,46 @@ public class ProfessordbAdapter {
 
     public boolean updateRatings(long ri, float cr) {
         ContentValues cvalue = new ContentValues();
-        cvalue.put(PROF_RATINGS, cr);
-        return db.update(PROF_TABLE, cvalue, PROF_ID+"="+ri, null) > 0;
+        cvalue.put(CRSE_RATINGS, cr);
+        return db.update(COURSE_TABLE, cvalue, CRSE_ID+"="+ri, null) > 0;
     }
 
     // database query methods
-    public Cursor getAllProfessors() {
-        return db.query(PROF_TABLE, PROF_COLS, null, null, null, null, null);
+    public Cursor getAllCourses() {
+        return db.query(COURSE_TABLE, CRSE_COLS, null, null, null, null, null);
     }
 
-    public Cursor getProfessorCursor(long ri) throws SQLException {
-        Cursor result = db.query(true, PROF_TABLE, PROF_COLS, PROF_ID+"="+ri, null, null, null, null, null);
+    public Cursor getCourseCursor(long ri) throws SQLException {
+        Cursor result = db.query(true, COURSE_TABLE, CRSE_COLS, CRSE_ID+"="+ri, null, null, null, null, null);
         if ((result.getCount() == 0) || !result.moveToFirst()) {
             throw new SQLException("No course items found for row: " + ri);
         }
         return result;
     }
 
-//    public Professor getProfessorItem(long ri) throws SQLException {
-//        Cursor cursor = db.query(true, PROF_TABLE, PROF_COLS, PROF_ID+"="+ri, null, null, null, null, null);
+//    public CourseItem getCourseItem(long ri) throws SQLException {
+//        Cursor cursor = db.query(true, COURSE_TABLE, CRSE_COLS, CRSE_ID+"="+ri, null, null, null, null, null);
 //        if ((cursor.getCount() == 0) || !cursor.moveToFirst()) {
 //            throw new SQLException("No course items found for row: " + ri);
 //        }
 //        // must use column indices to get column values
-//        int nameIndex = cursor.getColumnIndex(PROF_NAME);
-//        Professor result = new Professor(cursor.getString(nameIndex), cursor.getString(2), cursor.getString(3));
+//        int nameIndex = cursor.getColumnIndex(CRSE_NAME);
+//        CourseItem result = new CourseItem(cursor.getString(nameIndex), cursor.getString(2), cursor.getString(3));
 //        return result;
 //    }
 
-    private static class ProfessordbHelper extends SQLiteOpenHelper {
+    private static class CoursedbHelper extends SQLiteOpenHelper {
 
         // SQL statement to create a new database
-        private static final String DB_CREATE = "CREATE TABLE " + PROF_TABLE
-                + " (" + PROF_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + PROF_NAME + " TEXT,"
-                + PROF_DEPT + " TEXT, " + PROF_RATINGS + " TEXT," + COURSE_ID + " INTEGER," +
-                " FOREIGN KEY ("+COURSE_ID+") REFERENCES "+COURSE_TABLE+"("+CRSE_ID+"));";
+        // TODO: this MUST BE CHANGED! set foreign key relationship with professor
+        private static final String DB_CREATE = "CREATE TABLE " + COURSE_TABLE
+                + " (" + CRSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CRSE_NAME + " TEXT,"
+                + CRSE_DESIGNATION + " TEXT, " + CRSE_RATINGS + " TEXT);";
+        // + CRSE_PROFESSORS + " REAL,"
+        // + PROF_ID + " INTEGER," +
+        //                " FOREIGN KEY ("+PROF_ID+") REFERENCES "+COURSE_TABLE+"("+PROF_ID+"));"
 
-        public ProfessordbHelper(Context context, String name, SQLiteDatabase.CursorFactory fct, int version) {
+        public CoursedbHelper(Context context, String name, SQLiteDatabase.CursorFactory fct, int version) {
             super(context, name, fct, version);
         }
 
@@ -134,8 +136,9 @@ public class ProfessordbAdapter {
                     + newVersion + ", destroying old data");
             // drop old table if it exists, create new one
             // better to migrate existing data into new table
-            adb.execSQL("DROP TABLE IF EXISTS " + PROF_TABLE);
+            adb.execSQL("DROP TABLE IF EXISTS " + COURSE_TABLE);
             onCreate(adb);
         }
     }
+
 }

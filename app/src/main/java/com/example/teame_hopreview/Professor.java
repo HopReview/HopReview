@@ -17,7 +17,6 @@ public class Professor extends Profile {
      */
     public Professor() { }
 
-
     /**
      * Constructor to create a Professor object
      * @param name : indicating the Professor's name

@@ -18,7 +18,6 @@ public class CourseListFrag extends Fragment {
     private MainActivity myAct;
     private Professor profItem;
     Context context;
-    protected static CoursedbAdapter dbAdapt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,11 +25,7 @@ public class CourseListFrag extends Fragment {
 
         View myView = inflater.inflate(R.layout.frag_course, container, false);
 
-
         context = getActivity().getApplicationContext();
-
-        // dbAdapt = CoursedbAdapter.getInstance(context);
-        // dbAdapt.open();
 
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");

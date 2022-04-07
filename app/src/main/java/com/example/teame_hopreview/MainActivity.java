@@ -1,6 +1,7 @@
 package com.example.teame_hopreview;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.teame_hopreview.ui.course.CourseFragment;
@@ -14,6 +15,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.teame_hopreview.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
@@ -23,7 +29,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     private Fragment professors;
     private Fragment profile;
     public BottomNavigationView bottomNavigationView;
-
+    private FirebaseDatabase mydbase;
+    private DatabaseReference dbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +44,11 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         professors = new ProfessorFragment();
         profile = new ProfileFragment();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container, this.home).commit();
+        // TODO: load database here and make sure to pass info to other pages
+        mydbase = FirebaseDatabase.getInstance();
+        dbRef = mydbase.getReference();
 
+        getSupportFragmentManager().beginTransaction().add(R.id.container, this.home).commit();
 
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnItemSelectedListener(this);
