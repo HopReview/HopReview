@@ -7,10 +7,13 @@ import java.util.Map;
 
 public class CourseItem extends Profile {
     private String courseName;
+    private String courseNumber;
     private String courseDesignation;
     private ArrayList<Professor> professors;
+    private ArrayList<ReviewItem> reviews;
     private Map<Professor, Map<String, Integer>> mixedRatings;
     private int averageRating;
+    private int reviewCount;
 
     /**
      * Constructor to create a Course object
@@ -20,12 +23,14 @@ public class CourseItem extends Profile {
     /**
      * Constructor to create a Course object
      * @param name : indicating the Course's name
+     * @param courseNum : indicasting the Course's number
      * @param courseDesignation : indicating the course designation of the Course
      * @param professors : indicating the professors teaching the Course
      */
-    public CourseItem(String name, String courseDesignation,
+    public CourseItem(String name, String courseNum, String courseDesignation,
                       ArrayList<Professor> professors) {
         this.courseName = name;
+        this.courseNumber = courseNum;
         this.courseDesignation = courseDesignation;
         this.professors = professors;
 
@@ -44,11 +49,40 @@ public class CourseItem extends Profile {
 
 
     /**
+     * Method for getting a Course's number
+     * @return String number of the Course
+     */
+    public String getCourseNumber() { return this.courseNumber; }
+
+    /**
      * Method for getting a Course's area of designation
      * @return String course designation of a Course
      */
     public String getDesignation() { return this.courseDesignation; }
 
+
+    /**
+     * Method for getting reviews for the course
+     * @return ArrayList of review items
+     */
+    public ArrayList<ReviewItem> getReviews() { return this.reviews; }
+
+
+    /**
+     * Method for getting the amount of reviews for the course
+     * @return int representing the amount of reviews
+     */
+    public int getReviewCount() { return reviewCount; }
+
+
+    /**
+     * Method for adding a review for the course
+     * @param newReview - review to be added
+     */
+    public void addReview(ReviewItem newReview) {
+        reviews.add(newReview);
+        reviewCount++;
+    }
 
     /**
      * Method for getting the professors teaching the Course

@@ -25,7 +25,13 @@ public class CourseListFrag extends Fragment {
                              Bundle savedInstanceState) {
 
         View myView = inflater.inflate(R.layout.frag_course, container, false);
+
+
         context = getActivity().getApplicationContext();
+
+        // dbAdapt = CoursedbAdapter.getInstance(context);
+        // dbAdapt.open();
+
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");
         myList = (RecyclerView) myView.findViewById(R.id.myList);
