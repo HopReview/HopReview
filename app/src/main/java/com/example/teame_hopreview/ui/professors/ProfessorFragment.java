@@ -1,4 +1,4 @@
-package com.example.teame_hopreview.ui.dashboard;
+package com.example.teame_hopreview.ui.professors;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.teame_hopreview.databinding.FragmentDashboardBinding;
+import com.example.teame_hopreview.databinding.FragmentProfessorsBinding;
 
-public class DashboardFragment extends Fragment {
+public class ProfessorFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentProfessorsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        ProfessorViewModel professorViewModel =
+                new ViewModelProvider(this).get(ProfessorViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentProfessorsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        professorViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

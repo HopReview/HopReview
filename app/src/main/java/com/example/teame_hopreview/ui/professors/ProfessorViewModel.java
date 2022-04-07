@@ -1,16 +1,16 @@
-package com.example.teame_hopreview.ui.notifications;
+package com.example.teame_hopreview.ui.professors;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class ProfessorViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public ProfessorViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is professor fragment");
     }
 
     public LiveData<String> getText() {

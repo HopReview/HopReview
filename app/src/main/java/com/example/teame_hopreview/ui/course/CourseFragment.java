@@ -1,18 +1,24 @@
-package com.example.teame_hopreview;
+package com.example.teame_hopreview.ui.course;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.TextView;
+
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class CourseFrag extends Fragment {
+import com.example.teame_hopreview.CourseItem;
+import com.example.teame_hopreview.MainActivity;
+import com.example.teame_hopreview.R;
 
-    private ListView myList;
+public class CourseFragment extends Fragment {
+
+    private RecyclerView myList;
     private CardView myCard;
     private MainActivity myAct;
     private CourseItem courseItem;
@@ -26,11 +32,12 @@ public class CourseFrag extends Fragment {
         View myView = inflater.inflate(R.layout.frag_course, container, false);
         context = getActivity().getApplicationContext();
         myAct = (MainActivity) getActivity();
-        // set title
-        myAct.getSupportActionBar().setTitle("Courses");
+
 
         // get the recycler view for the list
-        myList = (ListView) myView.findViewById(R.id.myList);
+
+        myList = (RecyclerView) myView.findViewById(R.id.myList);
+
 
         return myView;
     }
