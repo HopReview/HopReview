@@ -11,15 +11,26 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class CourseListFrag extends Fragment {
 
     private RecyclerView myList;
     private CardView myCard;
     private MainActivity myAct;
     private Professor profItem;
+    private DatabaseReference dbref;
     Context context;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dbref = FirebaseDatabase.getInstance().getReference();
+
+
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
