@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         professors = new ProfessorFragment();
         profile = new ProfileFragment();
 
-        // TODO: load database here and make sure to pass info to other pages
         mydbase = FirebaseDatabase.getInstance();
         dbRef = mydbase.getReference();
 
