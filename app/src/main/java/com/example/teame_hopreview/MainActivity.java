@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     private FirebaseDatabase mydbase;
     private DatabaseReference dbRef;
 
+    // TODO: for testing only, remove later
+    private static final String TAG = "DB_REF: ";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,34 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         mydbase = FirebaseDatabase.getInstance();
         dbRef = mydbase.getReference();
+
+        // TODO: need to adjust for recycler CourseListFrag
+//        dbRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+//                long count = snapshot.getChildrenCount();
+//                Log.d(TAG, "Children count: " + count);
+//                Log.d(TAG, "Client count: " + snapshot.child("clients").getChildrenCount());
+//
+//                // need to recreate the mItems list somehow
+//                // another way is to use a FirebaseRecyclerView - see Sample Database code
+//
+//                mItems.clear();
+//                Iterable<DataSnapshot> clients = snapshot.child("clients").getChildren();
+//                for (DataSnapshot pair : clients) {
+//                    mItems.add(pair.getValue(CourseItem.class));
+//                }
+//                mAdapt.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, this.home).commit();
 
