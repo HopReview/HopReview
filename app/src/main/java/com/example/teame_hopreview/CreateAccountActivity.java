@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -15,8 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.teame_hopreview.ui.course.CourseFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,7 +39,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        cFrag = new CourseFrag();
+        cFrag = new CourseFragment();
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,11 +104,11 @@ public class CreateAccountActivity extends AppCompatActivity {
         Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
         Context context = getApplicationContext();
 
-        EditText usernameEt = (EditText) findViewById(R.id.userName_sign);
-        EditText emailEt = (EditText) findViewById(R.id.email_sign);
-        EditText emailConfirmEt = (EditText) findViewById(R.id.emailConfirm_sign);
-        EditText passwordEt = (EditText) findViewById(R.id.password_sign);
-        EditText passwordConfirmEt = (EditText) findViewById(R.id.passwordConfirm_sign);
+        TextInputEditText usernameEt = findViewById(R.id.userName_sign);
+        TextInputEditText emailEt = findViewById(R.id.email_sign);
+        TextInputEditText emailConfirmEt =  findViewById(R.id.emailConfirm_sign);
+        TextInputEditText passwordEt =  findViewById(R.id.password_sign);
+        TextInputEditText passwordConfirmEt = findViewById(R.id.passwordConfirm_sign);
 
         String username = usernameEt.getText().toString();
         String email = emailEt.getText().toString();

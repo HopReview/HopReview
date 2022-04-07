@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,8 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.teame_hopreview.ui.course.CourseFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,16 +30,18 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "EmailPassword";
     private FragmentTransaction transaction;
     private Fragment cFrag;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        context = this;
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        cFrag = new CourseFrag();
+        cFrag = new CourseFragment();
 
         Button logInBtn = (Button) findViewById(R.id.login_btn);
         TextView createAccountTxt = (TextView) findViewById(R.id.createAccount);
@@ -79,6 +82,8 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG, "signInWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
+                        Intent intent = new Intent(context, MainActivity.class);
+                        startActivity(intent);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -102,11 +107,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void checkLogIn(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+
 
         // get user entered details
-        EditText emailEt = (EditText) findViewById(R.id.email);
-        EditText passwordEt = (EditText) findViewById(R.id.password);
+        TextInputEditText emailEt = findViewById(R.id.email);
+        TextInputEditText passwordEt = findViewById(R.id.password);
 
         Context context = getApplicationContext();
 
@@ -115,13 +120,16 @@ public class LoginActivity extends AppCompatActivity {
 
         signIn(email, password);
 
+
         /*
         if (email.equals()) {
-            startActivity(intent);
+
         } else {
             Toast toast = Toast.makeText(context, "Email and/or password does not match"
             , Toast.LENGTH_SHORT).show();
         }
-        */
+
+         */
+
     }
 }
