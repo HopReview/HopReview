@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationBarView;
@@ -20,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     public BottomNavigationView bottomNavigationView;
     private FirebaseDatabase mydbase;
     private DatabaseReference dbRef;
+//    private SimpleItemRecyclerViewAdapter mAdapt;
 
     // TODO: for testing only, remove later
     private static final String TAG = "DB_REF: ";
@@ -50,7 +54,12 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         mydbase = FirebaseDatabase.getInstance();
         dbRef = mydbase.getReference();
 
-        // TODO: need to adjust for recycler CourseListFrag
+//        RecyclerView recyclerView = findViewById(R.id.myList);
+//        assert recyclerView != null;
+//        mAdapt = new SimpleItemRecyclerViewAdapter(this, mItems, mTwoPane);
+//        recyclerView.setAdapter(mAdapt);
+//
+//        // TODO: need to adjust for recycler CourseListFrag
 //        dbRef.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot snapshot) {
