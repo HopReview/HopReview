@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.teame_hopreview.ui.professors.DashboardFragment"
+        android:name="com.example.teame_hopreview.ui.professors.ProfessorFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_professors" />
 
