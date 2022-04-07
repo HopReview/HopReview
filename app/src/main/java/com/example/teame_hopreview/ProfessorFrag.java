@@ -1,45 +1,38 @@
-package com.example.teame_hopreview.ui.course;
+package com.example.teame_hopreview;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
+import android.widget.ListView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.teame_hopreview.CourseItem;
-import com.example.teame_hopreview.CoursedbAdapter;
-import com.example.teame_hopreview.MainActivity;
-import com.example.teame_hopreview.R;
+public class ProfessorFrag extends Fragment {
 
-public class CourseFragment extends Fragment {
-
-    private RecyclerView myList;
+    private ListView myList;
     private CardView myCard;
     private MainActivity myAct;
-    private CourseItem courseItem;
+    private Professor profItem;
     Context context;
-    protected static CoursedbAdapter dbAdapt;
+    protected static ProfessordbAdapter dbAdapt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate layout for fragment
-        View myView = inflater.inflate(R.layout.frag_course, container, false);
+        View myView = inflater.inflate(R.layout.fragment_professors, container, false);
         context = getActivity().getApplicationContext();
         myAct = (MainActivity) getActivity();
-
+        // set title
+        myAct.getSupportActionBar().setTitle("Professors");
 
         // get the recycler view for the list
-
-        myList = (RecyclerView) myView.findViewById(R.id.myList);
-
+        // TODO: create separate xml from course
+        myList = (ListView) myView.findViewById(R.id.myList);
 
         return myView;
     }
