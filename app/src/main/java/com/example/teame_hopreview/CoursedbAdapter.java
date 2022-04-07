@@ -14,8 +14,8 @@ public class CoursedbAdapter {
     private CoursedbHelper dbHelper;
     private final Context context;
 
-    private static final String DB_NAME = "courses.db";
-    private static int dbVersion = 2;  // added semester
+    private static final String DB_NAME = "hopreview.db";
+    private static int dbVersion = 1;
 
     private static final String COURSE_TABLE = "courses";
     public static final String CRSE_ID = "crse_id";   // column 0

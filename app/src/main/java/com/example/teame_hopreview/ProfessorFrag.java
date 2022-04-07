@@ -10,14 +10,14 @@ import android.widget.ListView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-public class CourseFrag extends Fragment {
+public class ProfessorFrag extends Fragment {
 
     private ListView myList;
     private CardView myCard;
     private MainActivity myAct;
-    private CourseItem courseItem;
+    private Professor profItem;
     Context context;
-    protected static CoursedbAdapter dbAdapt;
+    protected static ProfessordbAdapter dbAdapt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,9 +28,10 @@ public class CourseFrag extends Fragment {
         context = getActivity().getApplicationContext();
         myAct = (MainActivity) getActivity();
         // set title
-        myAct.getSupportActionBar().setTitle("Courses");
+        myAct.getSupportActionBar().setTitle("Professors");
 
         // get the recycler view for the list
+        // TODO: create separate xml from course
         myList = (ListView) myView.findViewById(R.id.myList);
 
         return myView;
