@@ -28,6 +28,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private static final String TAG = "EmailPassword";
     private FragmentTransaction transaction;
     private Fragment cFrag;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,12 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            // currentUser.reload();
+            updateUI(currentUser);
+        }
 
         cFrag = new CourseFragment();
 
@@ -62,10 +69,11 @@ public class CreateAccountActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            currentUser.reload();
-        }
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if(currentUser != null){
+//            currentUser.reload();
+//            updateUI(currentUser);
+//        }
     }
 
     private void createAccount(String email, String password) {
@@ -83,20 +91,16 @@ public class CreateAccountActivity extends AppCompatActivity {
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
-                        updateUI(null);
+                        // updateUI(null);
                     }
                 }
             });
     }
 
     private void updateUI(FirebaseUser user) {
-        // TODO: go to new fragment and pass user!
-//        transaction = getSupportFragmentManager().beginTransaction();
-//        // Replace whatever is in the fragment_container view with this fragment,
-//        // and add the transaction to the back stack so the user can navigate back
-//        transaction.replace(R.id.text_home, this.cFrag);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
+        // TODO: pass user!
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
     }
 
     private void checkSignUp(View view) {
@@ -116,23 +120,20 @@ public class CreateAccountActivity extends AppCompatActivity {
         String password = passwordEt.getText().toString();
         String passwordConfirm = passwordConfirmEt.getText().toString();
 
-        createAccount(email,password);
-
-        /*
-        if (!email.equals(emailConfirm) || password.equals(passwordConfirm)) {
-            Toast.makeText(context, "Email and/or password couldn't be confirmed successfully", Toast.LENGTH_SHORT).show();
-        } else if() {
-            TO DO: check whether username or email already exists
-            Toast.makeText(context, "Username already exists", Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, "Email already registered", Toast.LENGTH_SHORT).show();
-        } else if() {
-            TO DO: check whether password is appropriate
-            Toast.makeText(context, "Password is inadequate", Toast.LENGTH_SHORT).show();
-        } else {
-            TO DO: create account, update Firebase, direct to mainActivity
-            startActivity(intent)
+        if (!email.equals(emailConfirm) || !password.equals(passwordConfirm)) {
+            Toast.makeText(context, "Email and/or password could not be verified successfully", Toast.LENGTH_SHORT).show();
         }
-        */
+        //        else if(!password.equals(passwordConfirm)) {
+        //            // TO DO: check whether username or email already exists
+        //            Toast.makeText(context, "Username already exists", Toast.LENGTH_SHORT).show();
+        //            Toast.makeText(context, "Email already registered", Toast.LENGTH_SHORT).show();
+        //        } else if() {
+        //            // TO DO: check whether password is appropriate
+        //            Toast.makeText(context, "Password is inadequate", Toast.LENGTH_SHORT).show();
+        //        }
+        else {
+            createAccount(email,password);
+        }
 
     }
 

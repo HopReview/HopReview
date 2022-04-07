@@ -82,14 +82,12 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG, "signInWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
-                        Intent intent = new Intent(context, MainActivity.class);
-                        startActivity(intent);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                         Toast.makeText(LoginActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
-                        updateUI(null);
+                        // updateUI(null);
                     }
                 }
             });
@@ -97,13 +95,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void updateUI(FirebaseUser user) {
-        // TODO: go to new fragment and pass user!
-//        transaction = getSupportFragmentManager().beginTransaction();
-//        // Replace whatever is in the fragment_container view with this fragment,
-//        // and add the transaction to the back stack so the user can navigate back
-//        transaction.replace(R.id.text_home, this.cFrag);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
+        // TODO: pass user!
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
     }
 
     public void checkLogIn(View view) {
