@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.CourseItem;
-import com.example.teame_hopreview.CoursedbAdapter;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 
@@ -24,7 +23,6 @@ public class CourseFragment extends Fragment {
     private MainActivity myAct;
     private CourseItem courseItem;
     Context context;
-    protected static CoursedbAdapter dbAdapt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

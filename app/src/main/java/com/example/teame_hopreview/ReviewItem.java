@@ -9,7 +9,7 @@ public class ReviewItem extends Profile {
     private String parentName;
     private String reviewerName;
     private String reviewContent;
-    // TO DO: add more fields to the review item
+    // TODO: add more fields to the review item
 
     /**
      * Constructor to create a ReviewItem object
@@ -50,8 +50,6 @@ public class ReviewItem extends Profile {
     public String getReviewContent() { return this.reviewContent; }
 
 
-    // TO DO:
-    // methods for getting and setting other important review items
-
+    // TODO: methods for getting and setting other important review items
 
 }
