@@ -203,8 +203,7 @@ public class CourseItem extends Profile {
         int totRates = 0;
         for (Professor prof : professors) {
             currRating = mixedRatings.get(prof);
-            ratingSum += (currRating.get("Workload") + currRating.get("Fun")
-                    + currRating.get("Grading") + currRating.get("Knowledge"));
+            ratingSum += (currRating.get("Workload") + currRating.get("Fun"));
             totRates += currRating.get("RateCount");
         }
 
@@ -219,8 +218,8 @@ public class CourseItem extends Profile {
         Map<String, Integer> holderRatings = new HashMap<String, Integer>();
         holderRatings.put("Workload", 0);
         holderRatings.put("Fun", 0);
-        holderRatings.put("Grading", 0);
-        holderRatings.put("Knowledge", 0);
+        //        holderRatings.put("Grading", 0);
+        //        holderRatings.put("Knowledge", 0);
         holderRatings.put("RateCount", 0);
 
         return holderRatings;
