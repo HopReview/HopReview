@@ -20,12 +20,12 @@ public class CoursedbAdapter {
     private static final String COURSE_TABLE = "courses";
     public static final String CRSE_ID = "crse_id";   // column 0
     public static final String CRSE_NAME = "crse_name";
-    public static final String CRSE_CREDS = "crse_cred";
     public static final String CRSE_DESIGNATION = "crse_designation";
     public static final String CRSE_PROFESSORS = "crse_professors";
-    public static final String CRSE_SEM = "crse_semester";
+    public static final String CRSE_RATINGS = "crse_ratings";
+//    public static final String CRSE_SEM = "crse_semester";
     // TODO: edit this format!
-    public static final String[] CRSE_COLS = {CRSE_ID, CRSE_NAME, CRSE_DESIGNATION, CRSE_PROFESSORS, CRSE_SEM};
+    public static final String[] CRSE_COLS = {CRSE_ID, CRSE_NAME, CRSE_DESIGNATION, CRSE_PROFESSORS, CRSE_RATINGS};
 
     private static final String SEMESTER_TABLE = "semesters";
     public static final String SEM_ID = "sem_id";
@@ -104,17 +104,17 @@ public class CoursedbAdapter {
         return result;
     }
 
-    /*public CourseItem getCourseItem(long ri) throws SQLException {
-        Cursor cursor = db.query(true, COURSE_TABLE, CRSE_COLS, CRSE_ID+"="+ri, null, null, null, null, null);
-        if ((cursor.getCount() == 0) || !cursor.moveToFirst()) {
-            throw new SQLException("No course items found for row: " + ri);
-        }
-        // must use column indices to get column values
-        int nameIndex = cursor.getColumnIndex(CRSE_NAME);
-        CourseItem result = new CourseItem(cursor.getString(nameIndex), cursor.getString(2), cursor.getString(3));
-        return result;
-    }
-*/
+//    public CourseItem getCourseItem(long ri) throws SQLException {
+//        Cursor cursor = db.query(true, COURSE_TABLE, CRSE_COLS, CRSE_ID+"="+ri, null, null, null, null, null);
+//        if ((cursor.getCount() == 0) || !cursor.moveToFirst()) {
+//            throw new SQLException("No course items found for row: " + ri);
+//        }
+//        // must use column indices to get column values
+//        int nameIndex = cursor.getColumnIndex(CRSE_NAME);
+//        CourseItem result = new CourseItem(cursor.getString(nameIndex), cursor.getString(2), cursor.getString(3));
+//        return result;
+//    }
+
 
     private static class CoursedbHelper extends SQLiteOpenHelper {
 
@@ -122,7 +122,8 @@ public class CoursedbAdapter {
         // TODO: this MUST BE CHANGED! set foreign key relationship with professor
         private static final String DB_CREATE = "CREATE TABLE " + COURSE_TABLE
                 + " (" + CRSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CRSE_NAME + " TEXT,"
-                + CRSE_DESIGNATION + " TEXT, " + CRSE_CREDS + " REAL," + CRSE_SEM + " TEXT);";
+                + CRSE_DESIGNATION + " TEXT, " + CRSE_RATINGS + " TEXT);";
+        // + CRSE_PROFESSORS + " REAL,"
 
         public CoursedbHelper(Context context, String name, SQLiteDatabase.CursorFactory fct, int version) {
             super(context, name, fct, version);
