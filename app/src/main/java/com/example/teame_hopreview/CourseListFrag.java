@@ -9,30 +9,27 @@ import android.widget.ListView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class ProfessorFrag extends Fragment {
+public class CourseListFrag extends Fragment {
 
-    private ListView myList;
+    private RecyclerView myList;
     private CardView myCard;
     private MainActivity myAct;
     private Professor profItem;
     Context context;
-    protected static ProfessordbAdapter dbAdapt;
+    protected static CoursedbAdapter dbAdapt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate layout for fragment
-        View myView = inflater.inflate(R.layout.fragment_professors, container, false);
+        View myView = inflater.inflate(R.layout.frag_course, container, false);
         context = getActivity().getApplicationContext();
         myAct = (MainActivity) getActivity();
-        // set title
-        myAct.getSupportActionBar().setTitle("Professors");
-
-        // get the recycler view for the list
-        // TODO: create separate xml from course
-        myList = (ListView) myView.findViewById(R.id.myList);
+        myAct.getSupportActionBar().setTitle("Courses");
+        myList = (RecyclerView) myView.findViewById(R.id.myList);
+        myCard = (CardView) myView.findViewById(R.id.course_card);
 
         return myView;
     }
