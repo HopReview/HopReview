@@ -37,10 +37,15 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         Button signUpBtn = (Button) findViewById(R.id.signup_btn);
 
-        context = getApplicationContext();
-
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            // currentUser.reload();
+            updateUI(currentUser);
+        }
+
         cFrag = new CourseFragment();
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,11 +69,11 @@ public class CreateAccountActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            currentUser.reload();
-            updateUI(currentUser);
-        }
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if(currentUser != null){
+//            currentUser.reload();
+//            updateUI(currentUser);
+//        }
     }
 
     private void createAccount(String email, String password) {
@@ -94,13 +99,14 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         // TODO: pass user!
-        Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
+        Intent intent = new Intent(context, MainActivity.class);
         startActivity(intent);
     }
 
     private void checkSignUp(View view) {
-//        Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
-        context = getApplicationContext();
+
+        Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
+        Context context = getApplicationContext();
 
         TextInputEditText usernameEt = findViewById(R.id.userName_sign);
         TextInputEditText emailEt = findViewById(R.id.email_sign);

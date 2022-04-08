@@ -31,10 +31,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-
     <!-- Course Panel Items-->
     <string name="average_rating">Average Rating</string>
     <string name="workload_rating">Workload Rating</string>
     <string name="fun_rating">Fun Rating</string>
+    <string name="logout">LOGOUT</string>
+    <string name="search">search</string>
 
 </resources>
