@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.teame_hopreview.ui.course.CourseItem;
+
 public class CoursedbAdapter {
     private SQLiteDatabase db;
     private CoursedbHelper dbHelper;

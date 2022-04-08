@@ -1,5 +1,7 @@
 package com.example.teame_hopreview;
 
+import com.example.teame_hopreview.ui.course.CourseItem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

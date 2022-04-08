@@ -1,8 +1,10 @@
 package com.example.teame_hopreview;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.teame_hopreview.ui.course.CourseAdapter;
 import com.example.teame_hopreview.ui.course.CourseFragment;
 import com.example.teame_hopreview.ui.home.HomeFragment;
 import com.example.teame_hopreview.ui.professors.ProfessorFragment;
@@ -23,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     private Fragment professors;
     private Fragment profile;
     public BottomNavigationView bottomNavigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
