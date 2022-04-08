@@ -1,4 +1,8 @@
-package com.example.teame_hopreview;
+package com.example.teame_hopreview.ui.course;
+
+import com.example.teame_hopreview.Professor;
+import com.example.teame_hopreview.Profile;
+import com.example.teame_hopreview.ReviewItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
