@@ -67,8 +67,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             currentUser.reload();
+            updateUI(currentUser);
         }
     }
 
@@ -101,29 +102,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void checkLogIn(View view) {
-
-
         // get user entered details
         TextInputEditText emailEt = findViewById(R.id.email);
         TextInputEditText passwordEt = findViewById(R.id.password);
 
-        Context context = getApplicationContext();
+        context = getApplicationContext();
 
         email = emailEt.getText().toString();
         password = passwordEt.getText().toString();
 
         signIn(email, password);
-
-
-        /*
-        if (email.equals()) {
-
-        } else {
-            Toast toast = Toast.makeText(context, "Email and/or password does not match"
-            , Toast.LENGTH_SHORT).show();
-        }
-
-         */
-
     }
 }
