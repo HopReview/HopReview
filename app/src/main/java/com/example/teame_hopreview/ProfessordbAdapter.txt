@@ -1,3 +1,5 @@
+// TODO: WILL NOT USE, DELETE LATER
+
 package com.example.teame_hopreview;
 
 import static com.example.teame_hopreview.CoursedbAdapter.COURSE_TABLE;

@@ -10,14 +10,25 @@ import android.widget.ListView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class ProfessorFrag extends Fragment {
 
     private ListView myList;
     private CardView myCard;
     private MainActivity myAct;
     private Professor profItem;
+    private DatabaseReference dbref;
     Context context;
-    protected static ProfessordbAdapter dbAdapt;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dbref = FirebaseDatabase.getInstance().getReference();
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

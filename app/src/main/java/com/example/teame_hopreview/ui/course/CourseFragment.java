@@ -6,12 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.teame_hopreview.CoursedbAdapter;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 
@@ -24,9 +25,18 @@ public class CourseFragment extends Fragment {
     private MainActivity myAct;
     private CourseItem courseItem;
     protected ArrayList<CourseItem> myCourses;
-    Context context;
-    protected static CoursedbAdapter dbAdapt;
     private CourseAdapter ca;
+    private DatabaseReference dbref;
+    Context context;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dbref = FirebaseDatabase.getInstance().getReference();
+
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,9 +46,6 @@ public class CourseFragment extends Fragment {
 
 
         context = getActivity().getApplicationContext();
-
-        // dbAdapt = CoursedbAdapter.getInstance(context);
-        // dbAdapt.open();
 
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");
