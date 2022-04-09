@@ -1,20 +1,26 @@
 package com.example.teame_hopreview.ui.course;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -26,6 +32,7 @@ public class CourseFragment extends Fragment {
     private CourseItem courseItem;
     protected ArrayList<CourseItem> myCourses;
     private CourseAdapter ca;
+    private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     Context context;
 
@@ -58,6 +65,33 @@ public class CourseFragment extends Fragment {
         myList.setAdapter(ca);
 
         // TO DO: Firebase
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        /*myList.setOnClickListener(new RecyclerView.OnItemTouchListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(myAct, CourseDetailFragment.class);
+
+                courseItem = (CourseItem) adapterView.getItemAtPosition(i);
+
+                String courseName = courseItem.getName();
+                String courseNum = courseItem.getCourseNumber();
+
+            }
+        });*/
+
 
         return myView;
     }
