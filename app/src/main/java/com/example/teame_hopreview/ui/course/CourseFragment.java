@@ -61,7 +61,7 @@ public class CourseFragment extends Fragment {
         ca = new CourseAdapter(context, myCourses);
 
         myList.setAdapter(ca);
-        myList.setLayoutManager(new LinearLayoutManager(context));
+        myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
         dbref = FirebaseDatabase.getInstance().getReference();
 
@@ -72,10 +72,10 @@ public class CourseFragment extends Fragment {
 
                 long count = snapshot.getChildrenCount();
                 Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Course count: " + snapshot.child("courses").getChildrenCount());
+                Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
 
                 myCourses.clear();
-                Iterable<DataSnapshot> courses = snapshot.child("courses").getChildren();
+                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
 
 
                 for (DataSnapshot crs : courses) {
