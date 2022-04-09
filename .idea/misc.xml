@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.18177083333333333" />
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2265" />
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/layout/activity_main.xml" value="0.152" />
@@ -20,6 +21,10 @@
         <entry key="app/src/main/res/layout/frag_course.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/frag_course_item.xml" value="0.49206644694010426" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/fragment_review.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/review_dropdown.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/review_dropdown_item.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.8407766990291262" />
       </map>
     </option>
   </component>

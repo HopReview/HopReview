@@ -21,16 +21,14 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan"
             android:exported="true"
-            android:label="@string/app_title">
-        </activity>
+            android:label="@string/app_title"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".CreateAccountActivity"
             android:exported="false"
             android:label="CreateAccountActivity"
-            android:parentActivityName=".LoginActivity">
-        </activity>
+            android:parentActivityName=".LoginActivity"></activity>
     </application>
 
 </manifest>
