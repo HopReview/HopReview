@@ -90,6 +90,8 @@ public class CreateReviewFragment extends Fragment {
         //Set views
         setupCourseDropdown(view);
         setupProfessorDropdown(view);
+        setupReviews(view);
+
 
         // Inflate the layout for this fragment
         return view;
@@ -136,6 +138,40 @@ public class CreateReviewFragment extends Fragment {
         //Aim: based on current selected professor, fill the course dropdown
         listManager.setCourses(selectedProfessor.getCourses());
         courseAdapter.notifyDataSetChanged();
+    }
+
+    private void setupReviews(View view) {
+        RatingsView funRatings = view.findViewById(R.id.create_review_fun_rating);
+        funRatings.setOnRatingChangedListener(new OnRatingChangedListener() {
+            @Override
+            public void onRatingChanged(int newRating) {
+                System.out.println(newRating);
+            }
+        });
+
+        RatingsView workloadRatings = view.findViewById(R.id.create_review_workload_rating);
+        workloadRatings.setOnRatingChangedListener(new OnRatingChangedListener() {
+            @Override
+            public void onRatingChanged(int newRating) {
+                System.out.println(newRating);
+            }
+        });
+
+        RatingsView gradingRatings = view.findViewById(R.id.create_review_grading_rating);
+        gradingRatings.setOnRatingChangedListener(new OnRatingChangedListener() {
+            @Override
+            public void onRatingChanged(int newRating) {
+                System.out.println(newRating);
+            }
+        });
+
+        RatingsView knowledgeRatings = view.findViewById(R.id.create_review_knowledge_rating);
+        knowledgeRatings.setOnRatingChangedListener(new OnRatingChangedListener() {
+            @Override
+            public void onRatingChanged(int newRating) {
+                System.out.println(newRating);
+            }
+        });
     }
 
 
