@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/course_card"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="5dp"
     app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="8dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
 
@@ -258,10 +258,9 @@
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.353"
+            app:layout_constraintHorizontal_bias="0.412"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.503" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/workload_rating"

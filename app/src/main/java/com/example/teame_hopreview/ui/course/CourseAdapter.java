@@ -51,21 +51,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.getDesignation().setText(currCourse.getDesignation());
         holder.getNameNum().setText(currCourse.getName() + " " + currCourse.getCourseNumber());
 
-        ArrayList<Professor> professors = currCourse.getProfessors();
-        Professor prof = null;
-        if (professors != null) {
-            prof = professors.get(0);
-        }
+        String prof = currCourse.getProfessors();
 
         /*StringBuilder profNamesStr = new StringBuilder();
         for (Professor prof : professors) {
             profNamesStr.append(prof.getProfessorName()).append(" / ");
         }*/
 
-        if (prof != null) {
-            holder.getProfessorNames().setText(prof.getProfessorName().toString());
-        }
-        holder.getReviewNum().setText(currCourse.getReviews().size() + " reviews");
+
+        holder.getProfessorNames().setText(prof);
+
+        // holder.getReviewNum().setText(currCourse.getReviews().size() + " reviews");
 
         holder.itemView.setTag(courseData.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);
