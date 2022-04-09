@@ -16,7 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.MainActivity;
@@ -41,18 +43,9 @@ public class CourseFragment extends Fragment {
     Context context;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        dbref = FirebaseDatabase.getInstance().getReference();
-
-
-    }
-
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
         View myView = inflater.inflate(R.layout.frag_course, container, false);
 
 
@@ -60,6 +53,7 @@ public class CourseFragment extends Fragment {
 
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");
+        System.out.println("Reached here");
         myList = (RecyclerView) myView.findViewById(R.id.myList);
         myCard = (CardView) myView.findViewById(R.id.course_card);
         myCourses = new ArrayList<CourseItem>();
@@ -67,7 +61,9 @@ public class CourseFragment extends Fragment {
         ca = new CourseAdapter(context, myCourses);
 
         myList.setAdapter(ca);
+        myList.setLayoutManager(new LinearLayoutManager(context));
 
+        dbref = FirebaseDatabase.getInstance().getReference();
 
         // TO DO: Firebase
         dbref.addValueEventListener(new ValueEventListener() {
@@ -76,14 +72,17 @@ public class CourseFragment extends Fragment {
 
                 long count = snapshot.getChildrenCount();
                 Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Client count: " + snapshot.child("clients").getChildrenCount());
+                Log.d(TAG, "Course count: " + snapshot.child("courses").getChildrenCount());
 
                 myCourses.clear();
                 Iterable<DataSnapshot> courses = snapshot.child("courses").getChildren();
 
+
                 for (DataSnapshot crs : courses) {
                     myCourses.add(crs.getValue(CourseItem.class));
                 }
+
+                ca.notifyDataSetChanged();
             }
 
             @Override
