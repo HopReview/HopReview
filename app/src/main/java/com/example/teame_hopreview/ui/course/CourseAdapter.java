@@ -1,6 +1,7 @@
 package com.example.teame_hopreview.ui.course;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,16 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private List<CourseItem> courseData;
     private LayoutInflater inflater;
     private AdapterView.OnItemClickListener clickListener;
+
+    private final View.OnClickListener mOnClickListener = (view) -> {
+        CourseItem course = (CourseItem) view.getTag();
+
+        Context context = view.getContext();
+        Intent intent = new Intent(context, CourseDetailFragment.class);
+        intent.putExtra("course_name", course.getName());
+
+        context.startActivity(intent);
+    };
 
     public CourseAdapter(Context context, List<CourseItem> items) {
         this.inflater = LayoutInflater.from(context);
@@ -48,6 +59,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
         holder.getProfessorNames().setText(profNamesStr.toString());
         holder.getReviewNum().setText(currCourse.getReviewCount() + " reviews");
+
+        holder.itemView.setTag(courseData.get(position));
+        holder.itemView.setOnClickListener(mOnClickListener);
     }
 
     @Override
