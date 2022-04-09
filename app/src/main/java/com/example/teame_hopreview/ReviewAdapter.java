@@ -1,6 +1,7 @@
 package com.example.teame_hopreview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     private List<ReviewItem> reviewData;
     private LayoutInflater inflater;
     private AdapterView.OnItemClickListener clickListener;
+
 
     public ReviewAdapter(Context context, List<ReviewItem> items) {
         this.inflater = LayoutInflater.from(context);
@@ -63,6 +65,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             holder.getStar1().setVisibility(View.VISIBLE);
         }
 
+        holder.itemView.setTag(reviewData.get(position));
+        // holder.itemView.setOnClickListener(mOnClickListener);
 
     }
 
