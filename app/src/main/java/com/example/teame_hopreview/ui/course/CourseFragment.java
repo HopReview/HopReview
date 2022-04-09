@@ -3,6 +3,7 @@ package com.example.teame_hopreview.ui.course;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CourseFragment extends Fragment {
+
+    private static final String TAG = "dbref: ";
+
 
     private RecyclerView myList;
     private CardView myCard;
@@ -64,35 +68,33 @@ public class CourseFragment extends Fragment {
 
         myList.setAdapter(ca);
 
+
         // TO DO: Firebase
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                long count = snapshot.getChildrenCount();
+                Log.d(TAG, "Children count: " + count);
+                Log.d(TAG, "Client count: " + snapshot.child("clients").getChildrenCount());
+
+                myCourses.clear();
+                Iterable<DataSnapshot> courses = snapshot.child("courses").getChildren();
+
+                for (DataSnapshot crs : courses) {
+                    myCourses.add(crs.getValue(CourseItem.class));
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
 
 
-        /*myList.setOnClickListener(new RecyclerView.OnItemTouchListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(myAct, CourseDetailFragment.class);
-
-                courseItem = (CourseItem) adapterView.getItemAtPosition(i);
-
-                String courseName = courseItem.getName();
-                String courseNum = courseItem.getCourseNumber();
-
-            }
-        });*/
-
 
         return myView;
     }
+
 }
