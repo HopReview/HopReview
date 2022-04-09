@@ -4,10 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,6 +58,7 @@ public class ProfessorFragment extends Fragment {
         myList = (RecyclerView) myView.findViewById(R.id.myList);
         myCard = (CardView) myView.findViewById(R.id.course_card);
         myProfessors = new ArrayList<>();
+        setHasOptionsMenu(true);
 
 //        ca = new ProfessorAdapter(context, myProfessors);
 //        myList.setAdapter(ca);
@@ -81,6 +86,31 @@ public class ProfessorFragment extends Fragment {
         });
 
         return myView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.bar_menu, menu);
+        MenuItem item = menu.findItem(R.id.search);
+        SearchView sv = new SearchView(((myAct.getSupportActionBar().getThemedContext())));
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        item.setActionView(sv);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                System.out.println("search query submit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                System.out.println("tap");
+                return false;
+            }
+        });
+
     }
 
 }

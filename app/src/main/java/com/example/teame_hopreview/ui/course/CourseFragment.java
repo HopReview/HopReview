@@ -1,10 +1,14 @@
 package com.example.teame_hopreview.ui.course;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,7 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +69,8 @@ public class CourseFragment extends Fragment {
         myList = (RecyclerView) myView.findViewById(R.id.myList);
         myCard = (CardView) myView.findViewById(R.id.course_card);
         myCourses = new ArrayList<CourseItem>();
-
+        setHasOptionsMenu(true);
+        /*
         ca = new CourseAdapter(context, myCourses);
 
         myList.setAdapter(ca);
@@ -93,8 +100,36 @@ public class CourseFragment extends Fragment {
         });
 
 
+         */
 
         return myView;
+    }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.bar_menu, menu);
+        MenuItem item = menu.findItem(R.id.search);
+        SearchView sv = new SearchView(((myAct.getSupportActionBar().getThemedContext())));
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        item.setActionView(sv);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                System.out.println("search query submit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                System.out.println("tap");
+                return false;
+            }
+        });
+
     }
 
 }

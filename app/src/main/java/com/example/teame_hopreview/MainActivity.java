@@ -1,17 +1,22 @@
 package com.example.teame_hopreview;
 
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.teame_hopreview.ui.course.CourseFragment;
+import com.example.teame_hopreview.ui.course.CourseItem;
 import com.example.teame_hopreview.ui.home.HomeFragment;
 import com.example.teame_hopreview.ui.professors.ProfessorFragment;
 import com.example.teame_hopreview.ui.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -20,8 +25,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.teame_hopreview.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
@@ -94,29 +103,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.bar_menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.search);
-        searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Type here to search");
 
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                return false;
-            }
-        });
-        return true;
-    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -124,32 +112,21 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         if (id == R.id.navigation_home) {
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, this.home).commit();
-            getSupportActionBar().show();
-            searchView.clearFocus();
             transaction.addToBackStack(null);
             return true;
         } else if (id == R.id.navigation_courses) {
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, this.course).commit();
-            getSupportActionBar().show();
-            searchView.setQuery("", false);
-            searchView.clearFocus();
             transaction.addToBackStack(null);
             return true;
         } else if (id == R.id.navigation_professors) {
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, this.professors).commit();
-            getSupportActionBar().show();
-            searchView.setQuery("", false);
-            searchView.clearFocus();
             transaction.addToBackStack(null);
             return true;
         } else if (id == R.id.navigation_profile) {
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, this.profile).commit();
-            getSupportActionBar().hide();
-            searchView.setQuery("", false);
-            searchView.clearFocus();
             transaction.addToBackStack(null);
             return true;
         }
