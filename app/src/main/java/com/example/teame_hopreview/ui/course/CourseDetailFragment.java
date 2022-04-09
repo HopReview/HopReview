@@ -13,7 +13,6 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.teame_hopreview.CreateReview;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewAdapter;
@@ -38,12 +37,22 @@ public class CourseDetailFragment extends Fragment {
     private CardView myCard;
     private MainActivity myAct;
     private FloatingActionButton myFab;
+    private CourseItem courseItem;
     private ReviewItem ReviewItem;
     protected ArrayList<ReviewItem> myReviews;
     Context context;
+    String courseName;
     private ReviewAdapter ra;
     FirebaseDatabase mdbase;
     DatabaseReference dbref;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        courseName = savedInstanceState.get("course_name").toString();
+        dbref = FirebaseDatabase.getInstance().getReference();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,9 +62,6 @@ public class CourseDetailFragment extends Fragment {
 
 
         context = getActivity().getApplicationContext();
-
-        // dbAdapt = CoursedbAdapter.getInstance(context);
-        // dbAdapt.open();
 
         myAct = (MainActivity) getActivity();
         myList = (RecyclerView) myView.findViewById(R.id.myList);
@@ -67,20 +73,40 @@ public class CourseDetailFragment extends Fragment {
 
         myList.setAdapter(ra);
 
-        // TO DO: Firebase
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-        mdbase = FirebaseDatabase.getInstance();
-        dbref = mdbase.getReference();
+                long count = snapshot.getChildrenCount();
+                Log.d(TAG, "Children count: " + count);
+                Log.d(TAG, "Client count: " + snapshot.child("clients").getChildrenCount());
 
+                myReviews.clear();
+                Iterable<DataSnapshot> courses = snapshot.child("courses").getChildren();
 
+                for (DataSnapshot crs : courses) {
+                    if (crs.getValue(CourseItem.class).getName().toString().equals(courseName)) {
+                        courseItem = crs.getValue(CourseItem.class);
+                    }
+                }
 
+                if (courseItem != null) {
+                    myReviews = courseItem.getReviews();
+                }
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
 
         myFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(myAct, CreateReview.class);
-                intent.putExtra("isCourse", true);
+                //Intent intent = new Intent(myAct, CreateReview.class);
+                //intent.putExtra("course_name", courseName);
 
             }
         });
