@@ -1,5 +1,6 @@
-package com.example.teame_hopreview;
+package com.example.teame_hopreview.ui.professors;
 
+import com.example.teame_hopreview.Profile;
 import com.example.teame_hopreview.ui.course.CourseItem;
 
 import java.util.ArrayList;
