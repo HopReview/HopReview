@@ -31,7 +31,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     @Override
     public CourseAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.frag_course_item, parent, false);
-        return new ViewHolder(view);
+        return new CourseAdapter.ViewHolder(view);
     }
 
     @Override

@@ -32,10 +32,18 @@
 
 
     <!-- Course Panel Items-->
+    <string name="course_ratings">Course Ratings</string>
+    <string name="professor_ratings">Professor Ratings</string>
+    <string name="workload_txt">Workload</string>
+    <string name="fun_txt">Fun</string>
+    <string name="grading_txt">Grading</string>
+    <string name="knowledge_txt">Knowledge</string>
+
     <string name="average_rating">Average Rating</string>
     <string name="workload_rating">Workload Rating</string>
     <string name="fun_rating">Fun Rating</string>
     <string name="logout">LOGOUT</string>
     <string name="search">search</string>
+    <string name="reviews_list">Reviews</string>
 
 </resources>

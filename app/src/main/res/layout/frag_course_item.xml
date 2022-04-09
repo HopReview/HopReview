@@ -24,7 +24,189 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    tools:layout_editor_absoluteX="-16dp"
+                    tools:layout_editor_absoluteY="0dp">
+
+                    <ImageView
+                        android:id="@+id/work_star1"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.328"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/work_star4"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.45"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/work_star3"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.409"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/work_star5"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.491"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/work_star2"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.368"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/avg_star1"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.552"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.512"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/avg_star3"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.633"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.512"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/avg_star4"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.674"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.512"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/avg_star5"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.715"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.512"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/fun_star2"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.796"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/fun_star1"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.755"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/fun_star3"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.837"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/fun_star4"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.877"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/fun_star5"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.918"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716"
+                        app:srcCompat="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/avg_star2"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.592"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.512"
+                        app:srcCompat="@drawable/star" />
 
                     <TextView
                         android:id="@+id/designation"
@@ -86,7 +268,7 @@
                         android:textAlignment="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.498"
+                        app:layout_constraintHorizontal_bias="0.353"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.503" />
@@ -99,7 +281,7 @@
                         android:textAlignment="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.162"
+                        app:layout_constraintHorizontal_bias="0.052"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.711" />
@@ -112,10 +294,10 @@
                         android:textAlignment="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.829"
+                        app:layout_constraintHorizontal_bias="0.653"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.717" />
+                        app:layout_constraintVertical_bias="0.711" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
