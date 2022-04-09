@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:rowCount="1"
+        android:rowCount="2"
         android:columnCount="3"
         >
 
@@ -18,10 +18,10 @@
             android:text="Course"
             android:layout_gravity="left | center_vertical"
             android:layout_columnWeight="1"
+            style="@style/CreateReview_Text"
             />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/menu"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,16 +29,13 @@
             android:layout_columnWeight="1"
             android:layout_columnSpan="2"
             app:startIconDrawable="@drawable/folder"
-            app:startIconTint="#6200EE"
-            app:boxStrokeColor="#6200EE"
+            app:startIconTint="@color/md_theme_light_primary"
+            app:boxStrokeColor="@color/md_theme_light_primary"
             android:hint="Courses">
 
 
-
-
-
             <AutoCompleteTextView
-
+                android:id="@+id/create_review_course_dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
@@ -46,6 +43,37 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Professor"
+            android:layout_gravity="left | center_vertical"
+            android:layout_columnWeight="1"
+            style="@style/CreateReview_Text"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill"
+            android:layout_columnWeight="1"
+            android:layout_columnSpan="2"
+            app:startIconDrawable="@drawable/folder"
+            app:startIconTint="@color/md_theme_light_primary"
+            app:boxStrokeColor="@color/md_theme_light_primary"
+            android:hint="Professors">
+
+
+            <AutoCompleteTextView
+                android:id="@+id/create_review_professor_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
     </GridLayout>

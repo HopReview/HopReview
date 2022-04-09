@@ -68,6 +68,7 @@ public class Professor extends Profile {
     public void addCourse(CourseItem crs) {
         courses.add(crs);
         Map<String, Integer> holderRatings = getEmptyMap();
+        if (mixedRatings == null) mixedRatings = new HashMap<>();
         mixedRatings.put(crs, holderRatings);
     }
 
