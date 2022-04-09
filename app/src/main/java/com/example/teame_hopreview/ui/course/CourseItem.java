@@ -13,7 +13,7 @@ public class CourseItem extends Profile {
     private String courseName;
     private String courseNumber;
     private String courseDesignation;
-    private ArrayList<Professor> professors;
+    private String professor;
     private ArrayList<ReviewItem> reviews;
     private int funRating;
     private int workloadRating;
@@ -29,14 +29,14 @@ public class CourseItem extends Profile {
      * @param name : indicating the Course's name
      * @param courseNum : indicasting the Course's number
      * @param courseDesignation : indicating the course designation of the Course
-     * @param professors : indicating the professors teaching the Course
+     * @param professor : indicating the professors teaching the Course
      */
     public CourseItem(String name, String courseNum, String courseDesignation,
-                      ArrayList<Professor> professors, int funRate, int workRate, int avgRate) {
+                      String professor, int funRate, int workRate, int avgRate) {
         this.courseName = name;
         this.courseNumber = courseNum;
         this.courseDesignation = courseDesignation;
-        this.professors = professors;
+        this.professor = professor;
         this.funRating = funRate;
         this.workloadRating = workRate;
         this.averageRating = avgRate;
@@ -83,7 +83,7 @@ public class CourseItem extends Profile {
      * Method for getting the professors teaching the Course
      * @return ArrayList representing the professors teaching the Course
      */
-    public ArrayList<Professor> getProfessors() { return this.professors; }
+    public String getProfessors() { return this.professor; }
 
     /*
     //    /**

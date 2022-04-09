@@ -65,7 +65,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         if (prof != null) {
             holder.getProfessorNames().setText(prof.getProfessorName().toString());
         }
-        holder.getReviewNum().setText(currCourse.getReviewCount() + " reviews");
+        holder.getReviewNum().setText(currCourse.getReviews().size() + " reviews");
 
         holder.itemView.setTag(courseData.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);
