@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.teame_hopreview.Professor;
+import com.example.teame_hopreview.ui.professors.Professor;
 import com.example.teame_hopreview.R;
 
 import java.util.ArrayList;
