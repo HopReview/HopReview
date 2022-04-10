@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     private Fragment home;
     private Fragment professors;
     private Fragment profile;
-    private Fragment createReview;
+    private CreateReviewFragment createReview;
     public BottomNavigationView bottomNavigationView;
     private FirebaseDatabase mydbase;
     private DatabaseReference dbRef;
@@ -134,13 +134,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             transaction.addToBackStack(null);
             return true;
         }
-        // TODO: REMOVE REVIEW TAB FROM NAVBAR
-        else if (id == R.id.navigation_reviews) {
-            transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, this.createReview).commit();
-            transaction.addToBackStack("createReviewStack");
-            return true;
-        }
         return false;
     }
 
@@ -151,7 +144,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         transaction.addToBackStack("createDetailStack");
     }
 
-    public void openMyReview() {
+    public void openMyReview(String courseName) {
+        createReview.reset();
+        createReview.setDefaultCourseName(courseName);
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, this.createReview).commit();
         transaction.addToBackStack("createReviewStack");
