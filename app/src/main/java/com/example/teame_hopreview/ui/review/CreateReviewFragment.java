@@ -45,9 +45,8 @@ public class CreateReviewFragment extends Fragment {
     }
 
     private void createFakeData() {
-        ArrayList<ReviewItem> empty = new ArrayList<>();
-        CourseItem calc1 = new CourseItem(0, "Q", "Calculus I", "AS.", 0, "R Brown", 0, empty);
-        CourseItem calc2 = new CourseItem(0, "Q", "Calculus II", "AS.", 0, "J Biden", 0, empty);
+        CourseItem calc1 = new CourseItem(0, "Q", "Calculus I", "AS.", 0, "R Brown", 0);
+        CourseItem calc2 = new CourseItem(0, "Q", "Calculus II", "AS.", 0, "J Biden", 0);
 
         /*Professor prof1 = new Professor("Richard Brown", "Math", new ArrayList<CourseItem>());
         Professor prof2 = new Professor("Emily Riehl", "Math", new ArrayList<CourseItem>());
