@@ -3,6 +3,7 @@ package com.example.teame_hopreview.ui.course;
 import com.example.teame_hopreview.ui.professors.Professor;
 import com.example.teame_hopreview.Profile;
 import com.example.teame_hopreview.ReviewItem;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,15 +25,9 @@ public class CourseItem extends Profile {
      */
     public CourseItem() { }
 
-    /**
-     * Constructor to create a Course object
-     * @param name : indicating the Course's name
-     * @param courseNum : indicasting the Course's number
-     * @param courseDesignation : indicating the course designation of the Course
-     * @param professor : indicating the professors teaching the Course
-     */
-    public CourseItem(String name, String courseNum, String courseDesignation,
-                      String professor, int funRate, int workRate, int avgRate) {
+
+    public CourseItem(int avgRate, String courseDesignation, String name,
+                      String courseNum, int funRate, String professor, int workRate) {
         this.courseName = name;
         this.courseNumber = courseNum;
         this.courseDesignation = courseDesignation;
@@ -42,6 +37,36 @@ public class CourseItem extends Profile {
         this.averageRating = avgRate;
 
     }
+
+    public void setCourseName(String name) {
+        this.courseName = name;
+    }
+
+    public void setCourseNumber(String num) {
+        this.courseNumber = num;
+    }
+
+    public void setCourseDesignation(String des) {
+        this.courseDesignation = des;
+    }
+
+    public void setProfessor(String prof) {
+        this.professor = prof;
+    }
+
+    public void setFunRating(int fun) {
+        this.funRating = fun;
+    }
+
+    public void setWorkloadRating(int work) {
+        this.workloadRating = work;
+    }
+
+    public void setAverageRating(int avg) {
+        this.averageRating = avg;
+    }
+
+
 
 
     /**
@@ -185,6 +210,14 @@ public class CourseItem extends Profile {
      */
     public int getAverageRating() {
         return averageRating;
+    }
+
+    public int getFunRating() {
+        return funRating;
+    }
+
+    public int getWorkloadRating() {
+        return workloadRating;
     }
 
     /*

@@ -65,7 +65,7 @@ public class CourseDetailFragment extends Fragment {
 
         myAct = (MainActivity) getActivity();
         myList = (RecyclerView) myView.findViewById(R.id.myList);
-        myCard = (CardView) myView.findViewById(R.id.course_card);
+        myCard = (CardView) myView.findViewById(R.id.review_card);
         myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton);
         myReviews = new ArrayList<ReviewItem>();
 
