@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -73,7 +74,70 @@ public class CourseDetailFragment extends Fragment {
         designation.setText(courseItem.getDesignation());
         courseName.setText(courseItem.getName());
         courseNum.setText(courseItem.getCourseNumber());
-        professor.setText(courseItem.getProfessors());
+        professor.setText("Taught by: " + courseItem.getProfessors());
+
+        ImageView[] avgStars = new ImageView[5];
+        ImageView[] workStars = new ImageView[5];
+        ImageView[] funStars = new ImageView[5];
+        ImageView[] gradeStars = new ImageView[5];
+        ImageView[] knowStars = new ImageView[5];
+
+        avgStars[0] = (ImageView) myView.findViewById(R.id.det_avg_1);
+        avgStars[1] = (ImageView) myView.findViewById(R.id.det_avg_2);
+        avgStars[2] = (ImageView) myView.findViewById(R.id.det_avg_3);
+        avgStars[3] = (ImageView) myView.findViewById(R.id.det_avg_4);
+        avgStars[4] = (ImageView) myView.findViewById(R.id.det_avg_5);
+
+        workStars[0] = (ImageView) myView.findViewById(R.id.det_work_1);
+        workStars[1] = (ImageView) myView.findViewById(R.id.det_work_2);
+        workStars[2] = (ImageView) myView.findViewById(R.id.det_work_3);
+        workStars[3] = (ImageView) myView.findViewById(R.id.det_work_4);
+        workStars[4] = (ImageView) myView.findViewById(R.id.det_work_5);
+
+        funStars[0] = (ImageView) myView.findViewById(R.id.det_fun_1);
+        funStars[1] = (ImageView) myView.findViewById(R.id.det_fun_2);
+        funStars[2] = (ImageView) myView.findViewById(R.id.det_fun_3);
+        funStars[3] = (ImageView) myView.findViewById(R.id.det_fun_4);
+        funStars[4] = (ImageView) myView.findViewById(R.id.det_fun_5);
+
+        gradeStars[0] = (ImageView) myView.findViewById(R.id.det_gr_1);
+        gradeStars[1] = (ImageView) myView.findViewById(R.id.det_gr_2);
+        gradeStars[2] = (ImageView) myView.findViewById(R.id.det_gr_3);
+        gradeStars[3] = (ImageView) myView.findViewById(R.id.det_gr_4);
+        gradeStars[4] = (ImageView) myView.findViewById(R.id.det_gr_5);
+
+        knowStars[0] = (ImageView) myView.findViewById(R.id.det_know_1);
+        knowStars[1] = (ImageView) myView.findViewById(R.id.det_know_2);
+        knowStars[2] = (ImageView) myView.findViewById(R.id.det_know_3);
+        knowStars[3] = (ImageView) myView.findViewById(R.id.det_know_4);
+        knowStars[4] = (ImageView) myView.findViewById(R.id.det_know_5);
+
+        for (int i = 0; i < 5; i++) {
+            if (i < courseItem.getAverageRating()) {
+                avgStars[i].setVisibility(View.VISIBLE);
+                // just for now, until we implement professors
+                gradeStars[i].setVisibility(View.VISIBLE);
+                knowStars[i].setVisibility(View.VISIBLE);
+            } else {
+                avgStars[i].setVisibility(View.INVISIBLE);
+                // just for now, until we implement professors
+                gradeStars[i].setVisibility(View.INVISIBLE);
+                knowStars[i].setVisibility(View.INVISIBLE);
+            }
+
+            if (i < courseItem.getWorkloadRating()) {
+                workStars[i].setVisibility(View.VISIBLE);
+            } else {
+                workStars[i].setVisibility(View.INVISIBLE);
+            }
+
+            if (i < courseItem.getFunRating()) {
+                workStars[i].setVisibility(View.VISIBLE);
+            } else {
+                workStars[i].setVisibility(View.INVISIBLE);
+            }
+        }
+
 
 
 

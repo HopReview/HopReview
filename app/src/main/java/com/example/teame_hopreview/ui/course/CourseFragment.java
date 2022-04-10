@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.teame_hopreview.ReviewItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -78,7 +79,7 @@ public class CourseFragment extends Fragment {
 
                 myCourses.clear();
                 Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
-
+                ArrayList<ReviewItem> reviewsHolder = new ArrayList<ReviewItem>();
 
                 for (DataSnapshot crs : courses) {
 
