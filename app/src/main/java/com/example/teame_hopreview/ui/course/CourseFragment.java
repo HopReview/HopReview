@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,6 +55,7 @@ public class CourseFragment extends Fragment {
 
 
         context = getActivity().getApplicationContext();
+        dbref = FirebaseDatabase.getInstance().getReference();
 
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");
@@ -68,7 +70,6 @@ public class CourseFragment extends Fragment {
         myList.setAdapter(ca);
         myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
-        dbref = FirebaseDatabase.getInstance().getReference();
 
         // TO DO: Firebase
         dbref.addValueEventListener(new ValueEventListener() {
@@ -84,7 +85,42 @@ public class CourseFragment extends Fragment {
 
 
                 for (DataSnapshot crs : courses) {
-                    myCourses.add(crs.getValue(CourseItem.class));
+
+                    System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
+                    System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
+                    System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
+                    System.out.println("CourseNum: " + crs.getValue(CourseItem.class).getCourseNumber());
+                    System.out.println("CourseDes: " + crs.getValue(CourseItem.class).getDesignation());
+                    Iterable<DataSnapshot> list = crs.getChildren();
+                    String name = " ";
+                    String num = " ";
+                    String prof = " ";
+                    String designation = " ";
+                    int avgRate = 0;
+                    int funRate = 0;
+                    int workRate = 0;
+
+                    int counter = 1;
+                    for (DataSnapshot item : list) {
+                        if (counter == 1) {
+                            avgRate = item.getValue(Integer.class);
+                        } else if (counter == 2) {
+                            designation = item.getValue(String.class);
+                        } else if (counter == 3) {
+                            name = item.getValue(String.class);
+                        } else if (counter == 4) {
+                            num = item.getValue(String.class);
+                        } else if (counter == 5) {
+                            funRate = item.getValue(Integer.class);
+                        } else if (counter == 6) {
+                            prof = item.getValue(String.class);
+                        } else if (counter == 7) {
+                            workRate = item.getValue(Integer.class);
+                        }
+                        counter++;
+                    }
+                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                    myCourses.add(courseItem);
                 }
 
                 ca.notifyDataSetChanged();
