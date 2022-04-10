@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.example.teame_hopreview.MainActivity;
-import com.example.teame_hopreview.Professor;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ui.course.CourseItem;
 
@@ -33,7 +32,7 @@ public class CreateReviewFragment extends Fragment {
 
     private AutoCompleteTextView courseDropdown;
 
-    private ArrayAdapter<ProfessorWrapper> professorAdapter;
+    private ArrayAdapter<String> professorAdapter;
 
     private AutoCompleteTextView professorDropdown;
 
@@ -44,10 +43,10 @@ public class CreateReviewFragment extends Fragment {
     }
 
     private void createFakeData() {
-        CourseItem calc1 = new CourseItem("Calculus I", "AS.", "Q", new ArrayList<Professor>());
-        CourseItem calc2 = new CourseItem("Calculus II", "AS.", "Q", new ArrayList<Professor>());
+        CourseItem calc1 = new CourseItem(0, "Q", "Calculus I", "AS.", 0, "R Brown", 0);
+        CourseItem calc2 = new CourseItem(0, "Q", "Calculus II", "AS.", 0, "J Biden", 0);
 
-        Professor prof1 = new Professor("Richard Brown", "Math", new ArrayList<CourseItem>());
+        /*Professor prof1 = new Professor("Richard Brown", "Math", new ArrayList<CourseItem>());
         Professor prof2 = new Professor("Emily Riehl", "Math", new ArrayList<CourseItem>());
         Professor prof3 = new Professor("Joe Biden", "Math", new ArrayList<CourseItem>());
 
@@ -64,13 +63,13 @@ public class CreateReviewFragment extends Fragment {
         prof2.addCourse(calc1);
         prof2.addCourse(calc2);
 
-        prof3.addCourse(calc2);
+        prof3.addCourse(calc2);*/
 
         listManager.addCourse(calc1);
         listManager.addCourse(calc2);
-        listManager.addProfessor(prof1);
+        /*listManager.addProfessor(prof1);
         listManager.addProfessor(prof2);
-        listManager.addProfessor(prof3);
+        listManager.addProfessor(prof3);*/
     }
 
     @Override
@@ -118,26 +117,28 @@ public class CreateReviewFragment extends Fragment {
         professorDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Professor professor = listManager.getProfessors().get(position);
-                fillCourseDropdown(professor);
+                /*String professor = listManager.getProfessors().get(position);
+                fillCourseDropdown(professor);*/
             }
         });
 
-        professorAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getProfessorWrappers());
+        professorAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getProfessors());
 
         professorDropdown.setAdapter(professorAdapter);
     }
 
     private void fillProfessorDropdown(CourseItem selectedCourse) {
         //Aim: based on current selected course, fill the professor dropdown
-        listManager.setProfessors(selectedCourse.getProfessors());
+        ArrayList<String> professors = new ArrayList<>();
+        professors.add(selectedCourse.getProfessors());
+        listManager.setProfessors(professors);
         professorAdapter.notifyDataSetChanged();
     }
 
-    private void fillCourseDropdown(Professor selectedProfessor) {
+    private void fillCourseDropdown(String selectedProfessor) {
         //Aim: based on current selected professor, fill the course dropdown
-        listManager.setCourses(selectedProfessor.getCourses());
-        courseAdapter.notifyDataSetChanged();
+        //listManager.setCourses(selectedProfessor.getCourses());
+        //courseAdapter.notifyDataSetChanged();
     }
 
     private void setupReviews(View view) {

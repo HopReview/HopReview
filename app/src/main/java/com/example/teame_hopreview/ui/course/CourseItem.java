@@ -1,11 +1,9 @@
 package com.example.teame_hopreview.ui.course;
 
-import com.example.teame_hopreview.Professor;
 import com.example.teame_hopreview.Profile;
 import com.example.teame_hopreview.ReviewItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,36 +11,59 @@ public class CourseItem extends Profile {
     private String courseName;
     private String courseNumber;
     private String courseDesignation;
-    private ArrayList<Professor> professors;
+    private String professor;
     private ArrayList<ReviewItem> reviews;
-    private Map<Professor, Map<String, Integer>> mixedRatings;
+    private int funRating;
+    private int workloadRating;
     private int averageRating;
-    private int reviewCount;
 
     /**
      * Constructor to create a Course object
      */
     public CourseItem() { }
 
-    /**
-     * Constructor to create a Course object
-     * @param name : indicating the Course's name
-     * @param courseNum : indicasting the Course's number
-     * @param courseDesignation : indicating the course designation of the Course
-     * @param professors : indicating the professors teaching the Course
-     */
-    public CourseItem(String name, String courseNum, String courseDesignation,
-                      ArrayList<Professor> professors) {
+
+    public CourseItem(int avgRate, String courseDesignation, String name,
+                      String courseNum, int funRate, String professor, int workRate) {
         this.courseName = name;
         this.courseNumber = courseNum;
         this.courseDesignation = courseDesignation;
-        this.professors = professors;
+        this.professor = professor;
+        this.funRating = funRate;
+        this.workloadRating = workRate;
+        this.averageRating = avgRate;
 
-        Map<String, Integer> emptyRatings = getEmptyMap();
-        for (Professor prof : Collections.unmodifiableList(professors)) {
-            mixedRatings.put(prof, emptyRatings);
-        }
     }
+
+    public void setCourseName(String name) {
+        this.courseName = name;
+    }
+
+    public void setCourseNumber(String num) {
+        this.courseNumber = num;
+    }
+
+    public void setCourseDesignation(String des) {
+        this.courseDesignation = des;
+    }
+
+    public void setProfessor(String prof) {
+        this.professor = prof;
+    }
+
+    public void setFunRating(int fun) {
+        this.funRating = fun;
+    }
+
+    public void setWorkloadRating(int work) {
+        this.workloadRating = work;
+    }
+
+    public void setAverageRating(int avg) {
+        this.averageRating = avg;
+    }
+
+
 
 
     /**
@@ -73,32 +94,25 @@ public class CourseItem extends Profile {
 
 
     /**
-     * Method for getting the amount of reviews for the course
-     * @return int representing the amount of reviews
-     */
-    public int getReviewCount() { return reviewCount; }
-
-
-    /**
      * Method for adding a review for the course
      * @param newReview - review to be added
      */
     public void addReview(ReviewItem newReview) {
         reviews.add(newReview);
-        reviewCount++;
     }
 
     /**
      * Method for getting the professors teaching the Course
      * @return ArrayList representing the professors teaching the Course
      */
-    public ArrayList<Professor> getProfessors() { return this.professors; }
+    public String getProfessors() { return this.professor; }
 
+    /*
     //    /**
     //     * Method to add a specific professor to a Course's professor list
     //     * Accordingly puts empty ratings for the professor
     //     * @param prof the Professor to add
-    //     */
+    //
     //    public void addProfessor(Professor prof) {
     //        professors.add(prof);
     //        Map<String, Integer> holderRatings = getEmptyMap();
@@ -109,11 +123,12 @@ public class CourseItem extends Profile {
     //     * Method to remove a specific professor from a Course's professor list
     //     * Accordingly removes ratings for the professor
     //     * @param prof the Professor to remove
-    //     */
+    //
     //    public void removeProfessor(Professor prof) {
     //        professors.remove(prof);
     //        mixedRatings.remove(prof);
     //    }
+
 
     /**
      * Method for adding ratings from a user for a specific professor teaching the course
@@ -122,6 +137,7 @@ public class CourseItem extends Profile {
      * @param ratings
      * @param prof
      */
+    /*
     public void addRatingsForProfessor(Map<String, Integer> ratings, Professor prof) {
         Map<String, Integer> currentRatings = mixedRatings.get(prof);
 
@@ -179,10 +195,10 @@ public class CourseItem extends Profile {
      * Method for getting the ratings for the Course for a specific professor
      * @param prof : the specific professor for which ratings are inquired
      * @return Map that represents the ratings of the Professor for that course
-     */
+     *//*
     public Map<String, Integer> getRatingsForCourse(Professor prof) {
         return mixedRatings.get(prof);
-    }
+    }*/
 
 
     /**
@@ -193,14 +209,22 @@ public class CourseItem extends Profile {
         return averageRating;
     }
 
+    public int getFunRating() {
+        return funRating;
+    }
 
+    public int getWorkloadRating() {
+        return workloadRating;
+    }
+
+    /*
     /**
      * Method for calculating an average rating for the professor
      * based on all the ratings for the courses they teach
      *
      * the ratings are assumed to be existing, as this is a private method call
      * and previous methods necessarily check whether they exist or not
-     */
+     *//*
     private void updateAverageRating() {
         Map<String, Integer> currRating;
         int ratingSum = 0;
@@ -212,6 +236,10 @@ public class CourseItem extends Profile {
         }
 
         averageRating = ratingSum / totRates;
+    }*/
+
+    private void updateAverageRating(int newAvg) {
+        averageRating = newAvg;
     }
 
     /**
