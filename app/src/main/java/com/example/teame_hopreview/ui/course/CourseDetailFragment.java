@@ -1,12 +1,12 @@
 package com.example.teame_hopreview.ui.course;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -46,8 +46,9 @@ public class CourseDetailFragment extends Fragment {
     FirebaseDatabase mdbase;
     DatabaseReference dbref;
 
-    public CourseDetailFragment(String courseName) {
-        this.courseName = courseName;
+    public CourseDetailFragment(CourseItem course) {
+        this.courseItem = course;
+        this.courseName = course.getName();
     }
 
     @Override
@@ -64,6 +65,18 @@ public class CourseDetailFragment extends Fragment {
         View myView = inflater.inflate(R.layout.course_detail_frag, container, false);
 
 
+        TextView designation = (TextView) myView.findViewById(R.id.course_designation);
+        TextView courseName = (TextView) myView.findViewById(R.id.course_name);
+        TextView courseNum = (TextView) myView.findViewById(R.id.course_num);
+        TextView professor = (TextView) myView.findViewById(R.id.teaching_professor);
+
+        designation.setText(courseItem.getDesignation());
+        courseName.setText(courseItem.getName());
+        courseNum.setText(courseItem.getCourseNumber());
+        professor.setText(courseItem.getProfessors());
+
+
+
         context = getActivity().getApplicationContext();
 
         myAct = (MainActivity) getActivity();
@@ -74,7 +87,10 @@ public class CourseDetailFragment extends Fragment {
 
         ra = new ReviewAdapter(context, myReviews);
 
-        myList.setAdapter(ra);
+        if (ra.getItemCount() != 0) {
+            myList.setAdapter(ra);
+        }
+
 
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,18 +98,23 @@ public class CourseDetailFragment extends Fragment {
 
                 long count = snapshot.getChildrenCount();
                 Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Client count: " + snapshot.child("clients").getChildrenCount());
+                Log.d(TAG, "Courses count: " + snapshot.child("courses_data").getChildrenCount());
 
                 myReviews.clear();
-                Iterable<DataSnapshot> courses = snapshot.child("courses").getChildren();
+                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
 
                 for (DataSnapshot crs : courses) {
-                    if (crs.getValue(CourseItem.class).getName().toString().equals(courseName)) {
-                        courseItem = crs.getValue(CourseItem.class);
+                    Iterable<DataSnapshot> list = crs.getChildren();
+                    int counter = 1;
+                    for (DataSnapshot item : list) {
+                        if (counter == 3 && item.getValue(String.class).equals(courseName)) {
+                            courseItem = crs.getValue(CourseItem.class);
+                        }
+                        counter++;
                     }
                 }
 
-                if (courseItem != null) {
+                if (courseItem != null && courseItem.getReviews() != null && !courseItem.getReviews().isEmpty()) {
                     myReviews = courseItem.getReviews();
                 }
 
