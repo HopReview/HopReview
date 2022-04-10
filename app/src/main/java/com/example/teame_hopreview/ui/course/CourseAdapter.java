@@ -30,7 +30,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     private final View.OnClickListener mOnClickListener = (view) -> {
         CourseItem course = (CourseItem) view.getTag();
-        mainActivity.openCourseDetailFragment(course.getName());
+        mainActivity.openCourseDetailFragment(course);
     };
 
     public CourseAdapter(MainActivity mainActivity, Context context, List<CourseItem> items) {
@@ -128,10 +128,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             professorNames = (TextView) courseView.findViewById(R.id.professor_names);
             reviewNum = (TextView) courseView.findViewById(R.id.review_count);
 
-            avgStar1 = (ImageView) courseView.findViewById(R.id.work_star1);
-            avgStar2 = (ImageView) courseView.findViewById(R.id.work_star3);
-            avgStar3 = (ImageView) courseView.findViewById(R.id.work_star4);
-            avgStar4 = (ImageView) courseView.findViewById(R.id.work_star5);
+            avgStar1 = (ImageView) courseView.findViewById(R.id.avg_star1);
+            avgStar2 = (ImageView) courseView.findViewById(R.id.avg_star2);
+            avgStar3 = (ImageView) courseView.findViewById(R.id.avg_star3);
+            avgStar4 = (ImageView) courseView.findViewById(R.id.avg_star4);
             avgStar5 = (ImageView) courseView.findViewById(R.id.avg_star5);
 
             workStar1 = (ImageView) courseView.findViewById(R.id.work_star1);

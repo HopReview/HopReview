@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         return false;
     }
 
-    public void openCourseDetailFragment(String courseName) {
+    public void openCourseDetailFragment(CourseItem courseName) {
         transaction = getSupportFragmentManager().beginTransaction();
         CourseDetailFragment courseDetail = new CourseDetailFragment(courseName);
         transaction.replace(R.id.fragment_container, courseDetail).commit();
