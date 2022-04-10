@@ -2,6 +2,7 @@ package com.example.teame_hopreview.ui.course;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
+import com.example.teame_hopreview.ReviewItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         CourseItem currCourse = courseData.get(position);
         holder.getDesignation().setText(currCourse.getDesignation());
         System.out.println(currCourse.getName());
-        holder.getNameNum().setText(currCourse.getName() + " " + currCourse.getCourseNumber());
+        holder.getNameNum().setText(currCourse.getName() + "\n" + currCourse.getCourseNumber());
 
         String prof = currCourse.getProfessors();
 
@@ -69,21 +71,34 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         ImageView[] workStars = holder.getWorkImages();
         ImageView[] funStars = holder.getFunImages();
 
-        for (int i = 0; i < currCourse.getAverageRating(); i++) {
-            avgStars[i].setVisibility(View.VISIBLE);
-            avgStars[i].setColorFilter(R.color.md_theme_light_primary);
+        for (int i = 0; i < 5; i++) {
+            if (i < currCourse.getAverageRating()) {
+                avgStars[i].setVisibility(View.VISIBLE);
+                avgStars[i].setColorFilter(R.color.md_theme_light_primary);
+            } else {
+                avgStars[i].setVisibility(View.INVISIBLE);
+            }
+            if (i < currCourse.getFunRating()) {
+                funStars[i].setVisibility(View.VISIBLE);
+                funStars[i].setColorFilter(R.color.md_theme_light_primary);
+            } else {
+                funStars[i].setVisibility(View.INVISIBLE);
+            }
+            if (i < currCourse.getWorkloadRating()) {
+                workStars[i].setVisibility(View.VISIBLE);
+                workStars[i].setColorFilter(R.color.md_theme_light_primary);
+            } else {
+                workStars[i].setVisibility(View.INVISIBLE);
+            }
         }
 
-        for (int i = 0; i < currCourse.getFunRating(); i++) {
-            funStars[i].setVisibility(View.VISIBLE);
-            avgStars[i].setColorFilter(R.color.md_theme_light_primary);
-        }
+        ArrayList<ReviewItem> reviews = currCourse.getReviews();
 
-        for (int i = 0; i < currCourse.getWorkloadRating(); i++) {
-            workStars[i].setVisibility(View.VISIBLE);
-            avgStars[i].setColorFilter(R.color.md_theme_light_primary);
+        if (reviews == null) {
+            holder.getReviewNum().setText("0 reviews");
+        } else {
+            holder.getReviewNum().setText(reviews.size() + " reviews");
         }
-
 
         holder.itemView.setTag(courseData.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);
@@ -113,10 +128,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             professorNames = (TextView) courseView.findViewById(R.id.professor_names);
             reviewNum = (TextView) courseView.findViewById(R.id.review_count);
 
-            avgStar1 = (ImageView) courseView.findViewById(R.id.avg_star1);
-            avgStar2 = (ImageView) courseView.findViewById(R.id.avg_star2);
-            avgStar3 = (ImageView) courseView.findViewById(R.id.avg_star3);
-            avgStar4 = (ImageView) courseView.findViewById(R.id.avg_star4);
+            avgStar1 = (ImageView) courseView.findViewById(R.id.work_star1);
+            avgStar2 = (ImageView) courseView.findViewById(R.id.work_star3);
+            avgStar3 = (ImageView) courseView.findViewById(R.id.work_star4);
+            avgStar4 = (ImageView) courseView.findViewById(R.id.work_star5);
             avgStar5 = (ImageView) courseView.findViewById(R.id.avg_star5);
 
             workStar1 = (ImageView) courseView.findViewById(R.id.work_star1);

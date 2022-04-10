@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.18177083333333333" />
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2265" />
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/layout/activity_main.xml" value="0.152" />
@@ -11,35 +10,23 @@
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/menu/bottom_nav_menu.xml" value="0.264" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/course_detail_frag.xml" value="0.4" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/create_review_course_item.xml" value="0.536" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/create_review_ratings_view_layout.xml" value="0.6" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/frag_course.xml" value="0.176" />
-        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/frag_course_item.xml" value="0.16" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/frag_course_item.xml" value="0.27610008628127697" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/frag_professor_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/frag_review_item.xml" value="0.264" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/fragment_course_detail.xml" value="0.1" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/fragment_create_review.xml" value="0.176" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/fragment_professors.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/fragment_review.xml" value="0.264" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/item.xml" value="0.152" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/item_list.xml" value="0.264" />
         <entry key="..\:/Users/shaod/Documents/School/SP22/UIMA/HopReview/app/src/main/res/layout/activity_create_account.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/shaod/Documents/School/SP22/UIMA/HopReview/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/shaod/Documents/School/SP22/UIMA/HopReview/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/shaod/Documents/School/SP22/UIMA/HopReview/app/src/main/res/layout/fragment_home.xml" value="0.18541666666666667" />
-<<<<<<< HEAD
-        <entry key="..\:/Users/shaod/Documents/School/SP22/UIMA/HopReview/app/src/main/res/layout/fragment_search.xml" value="0.23125" />
-        <entry key="..\:/Users/shaod/Documents/School/SP22/UIMA/HopReview/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3026041666666667" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/create_review_dropdown.xml" value="0.30512820512820515" />
-        <entry key="app/src/main/res/layout/create_review_ratings_view_layout.xml" value="0.15520833333333334" />
-        <entry key="app/src/main/res/layout/frag_course.xml" value="0.28229166666666666" />
-        <entry key="app/src/main/res/layout/frag_course_item.xml" value="0.49206644694010426" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28229166666666666" />
-        <entry key="app/src/main/res/layout/fragment_review.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/review_dropdown.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/review_dropdown_item.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.8407766990291262" />
-=======
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2682520548502605" />
->>>>>>> main
       </map>
     </option>
   </component>
