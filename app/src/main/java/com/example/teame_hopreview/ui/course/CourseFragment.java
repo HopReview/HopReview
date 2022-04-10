@@ -51,7 +51,6 @@ public class CourseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         View myView = inflater.inflate(R.layout.frag_course, container, false);
 
-
         context = getActivity().getApplicationContext();
         dbref = FirebaseDatabase.getInstance().getReference();
 
@@ -69,8 +68,6 @@ public class CourseFragment extends Fragment {
         myList.setAdapter(ca);
         myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
-
-        // TO DO: Firebase
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

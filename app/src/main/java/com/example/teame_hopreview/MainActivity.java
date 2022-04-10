@@ -133,7 +133,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             transaction.replace(R.id.fragment_container, this.profile).commit();
             transaction.addToBackStack(null);
             return true;
-        } else if (id == R.id.navigation_reviews) {
+        }
+        // TODO: REMOVE REVIEW TAB FROM NAVBAR
+        else if (id == R.id.navigation_reviews) {
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, this.createReview).commit();
             transaction.addToBackStack("createReviewStack");
@@ -147,6 +149,12 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         CourseDetailFragment courseDetail = new CourseDetailFragment(courseName);
         transaction.replace(R.id.fragment_container, courseDetail).commit();
         transaction.addToBackStack("createDetailStack");
+    }
+
+    public void openMyReview() {
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, this.createReview).commit();
+        transaction.addToBackStack("createReviewStack");
     }
 
 }

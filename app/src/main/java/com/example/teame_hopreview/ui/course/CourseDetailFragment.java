@@ -29,11 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CourseDetailFragment extends Fragment {
-
-
     private static final String TAG = "dbref: ";
-
-
 
     private RecyclerView myList;
     private CardView myCard;
@@ -148,10 +144,8 @@ public class CourseDetailFragment extends Fragment {
 
         ra = new ReviewAdapter(myAct, context, myReviews);
 
-//        if (ra != null) {
         myList.setAdapter(ra);
         myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
-//        }
 
 
         dbref.addValueEventListener(new ValueEventListener() {
@@ -185,7 +179,8 @@ public class CourseDetailFragment extends Fragment {
             public void onClick(View view) {
                 //Intent intent = new Intent(myAct, CreateReview.class);
                 //intent.putExtra("course_name", courseName);
-
+                //CourseItem course = (CourseItem) view.getTag();
+                myAct.openMyReview();
             }
         });
 
