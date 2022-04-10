@@ -44,6 +44,7 @@
     <string name="fun_rating">Fun Rating</string>
     <string name="logout">LOGOUT</string>
     <string name="search">search</string>
+    <string name="prompt_select_course">Select a course</string>
     <string name="reviews_list">Reviews</string>
 
 </resources>

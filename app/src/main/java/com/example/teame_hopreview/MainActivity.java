@@ -1,10 +1,10 @@
 package com.example.teame_hopreview;
 
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +14,7 @@ import com.example.teame_hopreview.ui.course.CourseItem;
 import com.example.teame_hopreview.ui.home.HomeFragment;
 import com.example.teame_hopreview.ui.professors.ProfessorFragment;
 import com.example.teame_hopreview.ui.profile.ProfileFragment;
+import com.example.teame_hopreview.ui.review.CreateReviewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     private Fragment home;
     private Fragment professors;
     private Fragment profile;
+    private Fragment createReview;
     public BottomNavigationView bottomNavigationView;
     private FirebaseDatabase mydbase;
     private DatabaseReference dbRef;
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         home = new HomeFragment();
         professors = new ProfessorFragment();
         profile = new ProfileFragment();
+        createReview = new CreateReviewFragment();
 
         mydbase = FirebaseDatabase.getInstance();
         dbRef = mydbase.getReference();
@@ -128,6 +131,11 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, this.profile).commit();
             transaction.addToBackStack(null);
+            return true;
+        } else if (id == R.id.navigation_reviews) {
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, this.createReview).commit();
+            transaction.addToBackStack("createReviewStack");
             return true;
         }
         return false;
