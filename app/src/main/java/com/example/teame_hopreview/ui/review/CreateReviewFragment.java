@@ -375,17 +375,42 @@ public class CreateReviewFragment extends Fragment {
                             int c2 = 1;
                             for (DataSnapshot r : rr) {
                                 if (c2 == 1) {
-                                    revAvgRate = r.getValue(Integer.class);
+                                    try {
+                                        revAvgRate = r.getValue(Integer.class);
+                                    } catch (Exception ex) {
+
+                                    }
+
                                 } else if (c2 == 2) {
-                                    date = r.getValue(String.class);
+                                    try {
+                                        date = r.getValue(String.class);
+                                    } catch (Exception ex) {
+
+                                    }
                                 } else if (c2 == 3) {
-                                    firstRating = r.getValue(Integer.class);
+                                    try {
+                                        firstRating = r.getValue(Integer.class);
+                                    } catch (Exception ex) {
+
+                                    }
                                 } else if (c2 == 4) {
-                                    reviewerContent = r.getValue(String.class);
+                                    try {
+                                        reviewerContent = r.getValue(String.class);
+                                    } catch (Exception ex) {
+
+                                    }
                                 } else if (c2 == 5) {
-                                    reviewerName = r.getValue(String.class);
+                                    try {
+                                        reviewerName = r.getValue(String.class);
+                                    } catch (Exception ex) {
+
+                                    }
                                 } else if (c2 == 6) {
-                                    secondRating = r.getValue(Integer.class);
+                                    try {
+                                        secondRating = r.getValue(Integer.class);
+                                    } catch (Exception ex) {
+
+                                    }
                                 }
                                 c2++;
                             }
