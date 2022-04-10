@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.teame_hopreview.ui.course.CourseDetailFragment;
 import com.example.teame_hopreview.ui.course.CourseFragment;
 import com.example.teame_hopreview.ui.course.CourseItem;
 import com.example.teame_hopreview.ui.home.HomeFragment;
@@ -139,6 +140,13 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             return true;
         }
         return false;
+    }
+
+    public void openCourseDetailFragment(String courseName) {
+        transaction = getSupportFragmentManager().beginTransaction();
+        CourseDetailFragment courseDetail = new CourseDetailFragment(courseName);
+        transaction.replace(R.id.fragment_container, courseDetail).commit();
+        transaction.addToBackStack("createDetailStack");
     }
 
 }

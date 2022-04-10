@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 
 import java.util.ArrayList;
@@ -22,21 +23,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private List<CourseItem> courseData;
     private LayoutInflater inflater;
     private AdapterView.OnItemClickListener clickListener;
+    private MainActivity mainActivity;
     Context context;
 
     private final View.OnClickListener mOnClickListener = (view) -> {
         CourseItem course = (CourseItem) view.getTag();
-
-        context = view.getContext();
-        Intent intent = new Intent(context, CourseDetailFragment.class);
-        intent.putExtra("course_name", course.getName());
-
-
+        mainActivity.openCourseDetailFragment(course.getName());
     };
 
-    public CourseAdapter(Context context, List<CourseItem> items) {
+    public CourseAdapter(MainActivity mainActivity, Context context, List<CourseItem> items) {
         this.inflater = LayoutInflater.from(context);
         this.courseData = items;
+        this.mainActivity = mainActivity;
     }
 
     @NonNull
