@@ -46,10 +46,13 @@ public class CourseDetailFragment extends Fragment {
     FirebaseDatabase mdbase;
     DatabaseReference dbref;
 
+    public CourseDetailFragment(String courseName) {
+        this.courseName = courseName;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        courseName = savedInstanceState.get("course_name").toString();
         dbref = FirebaseDatabase.getInstance().getReference();
 
     }

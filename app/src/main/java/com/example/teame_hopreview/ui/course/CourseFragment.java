@@ -61,7 +61,7 @@ public class CourseFragment extends Fragment {
         myCourses = new ArrayList<CourseItem>();
         setHasOptionsMenu(true);
 
-        ca = new CourseAdapter(context, myCourses);
+        ca = new CourseAdapter(myAct, context, myCourses);
 
         myList.setAdapter(ca);
         myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
