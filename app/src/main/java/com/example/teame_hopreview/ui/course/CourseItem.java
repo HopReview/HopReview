@@ -16,6 +16,7 @@ public class CourseItem extends Profile {
     private int funRating;
     private int workloadRating;
     private int averageRating;
+    private String id;
 
     /**
      * Constructor to create a Course object
@@ -255,5 +256,13 @@ public class CourseItem extends Profile {
         holderRatings.put("RateCount", 0);
 
         return holderRatings;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

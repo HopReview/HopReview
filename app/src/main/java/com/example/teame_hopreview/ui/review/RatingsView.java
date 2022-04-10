@@ -18,6 +18,15 @@ public class RatingsView extends LinearLayout {
     private ImageView star4;
     private ImageView star5;
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+        updateStarIcons(rating);
+    }
+
     private int rating = 0;
 
     private OnRatingChangedListener onRatingChangedListener;
