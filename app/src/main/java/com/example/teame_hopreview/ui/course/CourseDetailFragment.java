@@ -179,7 +179,7 @@ public class CourseDetailFragment extends Fragment {
                 //Intent intent = new Intent(myAct, CreateReview.class);
                 //intent.putExtra("course_name", courseName);
                 //CourseItem course = (CourseItem) view.getTag();
-                myAct.openMyReview();
+                myAct.openMyReview(courseItem.getCourseNumber());
             }
         });
 
