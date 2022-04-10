@@ -63,27 +63,27 @@ public class ProfessorFragment extends Fragment {
 //        ca = new ProfessorAdapter(context, myProfessors);
 //        myList.setAdapter(ca);
 
-        dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Client count: " + snapshot.child("clients").getChildrenCount());
-
-                myProfessors.clear();
-                Iterable<DataSnapshot> professors = snapshot.child("professors").getChildren();
-
-                for (DataSnapshot prf : professors) {
-                    myProfessors.add(prf.getValue(Professor.class));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+//        dbref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                long count = snapshot.getChildrenCount();
+//                Log.d(TAG, "Children count: " + count);
+//                Log.d(TAG, "Client count: " + snapshot.child("clients").getChildrenCount());
+//
+//                myProfessors.clear();
+//                Iterable<DataSnapshot> professors = snapshot.child("professors").getChildren();
+//
+//                for (DataSnapshot prf : professors) {
+//                    myProfessors.add(prf.getValue(Professor.class));
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
 
         return myView;
     }

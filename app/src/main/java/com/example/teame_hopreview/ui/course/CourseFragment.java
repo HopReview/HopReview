@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.teame_hopreview.ReviewItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,7 +37,9 @@ public class CourseFragment extends Fragment {
     private CardView myCard;
     private MainActivity myAct;
     private CourseItem courseItem;
+    private ReviewItem reviewItem;
     protected ArrayList<CourseItem> myCourses;
+    protected ArrayList<ReviewItem> myReviews;
     private CourseAdapter ca;
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
@@ -60,6 +61,7 @@ public class CourseFragment extends Fragment {
         myList = (RecyclerView) myView.findViewById(R.id.myList);
         myCard = (CardView) myView.findViewById(R.id.course_card);
         myCourses = new ArrayList<CourseItem>();
+        myReviews = new ArrayList<ReviewItem>();
         setHasOptionsMenu(true);
 
         ca = new CourseAdapter(myAct, context, myCourses);
@@ -82,7 +84,6 @@ public class CourseFragment extends Fragment {
                 ArrayList<ReviewItem> reviewsHolder = new ArrayList<ReviewItem>();
 
                 for (DataSnapshot crs : courses) {
-
                     System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
                     System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
                     System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
@@ -96,6 +97,13 @@ public class CourseFragment extends Fragment {
                     int avgRate = 0;
                     int funRate = 0;
                     int workRate = 0;
+
+                    int revAvgRate = 0;
+                    String date = "";
+                    int firstRating = 0;
+                    String reviewerContent = "";
+                    String reviewerName = "";
+                    int secondRating = 0;
 
                     int counter = 1;
                     for (DataSnapshot item : list) {
@@ -112,11 +120,36 @@ public class CourseFragment extends Fragment {
                         } else if (counter == 6) {
                             prof = item.getValue(String.class);
                         } else if (counter == 7) {
+                            Iterable<DataSnapshot> reviews = item.getChildren();
+                            myReviews.clear();
+                            for (DataSnapshot rev : reviews) {
+                                Iterable<DataSnapshot> rr = rev.getChildren();
+                                int c2 = 1;
+                                for (DataSnapshot r : rr) {
+                                    if (c2 == 1) {
+                                        revAvgRate = r.getValue(Integer.class);
+                                    } else if (c2 == 2) {
+                                        date = r.getValue(String.class);
+                                    } else if (c2 == 3) {
+                                        firstRating = r.getValue(Integer.class);
+                                    } else if (c2 == 4) {
+                                        reviewerContent = r.getValue(String.class);
+                                    } else if (c2 == 5) {
+                                        reviewerName = r.getValue(String.class);
+                                    } else if (c2 == 6) {
+                                        secondRating = r.getValue(Integer.class);
+                                    }
+                                    c2++;
+                                }
+                            }
+                            reviewItem = new ReviewItem(revAvgRate,date,firstRating,reviewerContent,reviewerName,secondRating);
+                        } else if (counter == 8) {
                             workRate = item.getValue(Integer.class);
                         }
                         counter++;
                     }
-                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                    myReviews.add(reviewItem);
+                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate, myReviews);
                     myCourses.add(courseItem);
                 }
 

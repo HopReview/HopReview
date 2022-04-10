@@ -24,7 +24,7 @@ public class CourseItem extends Profile {
 
 
     public CourseItem(int avgRate, String courseDesignation, String name,
-                      String courseNum, int funRate, String professor, int workRate) {
+                      String courseNum, int funRate, String professor, int workRate, ArrayList<ReviewItem> reviews) {
         this.courseName = name;
         this.courseNumber = courseNum;
         this.courseDesignation = courseDesignation;
@@ -32,7 +32,7 @@ public class CourseItem extends Profile {
         this.funRating = funRate;
         this.workloadRating = workRate;
         this.averageRating = avgRate;
-
+        this.reviews = reviews;
     }
 
     public void setCourseName(String name) {

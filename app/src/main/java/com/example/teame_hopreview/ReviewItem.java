@@ -26,7 +26,7 @@ public class ReviewItem extends Profile {
      * @param reviewer : User leaving the review
      * @param review : content of the review
      */
-    public ReviewItem(String parent, String reviewer, String review, int average, int firstRate, int secondRate, String dt) {
+    public ReviewItem(int average, String dt, int firstRate, String review, String reviewer, int secondRate) {
         this.reviewerName = reviewer;
         this.reviewContent = review;
         this.avgRating = average;
@@ -35,8 +35,6 @@ public class ReviewItem extends Profile {
         // get the category ratings
         firstRating = firstRate;
         secondRating = secondRate;
-
-
     }
 
 

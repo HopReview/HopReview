@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.MainActivity;
@@ -56,7 +57,6 @@ public class CourseDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbref = FirebaseDatabase.getInstance().getReference();
-
     }
 
     @Override
@@ -138,22 +138,20 @@ public class CourseDetailFragment extends Fragment {
             }
         }
 
-
-
-
         context = getActivity().getApplicationContext();
 
         myAct = (MainActivity) getActivity();
-        myList = (RecyclerView) myView.findViewById(R.id.myList);
+        myList = (RecyclerView) myView.findViewById(R.id.recyclerView);
         myCard = (CardView) myView.findViewById(R.id.review_card);
         myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton);
         myReviews = new ArrayList<ReviewItem>();
 
-        ra = new ReviewAdapter(context, myReviews);
+        ra = new ReviewAdapter(myAct, context, myReviews);
 
-        if (ra.getItemCount() != 0) {
-            myList.setAdapter(ra);
-        }
+//        if (ra != null) {
+        myList.setAdapter(ra);
+        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+//        }
 
 
         dbref.addValueEventListener(new ValueEventListener() {
@@ -166,22 +164,14 @@ public class CourseDetailFragment extends Fragment {
 
                 myReviews.clear();
                 Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
-
-                for (DataSnapshot crs : courses) {
-                    Iterable<DataSnapshot> list = crs.getChildren();
-                    int counter = 1;
-                    for (DataSnapshot item : list) {
-                        if (counter == 3 && item.getValue(String.class).equals(courseName)) {
-                            courseItem = crs.getValue(CourseItem.class);
-                        }
-                        counter++;
-                    }
-                }
+                System.out.println("NAME VALUE " + courseItem.getName());
 
                 if (courseItem != null && courseItem.getReviews() != null && !courseItem.getReviews().isEmpty()) {
                     myReviews = courseItem.getReviews();
+                    System.out.println("DATE VALUE " + courseItem.getReviews().get(0).getReviewContent());
                 }
 
+                ra.notifyDataSetChanged();
             }
 
             @Override

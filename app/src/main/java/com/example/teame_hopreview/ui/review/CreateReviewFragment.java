@@ -13,13 +13,15 @@ import android.widget.AutoCompleteTextView;
 
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
+import com.example.teame_hopreview.ReviewAdapter;
+import com.example.teame_hopreview.ReviewItem;
 import com.example.teame_hopreview.ui.course.CourseItem;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CreateReviewFragment#newInstance} factory method to
+ * Use the {@link CreateReviewFragment} factory method to
  * create an instance of this fragment.
  */
 public class CreateReviewFragment extends Fragment {
@@ -43,8 +45,9 @@ public class CreateReviewFragment extends Fragment {
     }
 
     private void createFakeData() {
-        CourseItem calc1 = new CourseItem(0, "Q", "Calculus I", "AS.", 0, "R Brown", 0);
-        CourseItem calc2 = new CourseItem(0, "Q", "Calculus II", "AS.", 0, "J Biden", 0);
+        ArrayList<ReviewItem> empty = new ArrayList<>();
+        CourseItem calc1 = new CourseItem(0, "Q", "Calculus I", "AS.", 0, "R Brown", 0, empty);
+        CourseItem calc2 = new CourseItem(0, "Q", "Calculus II", "AS.", 0, "J Biden", 0, empty);
 
         /*Professor prof1 = new Professor("Richard Brown", "Math", new ArrayList<CourseItem>());
         Professor prof2 = new Professor("Emily Riehl", "Math", new ArrayList<CourseItem>());

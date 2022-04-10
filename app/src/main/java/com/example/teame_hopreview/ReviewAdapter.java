@@ -2,6 +2,7 @@ package com.example.teame_hopreview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,23 +21,29 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     private List<ReviewItem> reviewData;
     private LayoutInflater inflater;
     private AdapterView.OnItemClickListener clickListener;
+    private MainActivity mainActivity;
 
-
-    public ReviewAdapter(Context context, List<ReviewItem> items) {
+    public ReviewAdapter(MainActivity mainActivity, Context context, List<ReviewItem> items) {
         this.inflater = LayoutInflater.from(context);
         this.reviewData = items;
+        this.mainActivity = mainActivity;
     }
 
     @NonNull
     @Override
     public ReviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.frag_course_item, parent, false);
+        View view = inflater.inflate(R.layout.frag_review_item, parent, false);
+        Log.d("REVIEWER NAME", "HELLO");
         return new ReviewAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ReviewAdapter.ViewHolder holder, int position) {
         ReviewItem currReview = reviewData.get(position);
+        Log.d("REVIEWER NAME", currReview.getReviewerName());
+        Log.d("REVIEWER DATE", currReview.getDate());
+        Log.d("REVIEWER CONTENT", currReview.getReviewContent());
+
         holder.getReviewer().setText(currReview.getReviewerName());
         holder.getDate().setText(currReview.getDate());
         holder.getComment().setText(currReview.getReviewContent());
