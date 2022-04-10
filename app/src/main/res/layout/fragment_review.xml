@@ -69,7 +69,7 @@
             android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_columnSpan="2"
-            app:startIconDrawable="@drawable/folder"
+            app:startIconDrawable="@drawable/person"
             app:startIconTint="@color/md_theme_light_primary"
             app:boxStrokeColor="@color/md_theme_light_primary"
             android:hint="Professors">
@@ -258,11 +258,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <Space
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 
     <TextView
