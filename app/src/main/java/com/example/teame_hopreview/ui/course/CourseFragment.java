@@ -38,6 +38,7 @@ public class CourseFragment extends Fragment {
     private CourseItem courseItem;
     private ReviewItem reviewItem;
     protected ArrayList<CourseItem> myCourses;
+    protected ArrayList<CourseItem> myCoursesCopy;
     protected ArrayList<ReviewItem> myReviews;
     private CourseAdapter ca;
     private FirebaseDatabase mdbase;
@@ -59,10 +60,11 @@ public class CourseFragment extends Fragment {
         myList = (RecyclerView) myView.findViewById(R.id.myList);
         myCard = (CardView) myView.findViewById(R.id.course_card);
         myCourses = new ArrayList<CourseItem>();
+        myCoursesCopy = new ArrayList<CourseItem>();
         myReviews = new ArrayList<ReviewItem>();
         setHasOptionsMenu(true);
 
-        ca = new CourseAdapter(myAct, context, myCourses);
+        ca = new CourseAdapter(myAct, context, myCourses, myCoursesCopy);
 
         myList.setAdapter(ca);
         myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
@@ -150,6 +152,7 @@ public class CourseFragment extends Fragment {
                         courseItem.addReview(r);
                     }
                     myCourses.add(courseItem);
+                    myCoursesCopy.add(courseItem);
                 }
 
                 ca.notifyDataSetChanged();
@@ -176,13 +179,12 @@ public class CourseFragment extends Fragment {
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                System.out.println("search query submit");
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                System.out.println("tap");
+                ca.getFilter().filter(newText);
                 return false;
             }
         });

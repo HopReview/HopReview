@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,10 +21,12 @@ import com.example.teame_hopreview.ReviewItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
+public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> implements Filterable {
 
     private List<CourseItem> courseData;
+    private List<CourseItem> courseDataCopy;
     private LayoutInflater inflater;
     private AdapterView.OnItemClickListener clickListener;
     private MainActivity mainActivity;
@@ -33,10 +37,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         mainActivity.openCourseDetailFragment(course);
     };
 
-    public CourseAdapter(MainActivity mainActivity, Context context, List<CourseItem> items) {
+    public CourseAdapter(MainActivity mainActivity, Context context, ArrayList<CourseItem> items, List<CourseItem> itemsCopy) {
         this.inflater = LayoutInflater.from(context);
         this.courseData = items;
         this.mainActivity = mainActivity;
+        this.courseDataCopy = itemsCopy;
     }
 
     @NonNull
@@ -107,6 +112,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return courseData.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return courseFilter;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -214,4 +224,32 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             return fun;
         }
     }
+    private Filter courseFilter = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CourseItem> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(courseDataCopy);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (CourseItem item : courseDataCopy) {
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            courseData.clear();
+            courseData.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
