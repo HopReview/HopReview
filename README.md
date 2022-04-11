@@ -4,6 +4,12 @@
 Abdullah Yousuf, Ege Seyithanoglu, Shalom Cesar, & Sebastian Cabrejos
 ```
 
+### GitHub
+Our GitHub repository can be found [here](https://github.com/jhu-cs-uima-sp22/TeamE-HopReview).
+
+### Meeting Notes
+Refer to the `meeting_notes` folder in our GitHub Repository.
+
 ### Account:
 Email: hopreview2022@gmail.com
 Password: hopreviewtest
