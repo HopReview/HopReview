@@ -19,3 +19,4 @@ able to login with the same credentials for future use.
 - Connected `Course` page with Firebase Realtime Database
 - Added Firebase Authentication via Email and Password
 - Integrated bottom navigation bar in all pages
+- Added `Search` functionality -> search by course name
