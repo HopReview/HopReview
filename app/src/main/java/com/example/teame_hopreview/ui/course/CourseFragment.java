@@ -32,7 +32,6 @@ public class CourseFragment extends Fragment {
 
     private static final String TAG = "dbref: ";
 
-
     private RecyclerView myList;
     private CardView myCard;
     private MainActivity myAct;
@@ -80,14 +79,14 @@ public class CourseFragment extends Fragment {
 
                 myCourses.clear();
                 Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
-                ArrayList<ReviewItem> reviewsHolder = new ArrayList<ReviewItem>();
 
                 for (DataSnapshot crs : courses) {
-                    System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
-                    System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
-                    System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
-                    System.out.println("CourseNum: " + crs.getValue(CourseItem.class).getCourseNumber());
-                    System.out.println("CourseDes: " + crs.getValue(CourseItem.class).getDesignation());
+                    myReviews.clear();
+//                    System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
+//                    System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
+//                    System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
+//                    System.out.println("CourseNum: " + crs.getValue(CourseItem.class).getCourseNumber());
+//                    System.out.println("CourseDes: " + crs.getValue(CourseItem.class).getDesignation());
                     Iterable<DataSnapshot> list = crs.getChildren();
                     String name = " ";
                     String num = " ";
@@ -120,7 +119,6 @@ public class CourseFragment extends Fragment {
                             prof = item.getValue(String.class);
                         } else if (counter == 7) {
                             Iterable<DataSnapshot> reviews = item.getChildren();
-                            myReviews.clear();
                             for (DataSnapshot rev : reviews) {
                                 Iterable<DataSnapshot> rr = rev.getChildren();
                                 int c2 = 1;
@@ -142,13 +140,17 @@ public class CourseFragment extends Fragment {
                                 }
                             }
                             reviewItem = new ReviewItem(revAvgRate,date,firstRating,reviewerContent,reviewerName,secondRating);
+                            myReviews.add(reviewItem);
                         } else if (counter == 8) {
                             workRate = item.getValue(Integer.class);
                         }
                         counter++;
                     }
-                    myReviews.add(reviewItem);
-                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate, myReviews);
+
+                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                    for (ReviewItem r : myReviews) {
+                        courseItem.addReview(r);
+                    }
                     myCourses.add(courseItem);
                     myCoursesCopy.add(courseItem);
                 }

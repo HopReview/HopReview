@@ -41,7 +41,6 @@ public class CourseDetailFragment extends Fragment {
     Context context;
     String courseName;
     private ReviewAdapter ra;
-    FirebaseDatabase mdbase;
     DatabaseReference dbref;
 
     public CourseDetailFragment(CourseItem course) {

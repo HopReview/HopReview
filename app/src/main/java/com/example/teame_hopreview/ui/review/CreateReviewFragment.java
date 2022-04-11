@@ -328,8 +328,10 @@ public class CreateReviewFragment extends Fragment {
             listManager.getCourses().clear();
             listManager.getCourseWrappers().clear();
             Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
+            ArrayList<ReviewItem> reviewsHolder = new ArrayList<ReviewItem>();
 
             for (DataSnapshot crs : courses) {
+                reviewsHolder.clear();
                 System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
                 System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
                 System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
@@ -351,8 +353,6 @@ public class CreateReviewFragment extends Fragment {
                 String reviewerContent = "";
                 String reviewerName = "";
                 int secondRating = 0;
-
-                ArrayList<ReviewItem> reviewsHolder = new ArrayList<ReviewItem>();
 
                 int counter = 1;
                 for (DataSnapshot item : list) {
@@ -422,7 +422,11 @@ public class CreateReviewFragment extends Fragment {
                     }
                     counter++;
                 }
-                CourseItem course = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate, reviewsHolder);
+                CourseItem course = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                course = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                for (ReviewItem r : reviewsHolder) {
+                    course.addReview(r);
+                }
                 course.setId(id);
                 if (defaultCourseName != null && defaultCourseName.equals(course.getName())) {
                     selectedCourse = course;
