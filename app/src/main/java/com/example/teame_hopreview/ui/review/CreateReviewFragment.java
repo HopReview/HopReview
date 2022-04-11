@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -38,6 +39,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.*;
 
 /**
@@ -111,6 +114,28 @@ public class CreateReviewFragment extends Fragment {
         setupProfessorDropdown(view);
         setupReviews(view);
 
+        ViewTreeObserver observer = view.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                courseDropdown.setText(null);
+                courseDropdown.setFocusable(false);
+                professorDropdown.setText(null);
+                professorDropdown.setFocusable(false);
+                if (defaultCourseName != null) {
+                    for (CourseItem item: listManager.getCourses()) {
+                        if (defaultCourseName.equals(item.getCourseNumber())) {
+                            selectedCourse = item;
+                            courseDropdown.setText(selectedCourse.getName(), false);
+                            fillProfessorDropdown(selectedCourse);
+                            break;
+                        }
+                    }
+                }
+
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
@@ -247,38 +272,13 @@ public class CreateReviewFragment extends Fragment {
         Task<Void> task6 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("secondRating").setValue(secondRating);
 
 
-        task1.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+        Task<Void> mainTask = Tasks.whenAll(task1, task2, task3, task4, task5, task6);
+        mainTask.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                task2.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        task3.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                task4.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        task5.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                task6.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        showToast("Review published!");
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
+                showToast("Review published!");
             }
         });
-
     }
 
     public void reset() {
@@ -288,7 +288,10 @@ public class CreateReviewFragment extends Fragment {
         gradingRating = 0;
         knowledgeRating = 0;
         if (professorDropdown != null) professorDropdown.setText(null);
-        if (courseDropdown != null) courseDropdown.setText(null);
+        if (courseDropdown != null) {
+            courseDropdown.setText(null);
+            courseDropdown.setFocusable(false);
+        }
     }
 
     private void showToast(String message) {
@@ -413,11 +416,6 @@ public class CreateReviewFragment extends Fragment {
                     course.addReview(r);
                 }
                 course.setId(id);
-                if (defaultCourseName != null && defaultCourseName.equals(course.getName())) {
-                    selectedCourse = course;
-                    if (professorDropdown != null) professorDropdown.setText(selectedCourse.getProfessors());
-                    if (courseDropdown != null) courseDropdown.setText(selectedCourse.getName());
-                }
                 listManager.addCourse(course);
             }
 
