@@ -86,10 +86,8 @@ public class CreateReviewFragment extends Fragment {
 
 
     public CreateReviewFragment() {
-        // Required empty public constructor
         listManager = new ListManager();
         selectedCourse = null;
-        //createFakeData();
         dbref = FirebaseDatabase.getInstance().getReference();
         dbref.addValueEventListener(new DatabaseChangeListener());
     }
@@ -132,18 +130,6 @@ public class CreateReviewFragment extends Fragment {
 
         courseAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getCourseWrappers());
         courseDropdown.setAdapter(courseAdapter);
-
-
-        /*if (defaultCourseName != null) {
-            //Search for it in courses
-            for (CourseItem course: listManager.getCourses()) {
-                if (course.getCourseNumber().equals(defaultCourseName)) {
-                    selectedCourse = course;
-                    courseDropdown.setText(course.getName());
-                    break;
-                }
-            }
-        }*/
     }
 
     private void setupProfessorDropdown(View view) {
@@ -301,7 +287,6 @@ public class CreateReviewFragment extends Fragment {
         funRating = 0;
         gradingRating = 0;
         knowledgeRating = 0;
-        if (courseAdapter != null) courseAdapter.clear();
         if (professorDropdown != null) professorDropdown.setText(null);
         if (courseDropdown != null) courseDropdown.setText(null);
     }
