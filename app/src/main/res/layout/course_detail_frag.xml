@@ -537,6 +537,7 @@
         android:layout_height="145dp"
         android:layout_marginTop="548dp"
         android:clickable="true"
+        android:backgroundTint="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/review_count"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.943"
