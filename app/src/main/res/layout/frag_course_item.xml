@@ -5,7 +5,7 @@
     android:id="@+id/course_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     app:cardBackgroundColor="@color/md_theme_light_primaryContainer"
     app:cardCornerRadius="20dp"
     app:cardElevation="10dp"
@@ -54,6 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="course number"
+                    android:textSize="14sp"
                     android:textColor="@color/md_theme_light_onSurfaceVariant" />
 
                 <TextView
@@ -260,6 +261,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:textSize="14sp"
             android:text="# Review"
             android:textColor="@color/md_theme_light_onSurfaceVariant" />
 

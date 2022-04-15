@@ -29,7 +29,7 @@ public class ProfileFragment extends Fragment {
         View myView = inflater.inflate(R.layout.fragment_profile, container, false);
         context = getActivity().getApplicationContext();
         myAct = (MainActivity) getActivity();
-        myAct.getSupportActionBar().setTitle("");
+        myAct.getSupportActionBar().setTitle("Profile");
 
 
         Button logoutBtn = myView.findViewById(R.id.logout_btn);
