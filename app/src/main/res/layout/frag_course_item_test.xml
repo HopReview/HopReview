@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/course_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    app:cardBackgroundColor="@color/md_theme_light_primaryContainer"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="?attr/colorPrimaryContainer"
     app:cardCornerRadius="20dp"
-    app:cardElevation="10dp"
+    app:cardElevation="2dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
 
@@ -26,12 +25,11 @@
                 android:id="@+id/designation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/rounded_textview"
                 android:gravity="center"
                 android:text="H"
-                android:textColor="@color/md_theme_light_onPrimary"
+                android:textColor="?attr/colorOnPrimary"
                 android:textSize="30sp" />
 
             <LinearLayout
@@ -40,31 +38,35 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/name"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Course Name"
-                    android:textStyle="bold"
-                    android:textColor="@color/md_theme_light_onPrimaryContainer"
-                    android:textSize="16sp" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="course number"
-                    android:textColor="@color/md_theme_light_onSurfaceVariant" />
+                    <TextView
+                        android:id="@+id/name_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Course Name"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textColor="?attr/colorOnPrimaryContainer" />
+
+                    <TextView
+                        android:id="@+id/num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="course number"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/professor_names"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:text="Professor"
-                    android:textStyle="bold"
-                    android:textColor="@color/md_theme_light_onSurfaceVariant"
-                    android:textSize="14sp" />
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
 
             </LinearLayout>
 
@@ -80,9 +82,9 @@
                 android:id="@+id/avg_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="110dp"
                 android:text="@string/average_rating"
-                android:textColor="@color/md_theme_light_onPrimaryContainer"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -93,7 +95,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="2dp"
                 android:src="@drawable/star_filled"
-                app:tint="@color/md_theme_light_primary" />
+                app:tint="?attr/colorPrimary" />
 
             <ImageView
                 android:id="@+id/avg_star2"
@@ -101,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:src="@drawable/star_filled"
-                app:tint="@color/md_theme_light_primary" />
+                app:tint="?attr/colorPrimary" />
 
             <ImageView
                 android:id="@+id/avg_star3"
@@ -109,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:src="@drawable/star_filled"
-                app:tint="@color/md_theme_light_primary" />
+                app:tint="?attr/colorPrimary" />
 
             <ImageView
                 android:id="@+id/avg_star4"
@@ -117,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:src="@drawable/star_filled"
-                app:tint="@color/md_theme_light_primary" />
+                app:tint="?attr/colorPrimary" />
 
             <ImageView
                 android:id="@+id/avg_star5"
@@ -125,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:src="@drawable/star_filled"
-                app:tint="@color/md_theme_light_primary" />
+                app:tint="?attr/colorPrimary" />
 
         </LinearLayout>
 
@@ -146,7 +148,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/workload_rating"
-                    android:textColor="@color/md_theme_light_onPrimaryContainer"
+                    android:textColor="?attr/colorOnPrimaryContainer"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -157,7 +159,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/star_filled"
-                    app:tint="@color/md_theme_light_primary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/work_star2"
@@ -165,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/star_filled"
-                    app:tint="@color/md_theme_light_primary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/work_star3"
@@ -173,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/star_filled"
-                    app:tint="@color/md_theme_light_primary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/work_star4"
@@ -181,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/star_filled"
-                    app:tint="@color/md_theme_light_primary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/work_star5"
@@ -189,14 +191,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/star_filled"
-                    app:tint="@color/md_theme_light_primary" />
+                    app:tint="?attr/colorPrimary" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="60dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -205,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/fun_rating"
-                    android:textColor="@color/md_theme_light_onPrimaryContainer"
+                    android:textColor="?attr/colorOnPrimaryContainer"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -216,7 +218,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/star_filled"
-                    app:tint="@color/md_theme_light_primary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/fun_star2"
@@ -224,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/star_filled"
-                    app:tint="@color/md_theme_light_primary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/fun_star3"
@@ -232,7 +234,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/star_filled"
-                    app:tint="@color/md_theme_light_primary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/fun_star4"
@@ -240,7 +242,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/star_filled"
-                    app:tint="@color/md_theme_light_primary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/fun_star5"
@@ -248,7 +250,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/star_filled"
-                    app:tint="@color/md_theme_light_primary" />
+                    app:tint="?attr/colorPrimary" />
 
             </LinearLayout>
 
@@ -261,7 +263,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:text="# Review"
-            android:textColor="@color/md_theme_light_onSurfaceVariant" />
+            android:textColor="?attr/colorOnSurfaceVariant" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
