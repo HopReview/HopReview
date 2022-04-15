@@ -23,12 +23,12 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_title"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".CreateAccountActivity"
             android:exported="false"
             android:label="CreateAccountActivity"
-            android:parentActivityName=".LoginActivity"></activity>
+            android:parentActivityName=".LoginActivity" />
     </application>
 
 </manifest>
