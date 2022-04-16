@@ -138,9 +138,9 @@ public class CourseFragment extends Fragment {
                                     }
                                     c2++;
                                 }
+                                reviewItem = new ReviewItem(revAvgRate, date, firstRating, reviewerContent, reviewerName, secondRating);
+                                myReviews.add(reviewItem);
                             }
-                            reviewItem = new ReviewItem(revAvgRate, date, firstRating, reviewerContent, reviewerName, secondRating);
-                            myReviews.add(reviewItem);
                         } else if (counter == 8) {
                             workRate = item.getValue(Integer.class);
                         }
