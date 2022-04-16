@@ -77,24 +77,27 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         ImageView[] workStars = holder.getWorkImages();
         ImageView[] funStars = holder.getFunImages();
 
+        context = mainActivity.getApplicationContext();
+
         for (int i = 0; i < 5; i++) {
             if (i < currCourse.getAverageRating()) {
-                avgStars[i].setVisibility(View.VISIBLE);
+                avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 avgStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
-                avgStars[i].setVisibility(View.INVISIBLE);
+                avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
             if (i < currCourse.getFunRating()) {
-                funStars[i].setVisibility(View.VISIBLE);
+                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 funStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
-                funStars[i].setVisibility(View.INVISIBLE);
+                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
             if (i < currCourse.getWorkloadRating()) {
-                workStars[i].setVisibility(View.VISIBLE);
+                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 workStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
-                workStars[i].setVisibility(View.INVISIBLE);
+                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
+
             }
         }
 
@@ -159,22 +162,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             funStar4 = (ImageView) courseView.findViewById(R.id.fun_star4);
             funStar5 = (ImageView) courseView.findViewById(R.id.fun_star5);
 
-
-            avgStar1.setVisibility(View.INVISIBLE);
-            avgStar2.setVisibility(View.INVISIBLE);
-            avgStar3.setVisibility(View.INVISIBLE);
-            avgStar4.setVisibility(View.INVISIBLE);
-            avgStar5.setVisibility(View.INVISIBLE);
-            workStar1.setVisibility(View.INVISIBLE);
-            workStar2.setVisibility(View.INVISIBLE);
-            workStar3.setVisibility(View.INVISIBLE);
-            workStar4.setVisibility(View.INVISIBLE);
-            workStar5.setVisibility(View.INVISIBLE);
-            funStar1.setVisibility(View.INVISIBLE);
-            funStar2.setVisibility(View.INVISIBLE);
-            funStar3.setVisibility(View.INVISIBLE);
-            funStar4.setVisibility(View.INVISIBLE);
-            funStar5.setVisibility(View.INVISIBLE);
 
         }
 

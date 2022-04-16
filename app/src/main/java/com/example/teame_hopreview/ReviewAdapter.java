@@ -2,6 +2,8 @@ package com.example.teame_hopreview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     private LayoutInflater inflater;
     private AdapterView.OnItemClickListener clickListener;
     private MainActivity mainActivity;
+    Context context;
 
     public ReviewAdapter(MainActivity mainActivity, Context context, List<ReviewItem> items) {
         this.inflater = LayoutInflater.from(context);
@@ -49,28 +53,20 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         holder.getComment().setText(currReview.getReviewContent());
 
         int avgRating = currReview.getAvgRating();
+        System.out.println("AVGRATING FOR REVIEW: " + avgRating);
 
-        if (avgRating < 2) {
-            holder.getStar3().setVisibility(View.VISIBLE);
-        } else if (avgRating < 3) {
-            holder.getStar3().setVisibility(View.VISIBLE);
-            holder.getStar4().setVisibility(View.VISIBLE);
-        } else if (avgRating < 4) {
-            holder.getStar3().setVisibility(View.VISIBLE);
-            holder.getStar4().setVisibility(View.VISIBLE);
-            holder.getStar2().setVisibility(View.VISIBLE);
-        } else if (avgRating < 5) {
-            holder.getStar3().setVisibility(View.VISIBLE);
-            holder.getStar4().setVisibility(View.VISIBLE);
-            holder.getStar2().setVisibility(View.VISIBLE);
-            holder.getStar5().setVisibility(View.VISIBLE);
-        } else {
-            holder.getStar3().setVisibility(View.VISIBLE);
-            holder.getStar4().setVisibility(View.VISIBLE);
-            holder.getStar2().setVisibility(View.VISIBLE);
-            holder.getStar5().setVisibility(View.VISIBLE);
-            holder.getStar1().setVisibility(View.VISIBLE);
+        context = mainActivity.getApplicationContext();
+        ImageView[] stars = holder.getStars();
+
+        for (int i = 0; i < 5; i++) {
+            if (i < avgRating) {
+                stars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
+                stars[i].setColorFilter(R.color.md_theme_light_primary);
+            } else {
+                stars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
+            }
         }
+
 
         holder.itemView.setTag(reviewData.get(position));
         // holder.itemView.setOnClickListener(mOnClickListener);
@@ -101,13 +97,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             star3 = (ImageView) reviewView.findViewById(R.id.review_star3);
             star4 = (ImageView) reviewView.findViewById(R.id.review_star4);
             star5 = (ImageView) reviewView.findViewById(R.id.review_star5);
-
-            star1.setVisibility(View.INVISIBLE);
-            star2.setVisibility(View.INVISIBLE);
-            star3.setVisibility(View.INVISIBLE);
-            star4.setVisibility(View.INVISIBLE);
-            star5.setVisibility(View.INVISIBLE);
-
         }
 
         public TextView getReviewer() {
@@ -122,14 +111,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             return comment;
         }
 
-        public ImageView getStar1() { return star1; }
+        public ImageView[] getStars() {
+            ImageView stars[] = new ImageView[5];
+            stars[0] = star1;
+            stars[1] = star2;
+            stars[2] = star3;
+            stars[3] = star4;
+            stars[4] = star5;
 
-        public ImageView getStar2() { return star2; }
-
-        public ImageView getStar3() { return star3; }
-
-        public ImageView getStar4() { return star4; }
-
-        public ImageView getStar5() { return star5; }
+            return stars;
+        }
     }
 }
