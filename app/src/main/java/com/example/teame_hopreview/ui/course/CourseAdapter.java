@@ -56,7 +56,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         CourseItem currCourse = courseData.get(position);
         holder.getDesignation().setText(currCourse.getDesignation());
         System.out.println(currCourse.getName());
-        holder.getNameNum().setText(currCourse.getName() + "\n" + currCourse.getCourseNumber());
+        holder.getName().setText(currCourse.getName());
+        holder.getNum().setText(currCourse.getCourseNumber());
 
         String prof = currCourse.getProfessors();
 
@@ -125,7 +126,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView designation;
-        private final TextView nameNum;
+        private final TextView name;
+        private final TextView num;
         private final TextView professorNames;
         private final TextView reviewNum;
         private final ImageView avgStar1, avgStar2, avgStar3, avgStar4, avgStar5;
@@ -137,7 +139,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             super(courseView);
 
             designation = (TextView) courseView.findViewById(R.id.designation);
-            nameNum = (TextView) courseView.findViewById(R.id.name_num);
+            name = (TextView) courseView.findViewById(R.id.name);
+            num = (TextView) courseView.findViewById(R.id.num);
             professorNames = (TextView) courseView.findViewById(R.id.professor_names);
             reviewNum = (TextView) courseView.findViewById(R.id.review_count);
 
@@ -166,9 +169,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             return designation;
         }
 
-        public TextView getNameNum() {
-            return nameNum;
+        public TextView getName() {
+            return name;
         }
+
+        public TextView getNum() { return num; }
 
         public TextView getProfessorNames() {
             return professorNames;
