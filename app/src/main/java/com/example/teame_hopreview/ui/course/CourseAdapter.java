@@ -56,7 +56,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         CourseItem currCourse = courseData.get(position);
         holder.getDesignation().setText(currCourse.getDesignation());
         System.out.println(currCourse.getName());
-        holder.getNameNum().setText(currCourse.getName() + "\n" + currCourse.getCourseNumber());
+        holder.getName().setText(currCourse.getName());
+        holder.getNum().setText(currCourse.getCourseNumber());
 
         String prof = currCourse.getProfessors();
 
@@ -76,24 +77,27 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         ImageView[] workStars = holder.getWorkImages();
         ImageView[] funStars = holder.getFunImages();
 
+        context = mainActivity.getApplicationContext();
+
         for (int i = 0; i < 5; i++) {
             if (i < currCourse.getAverageRating()) {
-                avgStars[i].setVisibility(View.VISIBLE);
+                avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 avgStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
-                avgStars[i].setVisibility(View.INVISIBLE);
+                avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
             if (i < currCourse.getFunRating()) {
-                funStars[i].setVisibility(View.VISIBLE);
+                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 funStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
-                funStars[i].setVisibility(View.INVISIBLE);
+                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
             if (i < currCourse.getWorkloadRating()) {
-                workStars[i].setVisibility(View.VISIBLE);
+                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 workStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
-                workStars[i].setVisibility(View.INVISIBLE);
+                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
+
             }
         }
 
@@ -122,7 +126,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView designation;
-        private final TextView nameNum;
+        private final TextView name;
+        private final TextView num;
         private final TextView professorNames;
         private final TextView reviewNum;
         private final ImageView avgStar1, avgStar2, avgStar3, avgStar4, avgStar5;
@@ -134,7 +139,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             super(courseView);
 
             designation = (TextView) courseView.findViewById(R.id.designation);
-            nameNum = (TextView) courseView.findViewById(R.id.name_num);
+            name = (TextView) courseView.findViewById(R.id.name);
+            num = (TextView) courseView.findViewById(R.id.num);
             professorNames = (TextView) courseView.findViewById(R.id.professor_names);
             reviewNum = (TextView) courseView.findViewById(R.id.review_count);
 
@@ -157,31 +163,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             funStar5 = (ImageView) courseView.findViewById(R.id.fun_star5);
 
 
-            avgStar1.setVisibility(View.INVISIBLE);
-            avgStar2.setVisibility(View.INVISIBLE);
-            avgStar3.setVisibility(View.INVISIBLE);
-            avgStar4.setVisibility(View.INVISIBLE);
-            avgStar5.setVisibility(View.INVISIBLE);
-            workStar1.setVisibility(View.INVISIBLE);
-            workStar2.setVisibility(View.INVISIBLE);
-            workStar3.setVisibility(View.INVISIBLE);
-            workStar4.setVisibility(View.INVISIBLE);
-            workStar5.setVisibility(View.INVISIBLE);
-            funStar1.setVisibility(View.INVISIBLE);
-            funStar2.setVisibility(View.INVISIBLE);
-            funStar3.setVisibility(View.INVISIBLE);
-            funStar4.setVisibility(View.INVISIBLE);
-            funStar5.setVisibility(View.INVISIBLE);
-
         }
 
         public TextView getDesignation() {
             return designation;
         }
 
-        public TextView getNameNum() {
-            return nameNum;
+        public TextView getName() {
+            return name;
         }
+
+        public TextView getNum() { return num; }
 
         public TextView getProfessorNames() {
             return professorNames;

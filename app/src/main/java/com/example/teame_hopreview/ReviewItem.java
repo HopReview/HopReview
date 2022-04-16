@@ -22,7 +22,7 @@ public class ReviewItem extends Profile {
 
     /**
      * Constructor to create a ReviewItem object
-     * @param parent : Course/Professor that review belongs to
+     *
      * @param reviewer : User leaving the review
      * @param review : content of the review
      */

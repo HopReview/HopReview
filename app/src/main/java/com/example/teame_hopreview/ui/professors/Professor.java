@@ -1,6 +1,7 @@
 package com.example.teame_hopreview.ui.professors;
 
 import com.example.teame_hopreview.Profile;
+import com.example.teame_hopreview.ReviewItem;
 import com.example.teame_hopreview.ui.course.CourseItem;
 
 import java.util.ArrayList;
@@ -9,11 +10,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Professor extends Profile {
+    private String initials;
     private String professorName;
     private String department;
     private ArrayList<CourseItem> courses;
+    private String course;
+    private ArrayList<ReviewItem> reviews;
     private Map<CourseItem, Map<String, Integer>> mixedRatings;
     private int averageRating;
+    private int gRating;
+    private int kRating;
+    private String id;
 
     /**
      * Constructor to create a Professor object
@@ -32,12 +39,23 @@ public class Professor extends Profile {
         this.department = department;
         // TODO: might remove courses parameter as requirement
         this.courses = courses;
+        String[] names = name.split(" ");
+
+        for (String s : names) {
+            initials.concat(String.valueOf(s.charAt(0)));
+        }
 
         Map<String, Integer> emptyRatings = getEmptyMap();
         for (CourseItem crs : Collections.unmodifiableList(courses)) {
             mixedRatings.put(crs, emptyRatings);
         }
     }
+
+    public String getCourse() { return this.course; }
+
+
+    public String getInitials() { return this.initials; }
+
 
     /**
      * Method for getting a Professor's name
@@ -60,6 +78,17 @@ public class Professor extends Profile {
      * @return ArrayList representing courses taught by the Professor
      */
     public ArrayList<CourseItem> getCourses() { return this.courses; }
+
+    public ArrayList<ReviewItem> getReviews() { return this.reviews; }
+
+
+    public int getGradeRating() {
+        return gRating;
+    }
+
+    public int getKnowledgeRating() {
+        return kRating;
+    }
 
     /**
      * Method to add a specific course to a Professor's course list
@@ -159,6 +188,11 @@ public class Professor extends Profile {
      */
     public int getAverageRating() {
         return averageRating;
+    }
+
+
+    public void addReview(ReviewItem newReview) {
+        reviews.add(newReview);
     }
 
 

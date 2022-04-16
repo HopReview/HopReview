@@ -7,7 +7,7 @@
     <string name="title_courses">Courses</string>
     <string name="title_professors">Professors</string>
     <string name="title_profile">Profile</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">HopReview</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_confirm_email">Confirm Email</string>
     <string name="prompt_username">Username</string>
@@ -40,8 +40,8 @@
     <string name="knowledge_txt">Knowledge</string>
 
     <string name="average_rating">Average Rating</string>
-    <string name="workload_rating">Workload Rating</string>
-    <string name="fun_rating">Fun Rating</string>
+    <string name="workload_rating">Workload</string>
+    <string name="fun_rating">Fun</string>
     <string name="logout">LOGOUT</string>
     <string name="search">search</string>
     <string name="prompt_select_course">Select a course</string>

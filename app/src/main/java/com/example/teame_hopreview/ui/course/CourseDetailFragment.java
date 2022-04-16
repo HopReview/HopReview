@@ -107,35 +107,36 @@ public class CourseDetailFragment extends Fragment {
         knowStars[3] = (ImageView) myView.findViewById(R.id.det_know_4);
         knowStars[4] = (ImageView) myView.findViewById(R.id.det_know_5);
 
+        context = getActivity().getApplicationContext();
+        myAct = (MainActivity) getActivity();
+
         for (int i = 0; i < 5; i++) {
             if (i < courseItem.getAverageRating()) {
-                avgStars[i].setVisibility(View.VISIBLE);
+                avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 // just for now, until we implement professors
-                gradeStars[i].setVisibility(View.VISIBLE);
-                knowStars[i].setVisibility(View.VISIBLE);
+                gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
+                knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
-                avgStars[i].setVisibility(View.INVISIBLE);
+                avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
                 // just for now, until we implement professors
-                gradeStars[i].setVisibility(View.INVISIBLE);
-                knowStars[i].setVisibility(View.INVISIBLE);
+                gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
+                knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
 
             if (i < courseItem.getWorkloadRating()) {
-                workStars[i].setVisibility(View.VISIBLE);
+                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
-                workStars[i].setVisibility(View.INVISIBLE);
+                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
 
             if (i < courseItem.getFunRating()) {
-                workStars[i].setVisibility(View.VISIBLE);
+                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
-                workStars[i].setVisibility(View.INVISIBLE);
+                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
         }
 
-        context = getActivity().getApplicationContext();
 
-        myAct = (MainActivity) getActivity();
         myList = (RecyclerView) myView.findViewById(R.id.recyclerView);
         myCard = (CardView) myView.findViewById(R.id.review_card);
         myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton);
@@ -145,9 +146,12 @@ public class CourseDetailFragment extends Fragment {
 
         myList.setAdapter(ra);
         myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+        myReviews.addAll(courseItem.getReviews());
+        System.out.println("reviewcount: " + courseItem.getReviews().size());
 
+        ra.notifyDataSetChanged();
 
-        dbref.addValueEventListener(new ValueEventListener() {
+        /*dbref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -171,7 +175,7 @@ public class CourseDetailFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
+        });*/
 
         myFab.setOnClickListener(new View.OnClickListener() {
             @Override
