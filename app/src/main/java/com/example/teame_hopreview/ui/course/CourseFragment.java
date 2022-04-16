@@ -57,7 +57,7 @@ public class CourseFragment extends Fragment {
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");
         System.out.println("Reached here");
-        myList = (RecyclerView) myView.findViewById(R.id.myList);
+        myList = (RecyclerView) myView.findViewById(R.id.myListProf);
         myCard = (CardView) myView.findViewById(R.id.course_card);
         myCourses = new ArrayList<CourseItem>();
         myCoursesCopy = new ArrayList<CourseItem>();
@@ -139,7 +139,7 @@ public class CourseFragment extends Fragment {
                                     c2++;
                                 }
                             }
-                            reviewItem = new ReviewItem(revAvgRate,date,firstRating,reviewerContent,reviewerName,secondRating);
+                            reviewItem = new ReviewItem(revAvgRate, date, firstRating, reviewerContent, reviewerName, secondRating);
                             myReviews.add(reviewItem);
                         } else if (counter == 8) {
                             workRate = item.getValue(Integer.class);
@@ -190,7 +190,6 @@ public class CourseFragment extends Fragment {
         });
 
     }
-
 
 
 }

@@ -14,10 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
+import com.example.teame_hopreview.ReviewItem;
 import com.example.teame_hopreview.ui.course.CourseAdapter;
 import com.example.teame_hopreview.ui.course.CourseItem;
 import com.google.firebase.database.DataSnapshot;
@@ -30,60 +32,141 @@ import java.util.ArrayList;
 
 public class ProfessorFragment extends Fragment {
 
-    private static final String TAG = "DB_REF: ";
+    private static final String TAG = "dbref: ";
 
     private RecyclerView myList;
     private CardView myCard;
     private MainActivity myAct;
-    private CourseItem courseItem;
+    private Professor professorItem;
+    private ReviewItem reviewItem;
     protected ArrayList<Professor> myProfessors;
-    private CourseAdapter ca;
+    protected ArrayList<Professor> myProfessorsCopy;
+    protected ArrayList<ReviewItem> myReviews;
+    private ProfessorAdapter pa;
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     Context context;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbref = FirebaseDatabase.getInstance().getReference();
-    }
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_professors, container, false);
+
         context = getActivity().getApplicationContext();
+        dbref = FirebaseDatabase.getInstance().getReference();
+
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Professors");
 
-        myList = (RecyclerView) myView.findViewById(R.id.myList);
-        myCard = (CardView) myView.findViewById(R.id.course_card);
-        myProfessors = new ArrayList<>();
+        myList = (RecyclerView) myView.findViewById(R.id.myListProf);
+        myCard = (CardView) myView.findViewById(R.id.professor_card);
+        myProfessors = new ArrayList<Professor>();
+        myProfessorsCopy = new ArrayList<Professor>();
+        myReviews = new ArrayList<ReviewItem>();
         setHasOptionsMenu(true);
 
-//        ca = new ProfessorAdapter(context, myProfessors);
-//        myList.setAdapter(ca);
+        pa = new ProfessorAdapter(myAct, context, myProfessors, myProfessorsCopy);
 
-//        dbref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                long count = snapshot.getChildrenCount();
-//                Log.d(TAG, "Children count: " + count);
-//                Log.d(TAG, "Client count: " + snapshot.child("clients").getChildrenCount());
-//
-//                myProfessors.clear();
-//                Iterable<DataSnapshot> professors = snapshot.child("professors").getChildren();
-//
-//                for (DataSnapshot prf : professors) {
-//                    myProfessors.add(prf.getValue(Professor.class));
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
+        myList.setAdapter(pa);
+        myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                long count = snapshot.getChildrenCount();
+                Log.d(TAG, "Children count: " + count);
+                Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
+
+                myProfessors.clear();
+                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
+
+                /*
+                for (DataSnapshot crs : courses) {
+                    myReviews.clear();
+//                    System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
+//                    System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
+//                    System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
+//                    System.out.println("CourseNum: " + crs.getValue(CourseItem.class).getCourseNumber());
+//                    System.out.println("CourseDes: " + crs.getValue(CourseItem.class).getDesignation());
+                    Iterable<DataSnapshot> list = crs.getChildren();
+                    String name = " ";
+                    String num = " ";
+                    String course = new String();
+                    String designation = " ";
+                    int avgRate = 0;
+                    int funRate = 0;
+                    int workRate = 0;
+
+                    int revAvgRate = 0;
+                    String date = "";
+                    int firstRating = 0;
+                    String reviewerContent = "";
+                    String reviewerName = "";
+                    int secondRating = 0;
+
+                    int counter = 1;
+                    for (DataSnapshot item : list) {
+                        if (counter == 1) {
+                            avgRate = item.getValue(Integer.class);
+                        } else if (counter == 2) {
+                            designation = item.getValue(String.class);
+                        } else if (counter == 3) {
+                            name = item.getValue(String.class);
+                        } else if (counter == 4) {
+                            num = item.getValue(String.class);
+                        } else if (counter == 5) {
+                            funRate = item.getValue(Integer.class);
+                        } else if (counter == 6) {
+                            course = item.getValue(String.class);
+                        } else if (counter == 7) {
+                            Iterable<DataSnapshot> reviews = item.getChildren();
+                            for (DataSnapshot rev : reviews) {
+                                Iterable<DataSnapshot> rr = rev.getChildren();
+                                int c2 = 1;
+                                for (DataSnapshot r : rr) {
+                                    if (c2 == 1) {
+                                        revAvgRate = r.getValue(Integer.class);
+                                    } else if (c2 == 2) {
+                                        date = r.getValue(String.class);
+                                    } else if (c2 == 3) {
+                                        firstRating = r.getValue(Integer.class);
+                                    } else if (c2 == 4) {
+                                        reviewerContent = r.getValue(String.class);
+                                    } else if (c2 == 5) {
+                                        reviewerName = r.getValue(String.class);
+                                    } else if (c2 == 6) {
+                                        secondRating = r.getValue(Integer.class);
+                                    }
+                                    c2++;
+                                }
+                            }
+                            reviewItem = new ReviewItem(revAvgRate, date, firstRating, reviewerContent, reviewerName, secondRating);
+                            myReviews.add(reviewItem);
+                        } else if (counter == 8) {
+                            workRate = item.getValue(Integer.class);
+                        }
+                        counter++;
+                    }
+
+                    professorItem = new Professor(avgRate, name, num, funRate, course, workRate);
+                    for (ReviewItem r : myReviews) {
+                        professorItem.addReview(r);
+                    }
+                    myProfessors.add(professorItem);
+                    myProfessorsCopy.add(professorItem);
+                }
+
+                pa.notifyDataSetChanged();
+                 */
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
 
         return myView;
     }

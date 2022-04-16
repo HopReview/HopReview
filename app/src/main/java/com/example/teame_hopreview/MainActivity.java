@@ -13,6 +13,8 @@ import com.example.teame_hopreview.ui.course.CourseDetailFragment;
 import com.example.teame_hopreview.ui.course.CourseFragment;
 import com.example.teame_hopreview.ui.course.CourseItem;
 import com.example.teame_hopreview.ui.home.HomeFragment;
+import com.example.teame_hopreview.ui.professors.Professor;
+import com.example.teame_hopreview.ui.professors.ProfessorDetailFragment;
 import com.example.teame_hopreview.ui.professors.ProfessorFragment;
 import com.example.teame_hopreview.ui.profile.ProfileFragment;
 import com.example.teame_hopreview.ui.review.CreateReviewFragment;
@@ -138,6 +140,13 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         transaction = getSupportFragmentManager().beginTransaction();
         CourseDetailFragment courseDetail = new CourseDetailFragment(courseName);
         transaction.replace(R.id.fragment_container, courseDetail).commit();
+        transaction.addToBackStack("createDetailStack");
+    }
+
+    public void openProfessorDetailFragment(Professor profName) {
+        transaction = getSupportFragmentManager().beginTransaction();
+        ProfessorDetailFragment professorDetail = new ProfessorDetailFragment(profName);
+        transaction.replace(R.id.fragment_container, professorDetail).commit();
         transaction.addToBackStack("createDetailStack");
     }
 
