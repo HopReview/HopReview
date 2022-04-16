@@ -14,7 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="125dp">
+        android:layout_height="111dp">
 
         <TextView
             android:id="@+id/reviewer"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="TextView"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textColor="@color/md_theme_light_primary"
             android:textSize="8sp"
             android:textStyle="bold"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="TextView"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textColor="@color/md_theme_light_primary"
             android:textSize="8sp"
             app:layout_constraintBottom_toBottomOf="@+id/review_count"
@@ -66,14 +66,14 @@
 
         <TextView
             android:id="@+id/comment"
-            android:layout_width="309dp"
-            android:layout_height="74dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="322dp"
+            android:layout_height="66dp"
+            android:layout_marginTop="36dp"
             android:text="TextView"
+            android:textAlignment="textStart"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/review_count"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.934" />
