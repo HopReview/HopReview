@@ -20,30 +20,19 @@
 
         <TextView
             android:id="@+id/designation"
-            android:layout_width="36dp"
-            android:layout_height="39dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/circular_background"
+            android:gravity="center"
             android:text="TextView"
-            android:textAlignment="center"
-            android:textColor="@color/md_theme_dark_primaryInverse"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textColor="@color/md_theme_light_onPrimary"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.028"
+            app:layout_constraintEnd_toStartOf="@+id/name_num"
+            app:layout_constraintHorizontal_bias="0.325"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.187" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="97dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.134"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.109" />
 
         <TextView
             android:id="@+id/name_num"
@@ -54,7 +43,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.645"
+            app:layout_constraintHorizontal_bias="0.775"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.1" />
@@ -67,20 +56,10 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.645"
+            app:layout_constraintHorizontal_bias="0.775"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.283" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.424"
-            tools:layout_editor_absoluteX="1dp" />
 
 
         <TextView
@@ -105,9 +84,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintHorizontal_bias="0.500"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.450" />
 
         <ImageView
             android:id="@+id/work_star1"
@@ -116,10 +96,10 @@
             android:src="@drawable/star_filled"
             app:layout_constraintBottom_toBottomOf="@+id/review_count"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.050"
+            app:layout_constraintHorizontal_bias="0.075"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.900"
+            app:layout_constraintVertical_bias="0.875"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -132,7 +112,7 @@
             app:layout_constraintHorizontal_bias="0.450"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.650"
+            app:layout_constraintVertical_bias="0.600"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -145,7 +125,7 @@
             app:layout_constraintHorizontal_bias="0.400"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.650"
+            app:layout_constraintVertical_bias="0.600"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -155,10 +135,10 @@
             android:src="@drawable/star_filled"
             app:layout_constraintBottom_toBottomOf="@+id/review_count"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.500"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.500"
-            app:layout_constraintVertical_bias="0.650"
+            app:layout_constraintVertical_bias="0.600"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -171,7 +151,7 @@
             app:layout_constraintHorizontal_bias="0.550"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.650"
+            app:layout_constraintVertical_bias="0.600"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -184,7 +164,7 @@
             app:layout_constraintHorizontal_bias="0.600"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.650"
+            app:layout_constraintVertical_bias="0.600"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -197,7 +177,7 @@
             app:layout_constraintHorizontal_bias="0.700"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.900"
+            app:layout_constraintVertical_bias="0.875"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -210,7 +190,7 @@
             app:layout_constraintHorizontal_bias="0.750"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.900"
+            app:layout_constraintVertical_bias="0.875"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -223,7 +203,7 @@
             app:layout_constraintHorizontal_bias="0.800"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.900"
+            app:layout_constraintVertical_bias="0.875"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -236,7 +216,7 @@
             app:layout_constraintHorizontal_bias="0.900"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.900"
+            app:layout_constraintVertical_bias="0.875"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -249,7 +229,7 @@
             app:layout_constraintHorizontal_bias="0.850"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.900"
+            app:layout_constraintVertical_bias="0.875"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -259,10 +239,10 @@
             android:src="@drawable/star_filled"
             app:layout_constraintBottom_toBottomOf="@+id/review_count"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.100"
+            app:layout_constraintHorizontal_bias="0.125"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.900"
+            app:layout_constraintVertical_bias="0.875"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -272,10 +252,10 @@
             android:src="@drawable/star_filled"
             app:layout_constraintBottom_toBottomOf="@+id/review_count"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.150"
+            app:layout_constraintHorizontal_bias="0.175"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.900"
+            app:layout_constraintVertical_bias="0.875"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -285,10 +265,10 @@
             android:src="@drawable/star_filled"
             app:layout_constraintBottom_toBottomOf="@+id/review_count"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.200"
+            app:layout_constraintHorizontal_bias="0.225"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.900"
+            app:layout_constraintVertical_bias="0.875"
             app:tint="@color/md_theme_light_primary" />
 
         <ImageView
@@ -298,10 +278,10 @@
             android:src="@drawable/star_filled"
             app:layout_constraintBottom_toBottomOf="@+id/review_count"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.250"
+            app:layout_constraintHorizontal_bias="0.275"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.900"
+            app:layout_constraintVertical_bias="0.875"
             app:tint="@color/md_theme_light_primary" />
 
         <TextView
@@ -316,7 +296,7 @@
             app:layout_constraintHorizontal_bias="0.089"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.769" />
+            app:layout_constraintVertical_bias="0.725" />
 
         <TextView
             android:id="@+id/fun_rating"
@@ -330,6 +310,6 @@
             app:layout_constraintHorizontal_bias="0.836"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.774" />
+            app:layout_constraintVertical_bias="0.725" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
