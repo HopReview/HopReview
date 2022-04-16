@@ -18,8 +18,8 @@ public class Professor extends Profile {
     private ArrayList<ReviewItem> reviews;
     private Map<CourseItem, Map<String, Integer>> mixedRatings;
     private int averageRating;
-    private int funRating;
-    private int workloadRating;
+    private int gRating;
+    private int kRating;
     private String id;
 
     /**
@@ -82,12 +82,12 @@ public class Professor extends Profile {
     public ArrayList<ReviewItem> getReviews() { return this.reviews; }
 
 
-    public int getFunRating() {
-        return funRating;
+    public int getGradeRating() {
+        return gRating;
     }
 
-    public int getWorkloadRating() {
-        return workloadRating;
+    public int getKnowledgeRating() {
+        return kRating;
     }
 
     /**

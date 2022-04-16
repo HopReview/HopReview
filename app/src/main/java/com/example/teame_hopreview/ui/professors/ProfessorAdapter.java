@@ -83,13 +83,13 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.View
             } else {
                 avgStars[i].setVisibility(View.INVISIBLE);
             }
-            if (i < currProfessor.getFunRating()) {
+            if (i < currProfessor.getGradeRating()) {
                 funStars[i].setVisibility(View.VISIBLE);
                 funStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
                 funStars[i].setVisibility(View.INVISIBLE);
             }
-            if (i < currProfessor.getWorkloadRating()) {
+            if (i < currProfessor.getKnowledgeRating()) {
                 workStars[i].setVisibility(View.VISIBLE);
                 workStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {

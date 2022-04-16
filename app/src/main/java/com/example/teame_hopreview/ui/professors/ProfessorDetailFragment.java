@@ -120,13 +120,13 @@ public class ProfessorDetailFragment extends Fragment {
                 knowStars[i].setVisibility(View.INVISIBLE);
             }
 
-            if (i < professor.getWorkloadRating()) {
+            if (i < professor.getKnowledgeRating()) {
                 workStars[i].setVisibility(View.VISIBLE);
             } else {
                 workStars[i].setVisibility(View.INVISIBLE);
             }
 
-            if (i < professor.getFunRating()) {
+            if (i < professor.getGradeRating()) {
                 workStars[i].setVisibility(View.VISIBLE);
             } else {
                 workStars[i].setVisibility(View.INVISIBLE);
