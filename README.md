@@ -18,7 +18,13 @@ Password: hopreviewtest
 You should also be able to create an account, and you'll be
 able to login with the same credentials for future use.
 
-### Tasks Completed
+### Sprint #2 - Tasks Completed
+- Created `My Courses` fragment, adapter, and XML
+- Created `My Reviews` fragment, wrapper, and XML
+- Created `Home Page` and populated with data
+- Populated all pages with data from Firebase
+
+### Sprint #1 - Tasks Completed
 - Created `Course` class, fragment, adapter, and XML
 - Created `Create Review` fragment, wrapper, and XML
 - Created `CreateAccount` and `Login` pages

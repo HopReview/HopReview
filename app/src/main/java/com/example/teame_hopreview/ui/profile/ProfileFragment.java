@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import com.example.teame_hopreview.LoginActivity;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
-import com.example.teame_hopreview.ui.course.MyCoursesFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.switchmaterial.SwitchMaterial;
