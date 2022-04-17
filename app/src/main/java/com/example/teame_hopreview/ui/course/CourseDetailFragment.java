@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -65,6 +66,7 @@ public class CourseDetailFragment extends Fragment {
         TextView courseName = (TextView) myView.findViewById(R.id.course_name);
         TextView courseNum = (TextView) myView.findViewById(R.id.course_num);
         TextView professor = (TextView) myView.findViewById(R.id.teaching_professor);
+        ImageButton bookmark = (ImageButton) myView.findViewById(R.id.bookmark_det);
 
         designation.setText(courseItem.getDesignation());
         courseName.setText(courseItem.getName());
@@ -184,6 +186,14 @@ public class CourseDetailFragment extends Fragment {
                 //intent.putExtra("course_name", courseName);
                 //CourseItem course = (CourseItem) view.getTag();
                 myAct.openMyReview(courseItem.getCourseNumber());
+            }
+        });
+
+        bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TO DO:
+                // IMPLEMENT, change bookmark icon so its filled, etc.
             }
         });
 

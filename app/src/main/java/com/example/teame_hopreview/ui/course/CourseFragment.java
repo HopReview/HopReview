@@ -57,7 +57,7 @@ public class CourseFragment extends Fragment {
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");
         System.out.println("Reached here");
-        myList = (RecyclerView) myView.findViewById(R.id.myListProf);
+        myList = (RecyclerView) myView.findViewById(R.id.myReviewsList);
         myCard = (CardView) myView.findViewById(R.id.course_card);
         myCourses = new ArrayList<CourseItem>();
         myCoursesCopy = new ArrayList<CourseItem>();
