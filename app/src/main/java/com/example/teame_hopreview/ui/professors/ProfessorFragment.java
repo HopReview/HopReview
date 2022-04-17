@@ -20,8 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewItem;
-import com.example.teame_hopreview.ui.course.CourseAdapter;
-import com.example.teame_hopreview.ui.course.CourseItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,7 +57,7 @@ public class ProfessorFragment extends Fragment {
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Professors");
 
-        myList = (RecyclerView) myView.findViewById(R.id.myListProf);
+        myList = (RecyclerView) myView.findViewById(R.id.myReviewsList);
         myCard = (CardView) myView.findViewById(R.id.professor_card);
         myProfessors = new ArrayList<Professor>();
         myProfessorsCopy = new ArrayList<Professor>();
