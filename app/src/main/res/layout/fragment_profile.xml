@@ -10,9 +10,22 @@
         android:id="@+id/logout_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorError"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="500dp"
         android:text="@string/logout" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logout_btn"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="?attr/colorError"
+        android:text="@string/delete_acct" />
 
 </RelativeLayout>
