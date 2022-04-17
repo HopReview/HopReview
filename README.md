@@ -12,6 +12,7 @@ Refer to the `meeting_notes` folder in our GitHub Repository.
 
 ### Account:
 Email: hopreview2022@gmail.com
+
 Password: hopreviewtest
 
 You should also be able to create an account, and you'll be

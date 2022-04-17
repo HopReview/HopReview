@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.teame_hopreview.LoginActivity;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
+import com.example.teame_hopreview.ui.course.MyCoursesFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -43,10 +44,7 @@ public class ProfileFragment extends Fragment {
         myCoursesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-//                Intent intent = new Intent(context, LoginActivity.class);
-//                startActivity(intent);
+                myAct.openMyCourses();
             }
         });
 
