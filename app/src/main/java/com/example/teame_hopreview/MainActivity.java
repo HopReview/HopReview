@@ -1,17 +1,13 @@
 package com.example.teame_hopreview;
 
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.teame_hopreview.ui.course.CourseDetailFragment;
 import com.example.teame_hopreview.ui.course.CourseFragment;
 import com.example.teame_hopreview.ui.course.CourseItem;
+import com.example.teame_hopreview.ui.profile.MyCoursesFragment;
 import com.example.teame_hopreview.ui.home.HomeFragment;
 import com.example.teame_hopreview.ui.professors.Professor;
 import com.example.teame_hopreview.ui.professors.ProfessorDetailFragment;
@@ -20,7 +16,6 @@ import com.example.teame_hopreview.ui.profile.ProfileFragment;
 import com.example.teame_hopreview.ui.review.CreateReviewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -29,12 +24,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.teame_hopreview.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
@@ -150,12 +141,19 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         transaction.addToBackStack("createDetailStack");
     }
 
-    public void openMyReview(String courseName) {
+    public void openCreateReview(String courseName) {
         createReview.reset();
         createReview.setDefaultCourseName(courseName);
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, this.createReview).commit();
         transaction.addToBackStack("createReviewStack");
+    }
+
+    public void openMyCourses() {
+        transaction = getSupportFragmentManager().beginTransaction();
+        MyCoursesFragment myCourses = new MyCoursesFragment();
+        transaction.replace(R.id.fragment_container, myCourses).commit();
+        transaction.addToBackStack("myCoursesStack");
     }
 
 }

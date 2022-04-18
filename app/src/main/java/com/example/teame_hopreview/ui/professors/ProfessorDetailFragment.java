@@ -183,7 +183,7 @@ public class ProfessorDetailFragment extends Fragment {
                 //Intent intent = new Intent(myAct, CreateReview.class);
                 //intent.putExtra("course_name", courseName);
                 //CourseItem course = (CourseItem) view.getTag();
-                myAct.openMyReview(professor.getProfessorName());
+                myAct.openCreateReview(professor.getProfessorName());
             }
         });
 

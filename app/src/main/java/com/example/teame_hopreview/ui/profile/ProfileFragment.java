@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -43,10 +41,7 @@ public class ProfileFragment extends Fragment {
         myCoursesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-//                Intent intent = new Intent(context, LoginActivity.class);
-//                startActivity(intent);
+                myAct.openMyCourses();
             }
         });
 
