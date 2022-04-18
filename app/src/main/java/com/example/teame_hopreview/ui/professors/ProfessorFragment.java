@@ -2,6 +2,7 @@ package com.example.teame_hopreview.ui.professors;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -75,89 +76,91 @@ public class ProfessorFragment extends Fragment {
 
                 long count = snapshot.getChildrenCount();
                 Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
+                Log.d(TAG, "Course count: " + snapshot.child("professors_data").getChildrenCount());
 
                 myProfessors.clear();
-                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
+                Iterable<DataSnapshot> professors = snapshot.child("professors_data").getChildren();
 
-                /*
-                for (DataSnapshot crs : courses) {
+
+                for (DataSnapshot profs : professors) {
                     myReviews.clear();
-//                    System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
-//                    System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
-//                    System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
-//                    System.out.println("CourseNum: " + crs.getValue(CourseItem.class).getCourseNumber());
-//                    System.out.println("CourseDes: " + crs.getValue(CourseItem.class).getDesignation());
-                    Iterable<DataSnapshot> list = crs.getChildren();
-                    String name = " ";
-                    String num = " ";
-                    String course = new String();
-                    String designation = " ";
+                    String professor = profs.getKey();
+                    String department = "";
+                    ArrayList<String> courseNames = new ArrayList<String>();
                     int avgRate = 0;
-                    int funRate = 0;
-                    int workRate = 0;
+                    int gradeRate = 0;
+                    int knowledgeRate = 0;
 
-                    int revAvgRate = 0;
+
                     String date = "";
-                    int firstRating = 0;
+                    int revAvgRate = 0;
+                    int revGradeRate = 0;
+                    int revKnowRate = 0;
                     String reviewerContent = "";
                     String reviewerName = "";
-                    int secondRating = 0;
 
+                    Iterable<DataSnapshot> list = profs.getChildren();
                     int counter = 1;
                     for (DataSnapshot item : list) {
                         if (counter == 1) {
                             avgRate = item.getValue(Integer.class);
                         } else if (counter == 2) {
-                            designation = item.getValue(String.class);
-                        } else if (counter == 3) {
-                            name = item.getValue(String.class);
-                        } else if (counter == 4) {
-                            num = item.getValue(String.class);
-                        } else if (counter == 5) {
-                            funRate = item.getValue(Integer.class);
-                        } else if (counter == 6) {
-                            course = item.getValue(String.class);
-                        } else if (counter == 7) {
-                            Iterable<DataSnapshot> reviews = item.getChildren();
-                            for (DataSnapshot rev : reviews) {
-                                Iterable<DataSnapshot> rr = rev.getChildren();
-                                int c2 = 1;
-                                for (DataSnapshot r : rr) {
-                                    if (c2 == 1) {
-                                        revAvgRate = r.getValue(Integer.class);
-                                    } else if (c2 == 2) {
-                                        date = r.getValue(String.class);
-                                    } else if (c2 == 3) {
-                                        firstRating = r.getValue(Integer.class);
-                                    } else if (c2 == 4) {
-                                        reviewerContent = r.getValue(String.class);
-                                    } else if (c2 == 5) {
-                                        reviewerName = r.getValue(String.class);
-                                    } else if (c2 == 6) {
-                                        secondRating = r.getValue(Integer.class);
-                                    }
-                                    c2++;
-                                }
+                            Iterable<DataSnapshot> crs = item.getChildren();
+                            for (DataSnapshot course : crs) {
+                                courseNames.add(course.getValue(String.class));
                             }
-                            reviewItem = new ReviewItem(revAvgRate, date, firstRating, reviewerContent, reviewerName, secondRating);
-                            myReviews.add(reviewItem);
-                        } else if (counter == 8) {
-                            workRate = item.getValue(Integer.class);
+                        } else if (counter == 3) {
+                            department = item.getValue(String.class);
+                        } else if (counter == 4) {
+                            gradeRate = item.getValue(Integer.class);
+                        } else if (counter == 5) {
+                            knowledgeRate = item.getValue(Integer.class);
+                        } else {
+                            Iterable<DataSnapshot> rev = item.getChildren();
+                            for (DataSnapshot review : rev) {
+                                Iterable<DataSnapshot> currRev = review.getChildren();
+                                int counter2 = 1;
+                                for (DataSnapshot curr : currRev) {
+                                    if (counter2 == 1) {
+                                        revAvgRate = curr.getValue(Integer.class);
+                                    } else if (counter2 == 2) {
+                                        date = curr.getValue(String.class);
+                                    } else if (counter2 == 3) {
+                                        revGradeRate = curr.getValue(Integer.class);
+                                    } else if (counter2 == 4) {
+                                        revKnowRate = curr.getValue(Integer.class);
+                                    } else if (counter2 == 5) {
+                                        reviewerContent = curr.getValue(String.class);
+                                    } else {
+                                        reviewerName = curr.getValue(String.class);
+                                    }
+
+                                    counter2++;
+                                }
+
+                                reviewItem = new ReviewItem(revAvgRate, date, revGradeRate, reviewerContent, reviewerName, revKnowRate);
+                                myReviews.add(reviewItem);
+                            }
                         }
+
                         counter++;
                     }
+                    professorItem = new Professor(professor, department, gradeRate, knowledgeRate, avgRate);
 
-                    professorItem = new Professor(avgRate, name, num, funRate, course, workRate);
-                    for (ReviewItem r : myReviews) {
-                        professorItem.addReview(r);
+                    for (ReviewItem review : myReviews) {
+                        professorItem.addReview(review);
                     }
+
+                    for (String str : courseNames) {
+                        professorItem.addCourseNames(str);
+                    }
+
                     myProfessors.add(professorItem);
                     myProfessorsCopy.add(professorItem);
                 }
 
                 pa.notifyDataSetChanged();
-                 */
+
             }
 
             @Override
