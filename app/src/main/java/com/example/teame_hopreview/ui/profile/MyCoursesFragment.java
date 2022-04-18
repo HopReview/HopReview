@@ -1,4 +1,4 @@
-package com.example.teame_hopreview.ui.course;
+package com.example.teame_hopreview.ui.profile;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,30 +9,29 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.teame_hopreview.ReviewItem;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
+import com.example.teame_hopreview.ReviewItem;
+import com.example.teame_hopreview.ui.course.CourseAdapter;
+import com.example.teame_hopreview.ui.course.CourseItem;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CourseFragment extends Fragment {
+public class MyCoursesFragment extends Fragment {
 
     private static final String TAG = "dbref: ";
 
-    private RecyclerView myList;
     private CardView myCard;
     private MainActivity myAct;
     private CourseItem courseItem;
@@ -49,7 +48,7 @@ public class CourseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View myView = inflater.inflate(R.layout.frag_course, container, false);
+        View myView = inflater.inflate(R.layout.frag_my_courses, container, false);
 
         context = getActivity().getApplicationContext();
         dbref = FirebaseDatabase.getInstance().getReference();
@@ -57,7 +56,6 @@ public class CourseFragment extends Fragment {
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");
         System.out.println("Reached here");
-        myList = (RecyclerView) myView.findViewById(R.id.myReviewsList);
         myCard = (CardView) myView.findViewById(R.id.course_card);
         myCourses = new ArrayList<CourseItem>();
         myCoursesCopy = new ArrayList<CourseItem>();
@@ -65,9 +63,6 @@ public class CourseFragment extends Fragment {
         setHasOptionsMenu(true);
 
         ca = new CourseAdapter(myAct, context, myCourses, myCoursesCopy);
-
-        myList.setAdapter(ca);
-        myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
         dbref.addValueEventListener(new ValueEventListener() {
             @Override

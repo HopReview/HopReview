@@ -235,7 +235,7 @@
         android:id="@+id/det_avg_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="72dp"
         android:src="@drawable/star_filled"
         app:layout_constraintBottom_toBottomOf="@+id/review_count"
         app:layout_constraintEnd_toEndOf="parent"
@@ -249,7 +249,7 @@
         android:id="@+id/det_avg_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="72dp"
         android:src="@drawable/star_filled"
         app:layout_constraintBottom_toBottomOf="@+id/review_count"
         app:layout_constraintEnd_toEndOf="parent"
@@ -263,7 +263,7 @@
         android:id="@+id/det_avg_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="72dp"
         android:src="@drawable/star_filled"
         app:layout_constraintBottom_toBottomOf="@+id/review_count"
         app:layout_constraintEnd_toEndOf="parent"
@@ -277,7 +277,7 @@
         android:id="@+id/det_avg_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="72dp"
         android:src="@drawable/star_filled"
         app:layout_constraintBottom_toBottomOf="@+id/review_count"
         app:layout_constraintEnd_toEndOf="parent"
@@ -291,7 +291,7 @@
         android:id="@+id/det_avg_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="72dp"
         android:src="@drawable/star_filled"
         app:layout_constraintBottom_toBottomOf="@+id/review_count"
         app:layout_constraintEnd_toEndOf="parent"
@@ -417,7 +417,7 @@
         android:id="@+id/avg_rating_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="92dp"
         android:text="@string/average_rating"
         android:textAlignment="center"
         android:textSize="10sp"
@@ -426,7 +426,7 @@
         app:layout_constraintHorizontal_bias="0.938"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.100" />
+        app:layout_constraintVertical_bias="0.300" />
 
     <TextView
         android:id="@+id/textView10"
@@ -570,5 +570,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+    <ImageButton
+        android:id="@+id/bookmark_det"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.964"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/bookmark_unfilled_xml" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

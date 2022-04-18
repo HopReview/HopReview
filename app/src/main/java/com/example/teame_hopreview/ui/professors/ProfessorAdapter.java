@@ -56,44 +56,48 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.View
     public void onBindViewHolder(@NonNull ProfessorAdapter.ViewHolder holder, int position) {
         Professor currProfessor = professorData.get(position);
         holder.getInitials().setText(currProfessor.getInitials());
-        System.out.println(currProfessor.getProfessorName());
-        holder.getNameNum().setText(currProfessor.getProfessorName() + "\n" + currProfessor.getDepartment());
+        holder.getName().setText(currProfessor.getProfessorName());
+        holder.getDepartment().setText(currProfessor.getDepartment());
+        ArrayList<String> courseNames = currProfessor.getCourseNames();
 
-        String prof = currProfessor.getCourse();
+        StringBuilder courseNamesStr = new StringBuilder();
+        int counter = 0;
+        for (String course : courseNames) {
+            if (counter != 0) {
+                courseNamesStr.append(" / ");
+            }
+            courseNamesStr.append(course);
+            counter++;
+        }
 
-        /*StringBuilder profNamesStr = new StringBuilder();
-        for (Professor prof : professors) {
-            profNamesStr.append(prof.getProfessorName()).append(" / ");
-        }*/
 
+        holder.getCourseNames().setText(courseNamesStr);
 
-        holder.getProfessorNames().setText(prof);
-
-
-        // holder.getReviewNum().setText(currProfessor.getReviews().size() + " reviews");
 
         ImageView[] avgStars = holder.getAvgImages();
-        ImageView[] workStars = holder.getWorkImages();
-        ImageView[] funStars = holder.getFunImages();
+        ImageView[] gradeStars = holder.getGradeImages();
+        ImageView[] knowStars = holder.getKnowImages();
+
+        context = mainActivity.getApplicationContext();
 
         for (int i = 0; i < 5; i++) {
             if (i < currProfessor.getAverageRating()) {
-                avgStars[i].setVisibility(View.VISIBLE);
+                avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 avgStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
-                avgStars[i].setVisibility(View.INVISIBLE);
+                avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
             if (i < currProfessor.getGradeRating()) {
-                funStars[i].setVisibility(View.VISIBLE);
-                funStars[i].setColorFilter(R.color.md_theme_light_primary);
+                gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
+                gradeStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
-                funStars[i].setVisibility(View.INVISIBLE);
+                gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
             if (i < currProfessor.getKnowledgeRating()) {
-                workStars[i].setVisibility(View.VISIBLE);
-                workStars[i].setColorFilter(R.color.md_theme_light_primary);
+                knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
+                knowStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
-                workStars[i].setVisibility(View.INVISIBLE);
+                knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
         }
 
@@ -122,56 +126,42 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView initial;
-        private final TextView nameNum;
-        private final TextView professorNames;
+        private final TextView department;
+        private final TextView name;
+        private final TextView courseNames;
         private final TextView reviewNum;
         private final ImageView avgStar1, avgStar2, avgStar3, avgStar4, avgStar5;
-        private final ImageView workStar1, workStar2, workStar3, workStar4, workStar5;
-        private final ImageView funStar1, funStar2, funStar3, funStar4, funStar5;
+        private final ImageView gradeStar1, gradeStar2, gradeStar3, gradeStar4, gradeStar5;
+        private final ImageView knowStar1, knowStar2, knowStar3, knowStar4, knowStar5;
 
 
         public ViewHolder(@NonNull View professorView) {
             super(professorView);
 
-            initial = (TextView) professorView.findViewById(R.id.initials);
-            nameNum = (TextView) professorView.findViewById(R.id.name_numProf);
-            professorNames = (TextView) professorView.findViewById(R.id.course_names);
+            initial = (TextView) professorView.findViewById(R.id.initialsProf);
+            name = (TextView) professorView.findViewById(R.id.nameProf);
+            department = (TextView) professorView.findViewById(R.id.department);
+            courseNames = (TextView) professorView.findViewById(R.id.course_names);
             reviewNum = (TextView) professorView.findViewById(R.id.review_countProf);
 
-            avgStar1 = (ImageView) professorView.findViewById(R.id.avg_star1Prof);
-            avgStar2 = (ImageView) professorView.findViewById(R.id.avg_star2Prof);
-            avgStar3 = (ImageView) professorView.findViewById(R.id.avg_star3Prof);
-            avgStar4 = (ImageView) professorView.findViewById(R.id.avg_star4Prof);
-            avgStar5 = (ImageView) professorView.findViewById(R.id.avg_star5Prof);
+            avgStar1 = (ImageView) professorView.findViewById(R.id.avg_star1ProfItem);
+            avgStar2 = (ImageView) professorView.findViewById(R.id.avg_star2ProfItem);
+            avgStar3 = (ImageView) professorView.findViewById(R.id.avg_star3ProfItem);
+            avgStar4 = (ImageView) professorView.findViewById(R.id.avg_star4ProfItem);
+            avgStar5 = (ImageView) professorView.findViewById(R.id.avg_star5ProfItem);
 
-            workStar1 = (ImageView) professorView.findViewById(R.id.work_star1Prof);
-            workStar2 = (ImageView) professorView.findViewById(R.id.work_star2Prof);
-            workStar3 = (ImageView) professorView.findViewById(R.id.work_star3Prof);
-            workStar4 = (ImageView) professorView.findViewById(R.id.work_star4Prof);
-            workStar5 = (ImageView) professorView.findViewById(R.id.work_star5Prof);
+            gradeStar1 = (ImageView) professorView.findViewById(R.id.grade_star1ProfItem);
+            gradeStar2 = (ImageView) professorView.findViewById(R.id.grade_star2ProfItem);
+            gradeStar3 = (ImageView) professorView.findViewById(R.id.grade_star3ProfItem);
+            gradeStar4 = (ImageView) professorView.findViewById(R.id.grade_star4ProfItem);
+            gradeStar5 = (ImageView) professorView.findViewById(R.id.grade_star5ProfItem);
 
-            funStar1 = (ImageView) professorView.findViewById(R.id.fun_star1Prof);
-            funStar2 = (ImageView) professorView.findViewById(R.id.fun_star2Prof);
-            funStar3 = (ImageView) professorView.findViewById(R.id.fun_star3Prof);
-            funStar4 = (ImageView) professorView.findViewById(R.id.fun_star4Prof);
-            funStar5 = (ImageView) professorView.findViewById(R.id.fun_star5Prof);
+            knowStar1 = (ImageView) professorView.findViewById(R.id.know_star1ProfItem);
+            knowStar2 = (ImageView) professorView.findViewById(R.id.know_star2ProfItem);
+            knowStar3 = (ImageView) professorView.findViewById(R.id.know_star3ProfItem);
+            knowStar4 = (ImageView) professorView.findViewById(R.id.know_star4ProfItem);
+            knowStar5 = (ImageView) professorView.findViewById(R.id.know_star5ProfItem);
 
-
-            avgStar1.setVisibility(View.INVISIBLE);
-            avgStar2.setVisibility(View.INVISIBLE);
-            avgStar3.setVisibility(View.INVISIBLE);
-            avgStar4.setVisibility(View.INVISIBLE);
-            avgStar5.setVisibility(View.INVISIBLE);
-            workStar1.setVisibility(View.INVISIBLE);
-            workStar2.setVisibility(View.INVISIBLE);
-            workStar3.setVisibility(View.INVISIBLE);
-            workStar4.setVisibility(View.INVISIBLE);
-            workStar5.setVisibility(View.INVISIBLE);
-            funStar1.setVisibility(View.INVISIBLE);
-            funStar2.setVisibility(View.INVISIBLE);
-            funStar3.setVisibility(View.INVISIBLE);
-            funStar4.setVisibility(View.INVISIBLE);
-            funStar5.setVisibility(View.INVISIBLE);
 
         }
 
@@ -179,12 +169,14 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.View
             return initial;
         }
 
-        public TextView getNameNum() {
-            return nameNum;
+        public TextView getName() {
+            return name;
         }
 
-        public TextView getProfessorNames() {
-            return professorNames;
+        public TextView getDepartment() { return department; }
+
+        public TextView getCourseNames() {
+            return courseNames;
         }
 
         public TextView getReviewNum() {
@@ -202,26 +194,26 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.View
             return avg;
         }
 
-        public ImageView[] getWorkImages() {
-            ImageView[] work = new ImageView[5];
-            work[0] = workStar1;
-            work[1] = workStar2;
-            work[2] = workStar3;
-            work[3] = workStar4;
-            work[4] = workStar5;
+        public ImageView[] getGradeImages() {
+            ImageView[] grade = new ImageView[5];
+            grade[0] = gradeStar1;
+            grade[1] = gradeStar2;
+            grade[2] = gradeStar3;
+            grade[3] = gradeStar4;
+            grade[4] = gradeStar5;
 
-            return work;
+            return grade;
         }
 
-        public ImageView[] getFunImages() {
-            ImageView[] fun = new ImageView[5];
-            fun[0] = funStar1;
-            fun[1] = funStar2;
-            fun[2] = funStar3;
-            fun[3] = funStar4;
-            fun[4] = funStar5;
+        public ImageView[] getKnowImages() {
+            ImageView[] know = new ImageView[5];
+            know[0] = knowStar1;
+            know[1] = knowStar2;
+            know[2] = knowStar3;
+            know[3] = knowStar4;
+            know[4] = knowStar5;
 
-            return fun;
+            return know;
         }
     }
 

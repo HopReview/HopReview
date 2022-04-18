@@ -69,7 +69,7 @@ public class ProfessorDetailFragment extends Fragment {
         initials.setText(professor.getInitials());
         courseName.setText(professor.getProfessorName());
         department.setText(professor.getDepartment());
-        professorView.setText("Taught by: " + professor.getCourse());
+        professorView.setText("Teaches: " + professor.getCourseNames());
 
         ImageView[] avgStars = new ImageView[5];
         ImageView[] workStars = new ImageView[5];
@@ -183,11 +183,9 @@ public class ProfessorDetailFragment extends Fragment {
                 //Intent intent = new Intent(myAct, CreateReview.class);
                 //intent.putExtra("course_name", courseName);
                 //CourseItem course = (CourseItem) view.getTag();
-                myAct.openMyReview(professor.getProfessorName());
+                myAct.openCreateReview(professor.getProfessorName());
             }
         });
-
-
 
         return myView;
     }
