@@ -82,11 +82,6 @@ public class CourseFragment extends Fragment {
 
                 for (DataSnapshot crs : courses) {
                     myReviews.clear();
-//                    System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
-//                    System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
-//                    System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
-//                    System.out.println("CourseNum: " + crs.getValue(CourseItem.class).getCourseNumber());
-//                    System.out.println("CourseDes: " + crs.getValue(CourseItem.class).getDesignation());
                     Iterable<DataSnapshot> list = crs.getChildren();
                     String name = " ";
                     String num = " ";

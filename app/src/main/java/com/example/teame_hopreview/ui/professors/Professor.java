@@ -14,6 +14,7 @@ public class Professor extends Profile {
     private String professorName;
     private String department;
     private ArrayList<CourseItem> courses;
+    private ArrayList<String> courseNames;
     private String course;
     private ArrayList<ReviewItem> reviews;
     private Map<CourseItem, Map<String, Integer>> mixedRatings;
@@ -31,27 +32,26 @@ public class Professor extends Profile {
      * Constructor to create a Professor object
      * @param name : indicating the Professor's name
      * @param department : indicating the department of the Professor
-     * @param courses :  indicating the courses taught by the Professor
      */
-    public Professor(String name, String department,
-                     ArrayList<CourseItem> courses) {
+    public Professor(String name, String department, int grading, int knowledge, int avg) {
         this.professorName = name;
         this.department = department;
         // TODO: might remove courses parameter as requirement
-        this.courses = courses;
         String[] names = name.split(" ");
+        this.initials = "";
+        this.reviews = new ArrayList<>();
+        this.courseNames = new ArrayList<>();
 
         for (String s : names) {
-            initials.concat(String.valueOf(s.charAt(0)));
+            initials += String.valueOf(s.charAt(0));
         }
 
-        Map<String, Integer> emptyRatings = getEmptyMap();
-        for (CourseItem crs : Collections.unmodifiableList(courses)) {
-            mixedRatings.put(crs, emptyRatings);
-        }
+        this.gRating = grading;
+        this.kRating = knowledge;
+        this.averageRating = avg;
     }
 
-    public String getCourse() { return this.course; }
+    public ArrayList<String> getCourseNames() { return this.courseNames; }
 
 
     public String getInitials() { return this.initials; }
@@ -88,6 +88,14 @@ public class Professor extends Profile {
 
     public int getKnowledgeRating() {
         return kRating;
+    }
+
+    public void addReview(ReviewItem rev) {
+        reviews.add(rev);
+    }
+
+    public void addCourseNames(String name) {
+        courseNames.add(name);
     }
 
     /**
@@ -190,10 +198,6 @@ public class Professor extends Profile {
         return averageRating;
     }
 
-
-    public void addReview(ReviewItem newReview) {
-        reviews.add(newReview);
-    }
 
 
     /**
