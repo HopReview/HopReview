@@ -408,6 +408,7 @@
         android:layout_marginTop="28dp"
         android:text="TextView"
         android:textAlignment="textStart"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.425"
         app:layout_constraintStart_toStartOf="parent"
@@ -544,12 +545,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewProf"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/plus" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewProf"
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:layout_marginTop="348dp"
@@ -569,7 +570,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewProf" />
 
     <ImageButton
         android:id="@+id/bookmark_det"
