@@ -8,6 +8,8 @@
     <string name="title_professors">Professors</string>
     <string name="title_profile">Profile</string>
     <string name="title_activity_login">HopReview</string>
+    <string name="recently_viewed">Recently Viewed</string>
+    <string name="recent_reviews">Recent Reviews</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_confirm_email">Confirm Email</string>
     <string name="prompt_username">Username</string>
