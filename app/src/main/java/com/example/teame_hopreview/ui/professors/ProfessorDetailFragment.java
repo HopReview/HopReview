@@ -18,7 +18,6 @@ import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewAdapter;
 import com.example.teame_hopreview.ReviewItem;
-import com.example.teame_hopreview.ui.course.CourseItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +41,8 @@ public class ProfessorDetailFragment extends Fragment {
     String professorName;
     private ReviewAdapter ra;
     DatabaseReference dbref;
+    private int workRate;
+    private int funRate;
 
     public ProfessorDetailFragment(Professor prof) {
         this.professor = prof;
@@ -69,8 +70,85 @@ public class ProfessorDetailFragment extends Fragment {
         initials.setText(professor.getInitials());
         courseName.setText(professor.getProfessorName());
         department.setText(professor.getDepartment());
-        professorView.setText("Teaches: " + professor.getCourseNames());
 
+        // implement later with a spinner
+        professorView.setText("Teaches: " + professor.getCourseNames());
+        String specificCourse = professor.getCourseNames().get(0);
+
+
+
+        myAct = (MainActivity) getActivity();
+        context = myAct.getApplicationContext();
+
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long count = snapshot.getChildrenCount();
+                Log.d(TAG, "Children count: " + count);
+                Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
+
+                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
+
+                for (DataSnapshot crs : courses) {
+                    Iterable<DataSnapshot> list = crs.getChildren();
+                    int counter = 1;
+                    boolean isCourse = false;
+                    for (DataSnapshot item : list) {
+                        if (isCourse) {
+                            if (counter == 5) {
+                                funRate = item.getValue(Integer.class);
+                            } else if (counter == 8) {
+                                workRate = item.getValue(Integer.class);
+                            }
+                        } else if (counter == 3) {
+                            if (item.getValue(String.class).equals(specificCourse)) {
+                                isCourse = true;
+                            }
+                        } else if (counter > 3) {
+                            break;
+                        }
+                        counter++;
+                    }
+
+                }
+                setRatesHelper(myView);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+        myList = (RecyclerView) myView.findViewById(R.id.recyclerViewProf);
+        myCard = (CardView) myView.findViewById(R.id.review_card);
+        myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton2);
+        myReviews = new ArrayList<ReviewItem>();
+
+        ra = new ReviewAdapter(myAct, context, myReviews);
+
+        myList.setAdapter(ra);
+        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+        myReviews.addAll(professor.getReviews());
+
+        ra.notifyDataSetChanged();
+
+
+        myFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(myAct, CreateReview.class);
+                //intent.putExtra("course_name", courseName);
+                //CourseItem course = (CourseItem) view.getTag();
+                myAct.openCreateReview(professor.getProfessorName());
+            }
+        });
+
+        return myView;
+    }
+
+
+    public void setRatesHelper(View myView) {
         ImageView[] avgStars = new ImageView[5];
         ImageView[] workStars = new ImageView[5];
         ImageView[] funStars = new ImageView[5];
@@ -109,84 +187,34 @@ public class ProfessorDetailFragment extends Fragment {
 
         for (int i = 0; i < 5; i++) {
             if (i < professor.getAverageRating()) {
-                avgStars[i].setVisibility(View.VISIBLE);
-                // just for now, until we implement professors
-                gradeStars[i].setVisibility(View.VISIBLE);
-                knowStars[i].setVisibility(View.VISIBLE);
+                avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
-                avgStars[i].setVisibility(View.INVISIBLE);
-                // just for now, until we implement professors
-                gradeStars[i].setVisibility(View.INVISIBLE);
-                knowStars[i].setVisibility(View.INVISIBLE);
+                avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
+            }
+
+            if (i < funRate) {
+                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
+            } else {
+                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
+            }
+
+            if (i < workRate) {
+                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
+            } else {
+                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
 
             if (i < professor.getKnowledgeRating()) {
-                workStars[i].setVisibility(View.VISIBLE);
+                knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
-                workStars[i].setVisibility(View.INVISIBLE);
+                knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
 
             if (i < professor.getGradeRating()) {
-                workStars[i].setVisibility(View.VISIBLE);
+                gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
-                workStars[i].setVisibility(View.INVISIBLE);
+                gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
         }
-
-        context = getActivity().getApplicationContext();
-
-        myAct = (MainActivity) getActivity();
-        myList = (RecyclerView) myView.findViewById(R.id.recyclerViewProf);
-        myCard = (CardView) myView.findViewById(R.id.review_card);
-        myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton2);
-        myReviews = new ArrayList<ReviewItem>();
-
-        ra = new ReviewAdapter(myAct, context, myReviews);
-
-        myList.setAdapter(ra);
-        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
-        myReviews.addAll(professor.getReviews());
-
-        ra.notifyDataSetChanged();
-
-
-
-        /*dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Courses count: " + snapshot.child("courses_data").getChildrenCount());
-
-                myReviews.clear();
-                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
-                System.out.println("NAME VALUE " + professor.getProfessorName());
-
-                if (professor != null && professor.getReviews() != null && !professor.getReviews().isEmpty()) {
-                    myReviews = professor.getReviews();
-                    System.out.println("DATE VALUE " + professor.getReviews().get(0).getReviewContent());
-                }
-
-                ra.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });*/
-
-        myFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent intent = new Intent(myAct, CreateReview.class);
-                //intent.putExtra("course_name", courseName);
-                //CourseItem course = (CourseItem) view.getTag();
-                myAct.openCreateReview(professor.getProfessorName());
-            }
-        });
-
-        return myView;
     }
 }

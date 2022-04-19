@@ -37,6 +37,8 @@ public class CourseDetailFragment extends Fragment {
     private MainActivity myAct;
     private FloatingActionButton myFab;
     private CourseItem courseItem;
+    private int gradeRate;
+    private int knowledgeRate;
     private ReviewItem ReviewItem;
     protected ArrayList<ReviewItem> myReviews;
     Context context;
@@ -71,8 +73,90 @@ public class CourseDetailFragment extends Fragment {
         designation.setText(courseItem.getDesignation());
         courseName.setText(courseItem.getName());
         courseNum.setText(courseItem.getCourseNumber());
+
+        // implement later with a spinner
         professor.setText("Taught by: " + courseItem.getProfessors());
 
+
+        myAct = (MainActivity) getActivity();
+        context = myAct.getApplicationContext();
+
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long count = snapshot.getChildrenCount();
+                Log.d(TAG, "Children count: " + count);
+                Log.d(TAG, "Professor count: " + snapshot.child("professors_data").getChildrenCount());
+
+                Iterable<DataSnapshot> professors = snapshot.child("professors_data").getChildren();
+
+
+                for (DataSnapshot profs : professors) {
+                    String professor = profs.getKey();
+                    if (professor.equals(courseItem.getProfessors())) {
+                        Iterable<DataSnapshot> list = profs.getChildren();
+                        int counter = 1;
+                        for (DataSnapshot item : list) {
+                            if (counter == 4) {
+                                gradeRate = item.getValue(Integer.class);
+                                System.out.println("This is the grade rating: " + gradeRate);
+                            } else if (counter == 5) {
+                                knowledgeRate = item.getValue(Integer.class);
+                                System.out.println("This is the knowledge rating: " + knowledgeRate);
+                            }
+                            counter++;
+                        }
+                        break;
+                    }
+                }
+
+                setRatesHelper(myView);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+        myList = (RecyclerView) myView.findViewById(R.id.recyclerViewProf);
+        myCard = (CardView) myView.findViewById(R.id.review_card);
+        myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton);
+        myReviews = new ArrayList<ReviewItem>();
+
+        ra = new ReviewAdapter(myAct, context, myReviews);
+
+        myList.setAdapter(ra);
+        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+        myReviews.addAll(courseItem.getReviews());
+
+        ra.notifyDataSetChanged();
+
+
+        myFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(myAct, CreateReview.class);
+                //intent.putExtra("course_name", courseName);
+                //CourseItem course = (CourseItem) view.getTag();
+                myAct.openCreateReview(courseItem.getCourseNumber());
+            }
+        });
+
+        bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TO DO:
+                // IMPLEMENT, change bookmark icon so its filled, etc.
+            }
+        });
+
+
+
+        return myView;
+    }
+
+    public void setRatesHelper(View myView) {
         ImageView[] avgStars = new ImageView[5];
         ImageView[] workStars = new ImageView[5];
         ImageView[] funStars = new ImageView[5];
@@ -109,19 +193,23 @@ public class CourseDetailFragment extends Fragment {
         knowStars[3] = (ImageView) myView.findViewById(R.id.det_know_4);
         knowStars[4] = (ImageView) myView.findViewById(R.id.det_know_5);
 
-        context = getActivity().getApplicationContext();
-        myAct = (MainActivity) getActivity();
-
         for (int i = 0; i < 5; i++) {
+            System.out.println("I've reached here for some reason");
             if (i < courseItem.getAverageRating()) {
                 avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
-                // just for now, until we implement professors
-                gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
-                knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
                 avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
-                // just for now, until we implement professors
+            }
+
+            if (i < gradeRate) {
+                gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
+            } else {
                 gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
+            }
+
+            if (i < knowledgeRate) {
+                knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
+            } else {
                 knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
 
@@ -132,73 +220,10 @@ public class CourseDetailFragment extends Fragment {
             }
 
             if (i < courseItem.getFunRating()) {
-                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
+                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
-                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
+                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
         }
-
-
-        myList = (RecyclerView) myView.findViewById(R.id.recyclerView);
-        myCard = (CardView) myView.findViewById(R.id.review_card);
-        myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton);
-        myReviews = new ArrayList<ReviewItem>();
-
-        ra = new ReviewAdapter(myAct, context, myReviews);
-
-        myList.setAdapter(ra);
-        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
-        myReviews.addAll(courseItem.getReviews());
-        System.out.println("reviewcount: " + courseItem.getReviews().size());
-
-        ra.notifyDataSetChanged();
-
-        /*dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Courses count: " + snapshot.child("courses_data").getChildrenCount());
-
-                myReviews.clear();
-                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
-                System.out.println("NAME VALUE " + courseItem.getName());
-
-                if (courseItem != null && courseItem.getReviews() != null && !courseItem.getReviews().isEmpty()) {
-                    myReviews = courseItem.getReviews();
-                    System.out.println("DATE VALUE " + courseItem.getReviews().get(0).getReviewContent());
-                }
-
-                ra.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });*/
-
-        myFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent intent = new Intent(myAct, CreateReview.class);
-                //intent.putExtra("course_name", courseName);
-                //CourseItem course = (CourseItem) view.getTag();
-                myAct.openCreateReview(courseItem.getCourseNumber());
-            }
-        });
-
-        bookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TO DO:
-                // IMPLEMENT, change bookmark icon so its filled, etc.
-            }
-        });
-
-
-
-        return myView;
     }
 }
