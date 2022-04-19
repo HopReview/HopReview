@@ -184,13 +184,12 @@ public class ProfessorFragment extends Fragment {
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                System.out.println("search query submit");
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                System.out.println("tap");
+                pa.getFilter().filter(newText);
                 return false;
             }
         });
