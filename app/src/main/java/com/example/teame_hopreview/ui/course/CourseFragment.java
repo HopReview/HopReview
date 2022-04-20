@@ -41,7 +41,6 @@ public class CourseFragment extends Fragment {
     protected ArrayList<CourseItem> myCoursesCopy;
     protected ArrayList<ReviewItem> myReviews;
     private CourseAdapter ca;
-    private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     Context context;
 

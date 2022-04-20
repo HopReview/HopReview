@@ -146,8 +146,8 @@ public class CourseDetailFragment extends Fragment {
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TO DO:
-                // IMPLEMENT, change bookmark icon so its filled, etc.
+                // TODO: IMPLEMENT, change bookmark icon so its filled, etc.
+
             }
         });
 
