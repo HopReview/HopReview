@@ -30,14 +30,14 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
     private MainActivity mainActivity;
     Context context;
 
-    private final View.OnClickListener bookmarkListener = (view) -> {
-        CourseItem course = (CourseItem) view.getTag();
-
-        // TODO: add to user's dataset
-
-        Toast.makeText(mainActivity, "COURSE SAVED",
-                Toast.LENGTH_LONG).show();
-    };
+//    private final View.OnClickListener bookmarkListener = (view) -> {
+//        CourseItem course = (CourseItem) view.getTag();
+//
+//        // TODO: add to user's dataset
+//
+//        Toast.makeText(mainActivity, "COURSE SAVED",
+//                Toast.LENGTH_LONG).show();
+//    };
 
 
     private final View.OnClickListener mOnClickListener = (view) -> {
@@ -106,8 +106,7 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
         private final TextView name;
         private final TextView professorNames;
         private final ImageView avgStar1, avgStar2, avgStar3, avgStar4, avgStar5;
-//        private final ImageButton bookmark;
-
+        // private final ImageButton bookmark;
 
         public ViewHolder(@NonNull View courseView) {
             super(courseView);
@@ -115,13 +114,12 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
             designation = (TextView) courseView.findViewById(R.id.designationBM);
             name = (TextView) courseView.findViewById(R.id.courseNameBM);
             professorNames = (TextView) courseView.findViewById(R.id.profsBM);
-//            bookmark = (ImageButton) courseView.findViewById(R.id.bookmark);
-
-            avgStar1 = (ImageView) courseView.findViewById(R.id.avg_star1);
-            avgStar2 = (ImageView) courseView.findViewById(R.id.avg_star2);
-            avgStar3 = (ImageView) courseView.findViewById(R.id.avg_star3);
-            avgStar4 = (ImageView) courseView.findViewById(R.id.avg_star4);
-            avgStar5 = (ImageView) courseView.findViewById(R.id.avg_star5);
+            // bookmark = (ImageButton) courseView.findViewById(R.id.bookmarkBM);
+            avgStar1 = (ImageView) courseView.findViewById(R.id.avg_star1BM);
+            avgStar2 = (ImageView) courseView.findViewById(R.id.avg_star2BM);
+            avgStar3 = (ImageView) courseView.findViewById(R.id.avg_star3BM);
+            avgStar4 = (ImageView) courseView.findViewById(R.id.avg_star4BM);
+            avgStar5 = (ImageView) courseView.findViewById(R.id.avg_star5BM);
         }
 
         public TextView getDesignation() {
