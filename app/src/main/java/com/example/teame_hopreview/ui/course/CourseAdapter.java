@@ -42,54 +42,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private LayoutInflater inflater;
     private MainActivity mainActivity;
     Context context;
-    private DatabaseReference dbref;
-    protected ArrayList<CourseItem> myCourses;
-    protected ArrayList<CourseItem> myCoursesCopy;
-    private MainActivity myAct;
-    private static final String TAG = "dbref: ";
-    private CourseAdapter cAdapt;
+//    private DatabaseReference dbref;
+//    protected ArrayList<CourseItem> myCourses;
+//    protected ArrayList<CourseItem> myCoursesCopy;
+//    private MainActivity myAct;
+//    private static final String TAG = "dbref: ";
+//    private CourseAdapter cAdapt;
 
 
     private final View.OnClickListener bookmarkListener = (view) -> {
         CourseItem course = (CourseItem) view.getTag();
 
-        dbref = FirebaseDatabase.getInstance().getReference();
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        CourseItem newCourse = (CourseItem) view.getTag();
-
-        dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-//                long count = snapshot.getChildrenCount();
-//                Log.d(TAG, "Children count: " + count);
-//                Log.d(TAG, "Usernames count: " + snapshot.child("usernames").getChildrenCount());
-
-                Iterable<DataSnapshot> unames = snapshot.child("usernames").getChildren();
-                for (DataSnapshot u : unames) {
-                    if (u.getKey().equals(mAuth.getCurrentUser().getEmail().replaceAll("[.]",""))) {
-                        System.out.println(u.getValue(String.class));
-                        // TODO: handle adding courses to my courses page
-
-                        break;
-                    } else{
-                        System.out.println("IM NOT HERE!");
-
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-//        cAdapt.notifyDataSetChanged();
 
         Toast.makeText(mainActivity, "COURSE SAVED",
                 Toast.LENGTH_LONG).show();
