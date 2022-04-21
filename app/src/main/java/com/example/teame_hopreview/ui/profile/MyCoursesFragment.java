@@ -32,15 +32,13 @@ public class MyCoursesFragment extends Fragment {
 
     private static final String TAG = "dbref: ";
 
-    private CardView myCard;
     private MainActivity myAct;
     private CourseItem courseItem;
     private ReviewItem reviewItem;
     protected ArrayList<CourseItem> myCourses;
     protected ArrayList<CourseItem> myCoursesCopy;
     protected ArrayList<ReviewItem> myReviews;
-    private CourseAdapter ca;
-    private FirebaseDatabase mdbase;
+    private CourseBMAdapter ca;
     private DatabaseReference dbref;
     Context context;
 
@@ -56,13 +54,12 @@ public class MyCoursesFragment extends Fragment {
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");
         System.out.println("Reached here");
-        myCard = (CardView) myView.findViewById(R.id.course_card);
         myCourses = new ArrayList<CourseItem>();
         myCoursesCopy = new ArrayList<CourseItem>();
         myReviews = new ArrayList<ReviewItem>();
         setHasOptionsMenu(true);
 
-        ca = new CourseAdapter(myAct, context, myCourses, myCoursesCopy);
+        ca = new CourseBMAdapter(myAct, context, myCourses, myCoursesCopy);
 
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -73,6 +70,9 @@ public class MyCoursesFragment extends Fragment {
                 Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
 
                 myCourses.clear();
+
+                // TODO: IMPORTANT, GET COURSES FOR SPECIFIC USER!
+
                 Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
 
                 for (DataSnapshot crs : courses) {
