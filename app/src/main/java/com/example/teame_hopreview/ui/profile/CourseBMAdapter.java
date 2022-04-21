@@ -1,12 +1,9 @@
-package com.example.teame_hopreview.ui.course;
+package com.example.teame_hopreview.ui.profile;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
@@ -20,13 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewItem;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.teame_hopreview.ui.course.CourseItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> implements Filterable {
+public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHolder> implements Filterable {
 
     private List<CourseItem> courseData;
     private List<CourseItem> courseDataCopy;
@@ -48,7 +44,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         mainActivity.openCourseDetailFragment(course);
     };
 
-    public CourseAdapter(MainActivity mainActivity, Context context, ArrayList<CourseItem> items, List<CourseItem> itemsCopy) {
+    public CourseBMAdapter(MainActivity mainActivity, Context context, ArrayList<CourseItem> items, List<CourseItem> itemsCopy) {
         this.inflater = LayoutInflater.from(context);
         this.courseData = items;
         this.mainActivity = mainActivity;
@@ -57,13 +53,13 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     @NonNull
     @Override
-    public CourseAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CourseBMAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.frag_course_item, parent, false);
-        return new CourseAdapter.ViewHolder(view);
+        return new CourseBMAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CourseBMAdapter.ViewHolder holder, int position) {
         CourseItem currCourse = courseData.get(position);
         holder.getDesignation().setText(currCourse.getDesignation());
         System.out.println(currCourse.getName());
@@ -77,16 +73,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             profNamesStr.append(prof.getProfessorName()).append(" / ");
         }*/
 
-
         holder.getProfessorNames().setText(prof);
-
-
 
         // holder.getReviewNum().setText(currCourse.getReviews().size() + " reviews");
 
         ImageView[] avgStars = holder.getAvgImages();
-        ImageView[] workStars = holder.getWorkImages();
-        ImageView[] funStars = holder.getFunImages();
 
         context = mainActivity.getApplicationContext();
 
@@ -96,19 +87,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 avgStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
                 avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
-            }
-            if (i < currCourse.getFunRating()) {
-                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
-                funStars[i].setColorFilter(R.color.md_theme_light_primary);
-            } else {
-                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
-            }
-            if (i < currCourse.getWorkloadRating()) {
-                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
-                workStars[i].setColorFilter(R.color.md_theme_light_primary);
-            } else {
-                workStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
-
             }
         }
 
@@ -143,8 +121,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         private final TextView professorNames;
         private final TextView reviewNum;
         private final ImageView avgStar1, avgStar2, avgStar3, avgStar4, avgStar5;
-        private final ImageView workStar1, workStar2, workStar3, workStar4, workStar5;
-        private final ImageView funStar1, funStar2, funStar3, funStar4, funStar5;
         private final ImageButton bookmark;
 
 
@@ -163,20 +139,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             avgStar3 = (ImageView) courseView.findViewById(R.id.avg_star3);
             avgStar4 = (ImageView) courseView.findViewById(R.id.avg_star4);
             avgStar5 = (ImageView) courseView.findViewById(R.id.avg_star5);
-
-            workStar1 = (ImageView) courseView.findViewById(R.id.work_star1);
-            workStar2 = (ImageView) courseView.findViewById(R.id.work_star2);
-            workStar3 = (ImageView) courseView.findViewById(R.id.work_star3);
-            workStar4 = (ImageView) courseView.findViewById(R.id.work_star4);
-            workStar5 = (ImageView) courseView.findViewById(R.id.work_star5);
-
-            funStar1 = (ImageView) courseView.findViewById(R.id.fun_star1);
-            funStar2 = (ImageView) courseView.findViewById(R.id.fun_star2);
-            funStar3 = (ImageView) courseView.findViewById(R.id.fun_star3);
-            funStar4 = (ImageView) courseView.findViewById(R.id.fun_star4);
-            funStar5 = (ImageView) courseView.findViewById(R.id.fun_star5);
-
-
         }
 
         public TextView getDesignation() {
@@ -206,28 +168,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             avg[4] = avgStar5;
 
             return avg;
-        }
-
-        public ImageView[] getWorkImages() {
-            ImageView[] work = new ImageView[5];
-            work[0] = workStar1;
-            work[1] = workStar2;
-            work[2] = workStar3;
-            work[3] = workStar4;
-            work[4] = workStar5;
-
-            return work;
-        }
-
-        public ImageView[] getFunImages() {
-            ImageView[] fun = new ImageView[5];
-            fun[0] = funStar1;
-            fun[1] = funStar2;
-            fun[2] = funStar3;
-            fun[3] = funStar4;
-            fun[4] = funStar5;
-
-            return fun;
         }
 
         public ImageButton getBookmark() {
