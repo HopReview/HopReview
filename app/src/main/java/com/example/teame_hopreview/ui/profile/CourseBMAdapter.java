@@ -33,6 +33,7 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
     private final View.OnClickListener bookmarkListener = (view) -> {
         CourseItem course = (CourseItem) view.getTag();
 
+        // TODO: add to user's dataset
 
         Toast.makeText(mainActivity, "COURSE SAVED",
                 Toast.LENGTH_LONG).show();
@@ -64,18 +65,10 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
         holder.getDesignation().setText(currCourse.getDesignation());
         System.out.println(currCourse.getName());
         holder.getName().setText(currCourse.getName());
-        holder.getNum().setText(currCourse.getCourseNumber());
 
         String prof = currCourse.getProfessors();
 
-        /*StringBuilder profNamesStr = new StringBuilder();
-        for (Professor prof : professors) {
-            profNamesStr.append(prof.getProfessorName()).append(" / ");
-        }*/
-
         holder.getProfessorNames().setText(prof);
-
-        // holder.getReviewNum().setText(currCourse.getReviews().size() + " reviews");
 
         ImageView[] avgStars = holder.getAvgImages();
 
@@ -92,15 +85,9 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
 
         ArrayList<ReviewItem> reviews = currCourse.getReviews();
 
-        if (reviews == null) {
-            holder.getReviewNum().setText("0 reviews");
-        } else {
-            holder.getReviewNum().setText(reviews.size() + " reviews");
-        }
-
         holder.itemView.setTag(courseData.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);
-        holder.bookmark.setOnClickListener(bookmarkListener);
+        // holder.bookmark.setOnClickListener(bookmarkListener);
     }
 
     @Override
@@ -117,22 +104,18 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
 
         private final TextView designation;
         private final TextView name;
-        private final TextView num;
         private final TextView professorNames;
-        private final TextView reviewNum;
         private final ImageView avgStar1, avgStar2, avgStar3, avgStar4, avgStar5;
-        private final ImageButton bookmark;
+//        private final ImageButton bookmark;
 
 
         public ViewHolder(@NonNull View courseView) {
             super(courseView);
 
-            designation = (TextView) courseView.findViewById(R.id.designation);
-            name = (TextView) courseView.findViewById(R.id.name);
-            num = (TextView) courseView.findViewById(R.id.num);
-            professorNames = (TextView) courseView.findViewById(R.id.professor_names);
-            reviewNum = (TextView) courseView.findViewById(R.id.review_count);
-            bookmark = (ImageButton) courseView.findViewById(R.id.bookmark);
+            designation = (TextView) courseView.findViewById(R.id.designationBM);
+            name = (TextView) courseView.findViewById(R.id.courseNameBM);
+            professorNames = (TextView) courseView.findViewById(R.id.profsBM);
+//            bookmark = (ImageButton) courseView.findViewById(R.id.bookmark);
 
             avgStar1 = (ImageView) courseView.findViewById(R.id.avg_star1);
             avgStar2 = (ImageView) courseView.findViewById(R.id.avg_star2);
@@ -149,14 +132,8 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
             return name;
         }
 
-        public TextView getNum() { return num; }
-
         public TextView getProfessorNames() {
             return professorNames;
-        }
-
-        public TextView getReviewNum() {
-            return reviewNum;
         }
 
         public ImageView[] getAvgImages() {
@@ -170,9 +147,9 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
             return avg;
         }
 
-        public ImageButton getBookmark() {
-            return bookmark;
-        }
+//        public ImageButton getBookmark() {
+//            return bookmark;
+//        }
     }
     private Filter courseFilter = new Filter() {
 

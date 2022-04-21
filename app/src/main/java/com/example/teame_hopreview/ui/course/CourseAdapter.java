@@ -37,6 +37,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private final View.OnClickListener bookmarkListener = (view) -> {
         CourseItem course = (CourseItem) view.getTag();
 
+        // TODO: add to user's dataset
 
         Toast.makeText(mainActivity, "COURSE SAVED",
                 Toast.LENGTH_LONG).show();
