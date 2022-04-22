@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bookmark_course_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/designationBM"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/circular_background"
+                android:gravity="center"
+                android:text="H"
+                android:textColor="@color/md_theme_light_onPrimary"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/courseNameBM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Course Name"
+                    android:textColor="@color/md_theme_light_onPrimaryContainer"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/profsBM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Professors"
+                    android:textColor="@color/md_theme_light_onSurfaceVariant"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/avg_star1BM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="0dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star2BM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="0dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star3BM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="0dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star4BM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="0dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star5BM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="0dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+</androidx.cardview.widget.CardView>
