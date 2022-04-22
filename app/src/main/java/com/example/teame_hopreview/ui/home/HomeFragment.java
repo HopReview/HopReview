@@ -2,31 +2,22 @@ package com.example.teame_hopreview.ui.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
-import com.example.teame_hopreview.ReviewAdapter;
 import com.example.teame_hopreview.ReviewItem;
 import com.example.teame_hopreview.User;
 import com.example.teame_hopreview.databinding.FragmentHomeBinding;
 import com.example.teame_hopreview.ui.course.CourseItem;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 

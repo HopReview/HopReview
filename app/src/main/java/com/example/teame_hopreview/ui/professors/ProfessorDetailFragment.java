@@ -41,6 +41,7 @@ public class ProfessorDetailFragment extends Fragment {
     String professorName;
     private ReviewAdapter ra;
     DatabaseReference dbref;
+    private String currCourse;
     private int workRate;
     private int funRate;
 
@@ -67,58 +68,101 @@ public class ProfessorDetailFragment extends Fragment {
         TextView department = (TextView) myView.findViewById(R.id.prof_departmentDet);
         // TextView professorView = (TextView) myView.findViewById(R.id.taught_coursesDet);
 
+        TextView[] courses = new TextView[4];
+        courses[0] = (TextView) myView.findViewById(R.id.course1);
+        courses[1] = (TextView) myView.findViewById(R.id.course2);
+        courses[2] = (TextView) myView.findViewById(R.id.course3);
+        courses[3] = (TextView) myView.findViewById(R.id.course4);
+
         initials.setText(professor.getInitials());
         courseName.setText(professor.getProfessorName());
         department.setText(professor.getDepartment());
 
         // implement later with a spinner
         // professorView.setText("Teaches: " + professor.getCourseNames());
-        String specificCourse = professor.getCourseNames().get(0);
+        ArrayList<String> coursesHolder = professor.getCourseNames();
+        currCourse = coursesHolder.get(0);
+
+        int counter = 0;
+        int size = coursesHolder.size();
+        while (counter < 4) {
+            if (counter < size) {
+                courses[counter].setText(coursesHolder.get(counter));
+            } else {
+                courses[counter].setVisibility(View.GONE);
+            }
+            counter++;
+        }
 
 
 
         myAct = (MainActivity) getActivity();
         context = myAct.getApplicationContext();
 
-        dbref.addValueEventListener(new ValueEventListener() {
+        courses[0].setBackground(myAct.getResources().getDrawable(R.drawable.selected_item_background));
+        myDbHelper(myView, currCourse);
+
+        courses[0].setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
-
-                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
-
-                for (DataSnapshot crs : courses) {
-                    Iterable<DataSnapshot> list = crs.getChildren();
-                    int counter = 1;
-                    boolean isCourse = false;
-                    for (DataSnapshot item : list) {
-                        if (isCourse) {
-                            if (counter == 5) {
-                                funRate = item.getValue(Integer.class);
-                            } else if (counter == 8) {
-                                workRate = item.getValue(Integer.class);
-                            }
-                        } else if (counter == 3) {
-                            if (item.getValue(String.class).equals(specificCourse)) {
-                                isCourse = true;
-                            }
-                        } else if (counter > 3) {
-                            break;
-                        }
-                        counter++;
-                    }
-
+            public void onClick(View view) {
+                if (courses[0].getVisibility() != View.GONE) {
+                    courses[0].setBackground(myAct.getResources().
+                            getDrawable(R.drawable.selected_item_background));
+                    courses[1].setBackground(null);
+                    courses[2].setBackground(null);
+                    courses[3].setBackground(null);
+                    currCourse = courses[0].getText().toString();
+                    myDbHelper(myView, currCourse);
                 }
-                setRatesHelper(myView);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
+        courses[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (courses[1].getVisibility() != View.GONE) {
+                    courses[1].setBackground(myAct.getResources().
+                            getDrawable(R.drawable.selected_item_background));
+                    courses[0].setBackground(null);
+                    courses[2].setBackground(null);
+                    courses[3].setBackground(null);
+                    currCourse = courses[1].getText().toString();
+                    myDbHelper(myView, currCourse);
+                }
+            }
+        });
+
+        courses[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (courses[2].getVisibility() != View.GONE) {
+                    courses[2].setBackground(myAct.getResources().
+                            getDrawable(R.drawable.selected_item_background));
+                    courses[0].setBackground(null);
+                    courses[1].setBackground(null);
+                    courses[3].setBackground(null);
+                    currCourse = courses[2].getText().toString();
+                    myDbHelper(myView, currCourse);
+                }
+            }
+        });
+
+        courses[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (courses[3].getVisibility() != View.GONE) {
+                    courses[3].setBackground(myAct.getResources().
+                            getDrawable(R.drawable.selected_item_background));
+                    courses[0].setBackground(null);
+                    courses[1].setBackground(null);
+                    courses[2].setBackground(null);
+                    currCourse = courses[3].getText().toString();
+                    myDbHelper(myView, currCourse);
+                }
+            }
+        });
+
+
 
         myList = (RecyclerView) myView.findViewById(R.id.recyclerViewProf);
         myCard = (CardView) myView.findViewById(R.id.review_card);
@@ -145,6 +189,48 @@ public class ProfessorDetailFragment extends Fragment {
         });
 
         return myView;
+    }
+
+    public void myDbHelper(View myView, String currCourse) {
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long count = snapshot.getChildrenCount();
+                Log.d(TAG, "Children count: " + count);
+                Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
+
+                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
+
+                for (DataSnapshot crs : courses) {
+                    Iterable<DataSnapshot> list = crs.getChildren();
+                    int counter = 1;
+                    boolean isCourse = false;
+                    for (DataSnapshot item : list) {
+                        if (isCourse) {
+                            if (counter == 5) {
+                                funRate = item.getValue(Integer.class);
+                            } else if (counter == 8) {
+                                workRate = item.getValue(Integer.class);
+                            }
+                        } else if (counter == 3) {
+                            if (item.getValue(String.class).equals(currCourse)) {
+                                isCourse = true;
+                            }
+                        } else if (counter > 3) {
+                            break;
+                        }
+                        counter++;
+                    }
+
+                }
+                setRatesHelper(myView);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 
 

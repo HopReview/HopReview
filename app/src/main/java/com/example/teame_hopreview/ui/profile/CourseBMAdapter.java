@@ -66,9 +66,23 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
         System.out.println(currCourse.getName());
         holder.getName().setText(currCourse.getName());
 
-        String prof = currCourse.getProfessors();
+        ArrayList<String> professors = currCourse.getProfessors();
 
-        holder.getProfessorNames().setText(prof);
+        StringBuilder profNamesStr = new StringBuilder();
+        int counter = 1;
+        int len = professors.size();
+        for (String prof : professors) {
+            if (counter + 1 == len) {
+                profNamesStr.append(prof);
+            } else {
+                profNamesStr.append(prof).append(" / ");
+            }
+            counter++;
+        }
+
+
+
+        holder.getProfessorNames().setText(profNamesStr.toString());
 
         ImageView[] avgStars = holder.getAvgImages();
 
