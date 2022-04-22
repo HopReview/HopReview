@@ -56,7 +56,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        SwitchMaterial toggleThemeBtn = myView.findViewById(R.id.toggle_theme);
+        /*SwitchMaterial toggleThemeBtn = myView.findViewById(R.id.toggle_theme);
         toggleThemeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +65,7 @@ public class ProfileFragment extends Fragment {
 //                Intent intent = new Intent(context, LoginActivity.class);
 //                startActivity(intent);
             }
-        });
+        });*/
 
 
 
