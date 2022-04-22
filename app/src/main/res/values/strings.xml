@@ -50,9 +50,14 @@
     <string name="average_rating">Average Rating</string>
     <string name="workload_rating">Workload</string>
     <string name="fun_rating">Fun</string>
-    <string name="logout">LOGOUT</string>
+    <string name="logout">Log Out</string>
     <string name="search">search</string>
     <string name="prompt_select_course">Select a course</string>
     <string name="reviews_list">Reviews</string>
+    <string name="update_password">Update Password</string>
+    <string name="profile_settings">Update Profile</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="username">USERNAME</string>
+    <string name="email_sample">bluejay@jhu.edu</string>
 
 </resources>

@@ -1,68 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:padding="0dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="ui.profile.ProfileFragment">
+    android:layout_height="match_parent">
 
-
-    <Button
-        android:id="@+id/logout_btn"
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="520dp"
-        android:text="@string/logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:fillViewport="true">
 
-    <Button
-        android:id="@+id/delete_acct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:backgroundTint="?attr/colorError"
-        android:text="@string/delete_acct"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logout_btn" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/toggle_theme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:minHeight="48dp"
-        android:text="@string/toggle_theme"
-        android:textColor="#757575"
-        app:layout_constraintBottom_toTopOf="@+id/logout_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:text="@string/username"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginTop="10dp"/>
 
-    <Button
-        android:id="@+id/my_reviews_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="188dp"
-        android:text="@string/my_reviews"
-        app:layout_constraintBottom_toTopOf="@+id/toggle_theme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:text="@string/email_sample"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/my_courses_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:text="@string/my_courses"
-        app:layout_constraintBottom_toTopOf="@+id/my_reviews_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/delete_acct"
+                android:layout_width="370dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="640dp"
+                android:backgroundTint="?attr/colorError"
+                android:text="@string/delete_acct"
+                android:textColor="?attr/colorOnError"
+                android:textSize="20sp"
+                app:cornerRadius="15dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/logout_btn"
+                android:layout_width="370dp"
+                android:layout_height="75dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="560dp"
+                android:backgroundTint="?attr/colorSurfaceVariant"
+                android:gravity="center_vertical"
+                android:text="@string/logout"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="18sp"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/login_icon"
+                app:iconGravity="end"
+                app:iconSize="30sp"
+                app:iconTint="?attr/colorOnSurfaceVariant" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/change_pass_btn"
+                android:layout_width="370dp"
+                android:layout_height="75dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="480dp"
+                android:backgroundTint="?attr/colorSurfaceVariant"
+                android:gravity="center_vertical"
+                android:text="@string/update_password"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="18sp"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/pencil"
+                app:iconGravity="end"
+                app:iconSize="30sp"
+                app:iconTint="?attr/colorOnSurfaceVariant" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/profile_settings_btn"
+                android:layout_width="370dp"
+                android:layout_height="75dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="400dp"
+                android:backgroundTint="?attr/colorSurfaceVariant"
+                android:gravity="center_vertical"
+                android:text="@string/profile_settings"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="18sp"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/ic_person_icon"
+                app:iconGravity="end"
+                app:iconSize="30sp"
+                app:iconTint="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="350dp"
+                android:text="@string/account_settings"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <!--<com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/toggle_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:minHeight="48dp"
+                android:text="@string/toggle_theme"
+                android:textColor="#757575"
+                app:layout_constraintBottom_toTopOf="@+id/logout_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent" />-->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/my_reviews_btn"
+                android:layout_width="370dp"
+                android:layout_height="75dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="260dp"
+                android:backgroundTint="?attr/colorSurfaceVariant"
+                android:gravity="center_vertical"
+                android:text="@string/my_reviews"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="18sp"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/arrow_forward"
+                app:iconGravity="end"
+                app:iconSize="30sp"
+                app:iconTint="?attr/colorOnSurfaceVariant" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/my_courses_btn"
+                android:layout_width="370dp"
+                android:layout_height="75dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="180dp"
+                android:backgroundTint="?attr/colorSurfaceVariant"
+                android:gravity="center_vertical"
+                android:text="@string/my_courses"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="18sp"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/arrow_forward"
+                app:iconGravity="end"
+                app:iconSize="30sp"
+                app:iconTint="?attr/colorOnSurfaceVariant" />
+
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+
+
+</RelativeLayout>
