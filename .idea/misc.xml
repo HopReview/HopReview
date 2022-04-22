@@ -11,8 +11,10 @@
         <entry key="..\:/Users/egese/Desktop/TeamE_HopReview/app/src/main/res/menu/bottom_nav_menu.xml" value="0.264" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/drawable/bookmark_filled.xml" value="0.1" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/drawable/bookmark_unfilled_xml.xml" value="0.1" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/drawable/circle.xml" value="0.1" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/drawable/circular_background.xml" value="0.1" />
-        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/course_detail_frag.xml" value="0.4954314720812183" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/drawable/selected_item_background.xml" value="0.1" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/course_detail_frag.xml" value="0.5992277992277992" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/create_review_course_item.xml" value="0.2" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/create_review_dropdown.xml" value="0.176" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/create_review_ratings_view_layout.xml" value="0.6" />
@@ -30,7 +32,8 @@
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/fragment_review.xml" value="0.152" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/item.xml" value="0.152" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/item_list.xml" value="0.264" />
-        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/prof_detail_frag.xml" value="0.4" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/layout/prof_detail_frag.xml" value="0.72" />
+        <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/egese/Desktop/projectFile/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/shaod/Documents/School/SP22/UIMA/HopReview/app/src/main/res/layout/activity_create_account.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/shaod/Documents/School/SP22/UIMA/HopReview/app/src/main/res/layout/activity_login.xml" value="0.264" />

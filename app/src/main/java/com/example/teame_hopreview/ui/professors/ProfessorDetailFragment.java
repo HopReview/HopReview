@@ -65,14 +65,14 @@ public class ProfessorDetailFragment extends Fragment {
         TextView initials = (TextView) myView.findViewById(R.id.initialsDet);
         TextView courseName = (TextView) myView.findViewById(R.id.prof_nameDet);
         TextView department = (TextView) myView.findViewById(R.id.prof_departmentDet);
-        TextView professorView = (TextView) myView.findViewById(R.id.taught_coursesDet);
+        // TextView professorView = (TextView) myView.findViewById(R.id.taught_coursesDet);
 
         initials.setText(professor.getInitials());
         courseName.setText(professor.getProfessorName());
         department.setText(professor.getDepartment());
 
         // implement later with a spinner
-        professorView.setText("Teaches: " + professor.getCourseNames());
+        // professorView.setText("Teaches: " + professor.getCourseNames());
         String specificCourse = professor.getCourseNames().get(0);
 
 
@@ -140,7 +140,7 @@ public class ProfessorDetailFragment extends Fragment {
                 //Intent intent = new Intent(myAct, CreateReview.class);
                 //intent.putExtra("course_name", courseName);
                 //CourseItem course = (CourseItem) view.getTag();
-                myAct.openCreateReview(professor.getProfessorName());
+                //myAct.openCreateReview(professor.getProfessorName());
             }
         });
 

@@ -71,15 +71,23 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.getName().setText(currCourse.getName());
         holder.getNum().setText(currCourse.getCourseNumber());
 
-        String prof = currCourse.getProfessors();
+        ArrayList<String> professors = currCourse.getProfessors();
 
-        /*StringBuilder profNamesStr = new StringBuilder();
-        for (Professor prof : professors) {
-            profNamesStr.append(prof.getProfessorName()).append(" / ");
-        }*/
+        StringBuilder profNamesStr = new StringBuilder();
+        int counter = 1;
+        int len = professors.size();
+        for (String prof : professors) {
+            if (counter + 1 == len) {
+                profNamesStr.append(prof);
+            } else {
+                profNamesStr.append(prof).append(" / ");
+            }
+            counter++;
+        }
 
 
-        holder.getProfessorNames().setText(prof);
+
+        holder.getProfessorNames().setText(profNamesStr.toString());
 
 
 
