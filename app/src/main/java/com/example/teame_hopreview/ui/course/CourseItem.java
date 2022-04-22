@@ -11,7 +11,7 @@ public class CourseItem extends Profile {
     private String courseName;
     private String courseNumber;
     private String courseDesignation;
-    private String professor;
+    private ArrayList<String> professor;
     private ArrayList<ReviewItem> reviews;
     private int funRating;
     private int workloadRating;
@@ -25,15 +25,16 @@ public class CourseItem extends Profile {
 
 
     public CourseItem(int avgRate, String courseDesignation, String name,
-                      String courseNum, int funRate, String professor, int workRate) {
+                      String courseNum, int funRate, ArrayList<String> professor, int workRate) {
         this.courseName = name;
         this.courseNumber = courseNum;
         this.courseDesignation = courseDesignation;
-        this.professor = professor;
         this.funRating = funRate;
         this.workloadRating = workRate;
         this.averageRating = avgRate;
         this.reviews = new ArrayList<ReviewItem>();
+        this.professor = new ArrayList<>();
+        this.professor.addAll(professor);
     }
 
     public void setCourseName(String name) {
@@ -48,8 +49,8 @@ public class CourseItem extends Profile {
         this.courseDesignation = des;
     }
 
-    public void setProfessor(String prof) {
-        this.professor = prof;
+    public void setProfessor(ArrayList<String> profs) {
+        this.professor.addAll(profs);
     }
 
     public void setFunRating(int fun) {
@@ -103,7 +104,7 @@ public class CourseItem extends Profile {
      * Method for getting the professors teaching the Course
      * @return ArrayList representing the professors teaching the Course
      */
-    public String getProfessors() { return this.professor; }
+    public ArrayList<String> getProfessors() { return this.professor; }
 
     /*
     //    /**

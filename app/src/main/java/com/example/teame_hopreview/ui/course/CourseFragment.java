@@ -40,6 +40,7 @@ public class CourseFragment extends Fragment {
     protected ArrayList<CourseItem> myCourses;
     protected ArrayList<CourseItem> myCoursesCopy;
     protected ArrayList<ReviewItem> myReviews;
+    private ArrayList<String> professors;
     private CourseAdapter ca;
     private DatabaseReference dbref;
     Context context;
@@ -61,6 +62,7 @@ public class CourseFragment extends Fragment {
         myCourses = new ArrayList<CourseItem>();
         myCoursesCopy = new ArrayList<CourseItem>();
         myReviews = new ArrayList<ReviewItem>();
+        professors = new ArrayList<>();
         setHasOptionsMenu(true);
 
         ca = new CourseAdapter(myAct, context, myCourses, myCoursesCopy);
@@ -77,14 +79,16 @@ public class CourseFragment extends Fragment {
                 Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
 
                 myCourses.clear();
+
                 Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
 
                 for (DataSnapshot crs : courses) {
                     myReviews.clear();
+                    professors.clear();
                     Iterable<DataSnapshot> list = crs.getChildren();
                     String name = " ";
                     String num = " ";
-                    String prof = new String();
+                    // String prof = new String();
                     String designation = " ";
                     int avgRate = 0;
                     int funRate = 0;
@@ -98,6 +102,7 @@ public class CourseFragment extends Fragment {
                     int secondRating = 0;
 
                     int counter = 1;
+
                     for (DataSnapshot item : list) {
                         if (counter == 1) {
                             avgRate = item.getValue(Integer.class);
@@ -110,7 +115,11 @@ public class CourseFragment extends Fragment {
                         } else if (counter == 5) {
                             funRate = item.getValue(Integer.class);
                         } else if (counter == 6) {
-                            prof = item.getValue(String.class);
+                            Iterable<DataSnapshot> profs = item.getChildren();
+                            for (DataSnapshot prof : profs) {
+                                professors.add(prof.getValue(String.class));
+                            }
+                            // prof = item.getValue(String.class);
                         } else if (counter == 7) {
                             Iterable<DataSnapshot> reviews = item.getChildren();
                             for (DataSnapshot rev : reviews) {
@@ -141,7 +150,7 @@ public class CourseFragment extends Fragment {
                         counter++;
                     }
 
-                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, professors, workRate);
                     for (ReviewItem r : myReviews) {
                         courseItem.addReview(r);
                     }

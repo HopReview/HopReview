@@ -48,7 +48,7 @@ import java.util.concurrent.*;
  * Use the {@link CreateReviewFragment} factory method to
  * create an instance of this fragment.
  */
-public class CreateReviewFragment extends Fragment {
+/*public class CreateReviewFragment extends Fragment {
 
     private MainActivity mainActivity;
 
@@ -162,8 +162,8 @@ public class CreateReviewFragment extends Fragment {
         professorDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                /*tring professor = listManager.getProfessors().get(position);
-                fillCourseDropdown(professor);*/
+                //tring professor = listManager.getProfessors().get(position);
+                //fillCourseDropdown(professor);
             }
         });
 
@@ -441,3 +441,4 @@ public class CreateReviewFragment extends Fragment {
 
 
 }
+*/
