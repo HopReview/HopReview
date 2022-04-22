@@ -77,7 +77,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         int counter = 1;
         int len = professors.size();
         for (String prof : professors) {
-            if (counter + 1 == len) {
+            System.out.println("Professors " + counter + " : " + prof);
+            if (counter == len) {
                 profNamesStr.append(prof);
             } else {
                 profNamesStr.append(prof).append(" / ");

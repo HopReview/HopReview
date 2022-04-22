@@ -68,7 +68,6 @@ public class CourseDetailFragment extends Fragment {
         TextView designation = (TextView) myView.findViewById(R.id.course_designation);
         TextView courseName = (TextView) myView.findViewById(R.id.course_name);
         TextView courseNum = (TextView) myView.findViewById(R.id.course_num);
-        // TextView professor = (TextView) myView.findViewById(R.id.teaching_professor);
 
         TextView[] professors = new TextView[4];
         professors[0] = (TextView) myView.findViewById(R.id.professor1);
@@ -82,7 +81,6 @@ public class CourseDetailFragment extends Fragment {
         courseNum.setText(courseItem.getCourseNumber());
 
         // implement later with a spinner
-        // professor.setText("Taught by: " + courseItem.getProfessors());
 
         ArrayList<String> professorsHolder = courseItem.getProfessors();
         currProfessor = professorsHolder.get(0);
@@ -104,12 +102,14 @@ public class CourseDetailFragment extends Fragment {
         context = myAct.getApplicationContext();
 
         professors[0].setBackground(myAct.getResources().getDrawable(R.drawable.selected_item_background));
+        myDbHelper(myView, currProfessor);
 
         professors[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (professors[0].getVisibility() != View.GONE) {
-                    professors[0].setBackground(myAct.getResources().getDrawable(R.drawable.selected_item_background));
+                    professors[0].setBackground(myAct.getResources().
+                            getDrawable(R.drawable.selected_item_background));
                     professors[1].setBackground(null);
                     professors[2].setBackground(null);
                     professors[3].setBackground(null);
@@ -158,43 +158,7 @@ public class CourseDetailFragment extends Fragment {
             }
         });
 
-        /*dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Professor count: " + snapshot.child("professors_data").getChildrenCount());
 
-                Iterable<DataSnapshot> professors = snapshot.child("professors_data").getChildren();
-
-
-                for (DataSnapshot profs : professors) {
-                    String professor = profs.getKey();
-                    if (professor.equals(currProfessor)) {
-                        Iterable<DataSnapshot> list = profs.getChildren();
-                        int counter = 1;
-                        for (DataSnapshot item : list) {
-                            if (counter == 4) {
-                                gradeRate = item.getValue(Integer.class);
-                                System.out.println("This is the grade rating: " + gradeRate);
-                            } else if (counter == 5) {
-                                knowledgeRate = item.getValue(Integer.class);
-                                System.out.println("This is the knowledge rating: " + knowledgeRate);
-                            }
-                            counter++;
-                        }
-                        break;
-                    }
-                }
-
-                setRatesHelper(myView);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });*/
 
         myList = (RecyclerView) myView.findViewById(R.id.recyclerViewProf);
         myCard = (CardView) myView.findViewById(R.id.review_card);
