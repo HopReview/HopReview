@@ -10,6 +10,8 @@
     <string name="title_activity_login">HopReview</string>
     <string name="recently_viewed">Recently Viewed</string>
     <string name="recent_reviews">Recent Reviews</string>
+    <string name="pick_course">Pick Your Course</string>
+    <string name="pick_professor">Pick Your Professor</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_confirm_email">Confirm Email</string>
     <string name="prompt_username">Username</string>

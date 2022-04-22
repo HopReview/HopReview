@@ -13,7 +13,7 @@ import com.example.teame_hopreview.ui.professors.Professor;
 import com.example.teame_hopreview.ui.professors.ProfessorDetailFragment;
 import com.example.teame_hopreview.ui.professors.ProfessorFragment;
 import com.example.teame_hopreview.ui.profile.ProfileFragment;
-import com.example.teame_hopreview.ui.review.CreateReviewFragment;
+// import com.example.teame_hopreview.ui.review.CreateReviewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     private Fragment home;
     private Fragment professors;
     private Fragment profile;
-    private CreateReviewFragment createReview;
+    // private CreateReviewFragment createReview;
     public BottomNavigationView bottomNavigationView;
     private FirebaseDatabase mydbase;
     private DatabaseReference dbRef;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         home = new HomeFragment();
         professors = new ProfessorFragment();
         profile = new ProfileFragment();
-        createReview = new CreateReviewFragment();
+        // createReview = new CreateReviewFragment();
 
         mydbase = FirebaseDatabase.getInstance();
         dbRef = mydbase.getReference();
@@ -141,13 +141,13 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         transaction.addToBackStack("createDetailStack");
     }
 
-    public void openCreateReview(String courseName) {
+    /*public void openCreateReview(String courseName) {
         createReview.reset();
         createReview.setDefaultCourseName(courseName);
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, this.createReview).commit();
         transaction.addToBackStack("createReviewStack");
-    }
+    }*/
 
     public void openMyCourses() {
         transaction = getSupportFragmentManager().beginTransaction();

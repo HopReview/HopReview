@@ -39,6 +39,7 @@ public class MyCoursesFragment extends Fragment {
     protected ArrayList<CourseItem> myCourses;
     protected ArrayList<CourseItem> myCoursesCopy;
     protected ArrayList<ReviewItem> myReviews;
+    private ArrayList<String> professors;
     private CourseAdapter ca;
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
@@ -60,6 +61,7 @@ public class MyCoursesFragment extends Fragment {
         myCourses = new ArrayList<CourseItem>();
         myCoursesCopy = new ArrayList<CourseItem>();
         myReviews = new ArrayList<ReviewItem>();
+        professors = new ArrayList<>();
         setHasOptionsMenu(true);
 
         ca = new CourseAdapter(myAct, context, myCourses, myCoursesCopy);
@@ -77,10 +79,11 @@ public class MyCoursesFragment extends Fragment {
 
                 for (DataSnapshot crs : courses) {
                     myReviews.clear();
+                    professors.clear();
                     Iterable<DataSnapshot> list = crs.getChildren();
                     String name = " ";
                     String num = " ";
-                    String prof = new String();
+                    // String prof = new String();
                     String designation = " ";
                     int avgRate = 0;
                     int funRate = 0;
@@ -106,7 +109,10 @@ public class MyCoursesFragment extends Fragment {
                         } else if (counter == 5) {
                             funRate = item.getValue(Integer.class);
                         } else if (counter == 6) {
-                            prof = item.getValue(String.class);
+                            Iterable<DataSnapshot> profs = item.getChildren();
+                            for (DataSnapshot prof : profs) {
+                                professors.add(prof.getValue(String.class));
+                            }
                         } else if (counter == 7) {
                             Iterable<DataSnapshot> reviews = item.getChildren();
                             for (DataSnapshot rev : reviews) {
@@ -137,7 +143,7 @@ public class MyCoursesFragment extends Fragment {
                         counter++;
                     }
 
-                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, professors, workRate);
                     for (ReviewItem r : myReviews) {
                         courseItem.addReview(r);
                     }
