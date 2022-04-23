@@ -13,6 +13,8 @@ public class ReviewItem extends Profile {
     private int firstRating; // fun or grading
     private int secondRating; // workload or knowledge
     private String date;
+    private String course = new String();
+    private String professor = new String();
 
 
     /**
@@ -36,6 +38,24 @@ public class ReviewItem extends Profile {
         firstRating = firstRate;
         secondRating = secondRate;
     }
+
+
+    public void setCourseName(String course) {
+        this.course = course;
+    }
+
+    public String getCourseName() {
+        return this.course;
+    }
+
+    public void setProfessorName(String prof) {
+        this.professor = prof;
+    }
+
+    public String getProfessorName() {
+        return this.professor;
+    }
+
 
 
     /**

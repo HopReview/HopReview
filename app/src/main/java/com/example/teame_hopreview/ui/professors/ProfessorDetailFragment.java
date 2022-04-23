@@ -1,6 +1,7 @@
 package com.example.teame_hopreview.ui.professors;
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,9 @@ public class ProfessorDetailFragment extends Fragment {
     private String currCourse;
     private int workRate;
     private int funRate;
+    private ArrayList<String> reviewContents;
+    private ArrayList<String> reviewUsers;
+    private ArrayList<String> reviewDates;
 
     public ProfessorDetailFragment(Professor prof) {
         this.professor = prof;
@@ -94,12 +98,15 @@ public class ProfessorDetailFragment extends Fragment {
             counter++;
         }
 
-
+        reviewContents = new ArrayList<>();
+        reviewUsers = new ArrayList<>();
+        reviewDates = new ArrayList<>();
 
         myAct = (MainActivity) getActivity();
         context = myAct.getApplicationContext();
 
         courses[0].setBackground(myAct.getResources().getDrawable(R.drawable.selected_item_background));
+        setProfessorCourses(currCourse);
         myDbHelper(myView, currCourse);
 
         courses[0].setOnClickListener(new View.OnClickListener() {
@@ -112,6 +119,7 @@ public class ProfessorDetailFragment extends Fragment {
                     courses[2].setBackground(null);
                     courses[3].setBackground(null);
                     currCourse = courses[0].getText().toString();
+                    setProfessorCourses(currCourse);
                     myDbHelper(myView, currCourse);
                 }
             }
@@ -127,6 +135,7 @@ public class ProfessorDetailFragment extends Fragment {
                     courses[2].setBackground(null);
                     courses[3].setBackground(null);
                     currCourse = courses[1].getText().toString();
+                    setProfessorCourses(currCourse);
                     myDbHelper(myView, currCourse);
                 }
             }
@@ -142,6 +151,7 @@ public class ProfessorDetailFragment extends Fragment {
                     courses[1].setBackground(null);
                     courses[3].setBackground(null);
                     currCourse = courses[2].getText().toString();
+                    setProfessorCourses(currCourse);
                     myDbHelper(myView, currCourse);
                 }
             }
@@ -157,6 +167,7 @@ public class ProfessorDetailFragment extends Fragment {
                     courses[1].setBackground(null);
                     courses[2].setBackground(null);
                     currCourse = courses[3].getText().toString();
+                    setProfessorCourses(currCourse);
                     myDbHelper(myView, currCourse);
                 }
             }
@@ -164,34 +175,30 @@ public class ProfessorDetailFragment extends Fragment {
 
 
 
-        myList = (RecyclerView) myView.findViewById(R.id.recyclerViewProf);
-        myCard = (CardView) myView.findViewById(R.id.review_card);
         myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton2);
-        myReviews = new ArrayList<ReviewItem>();
-
-        ra = new ReviewAdapter(myAct, context, myReviews);
-
-        myList.setAdapter(ra);
-        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
-        myReviews.addAll(professor.getReviews());
-
-        ra.notifyDataSetChanged();
 
 
         myFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(myAct, CreateReview.class);
-                //intent.putExtra("course_name", courseName);
-                //CourseItem course = (CourseItem) view.getTag();
-                //myAct.openCreateReview(professor.getProfessorName());
+                myAct.openCreateReview(professor);
             }
         });
 
         return myView;
     }
 
+    public void setProfessorCourses(String currCourse) {
+        for (ReviewItem rev : professor.getReviews()) {
+            rev.setCourseName(currCourse);
+        }
+    }
+
     public void myDbHelper(View myView, String currCourse) {
+        reviewContents.clear();
+        reviewUsers.clear();
+        reviewDates.clear();
+
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -209,6 +216,22 @@ public class ProfessorDetailFragment extends Fragment {
                         if (isCourse) {
                             if (counter == 5) {
                                 funRate = item.getValue(Integer.class);
+                            } else if (counter == 7) {
+                                Iterable<DataSnapshot> revs = item.getChildren();
+                                for (DataSnapshot rev : revs) {
+                                    Iterable<DataSnapshot> revContet = rev.getChildren();
+                                    int counter2 = 1;
+                                    for (DataSnapshot content : revContet) {
+                                        if (counter2 == 2) {
+                                            reviewDates.add(content.getValue(String.class));
+                                        } else if (counter2 == 4) {
+                                            reviewContents.add(content.getValue(String.class));
+                                        } else if (counter2 == 5) {
+                                            reviewUsers.add(content.getValue(String.class));
+                                        }
+                                        counter2++;
+                                    }
+                                }
                             } else if (counter == 8) {
                                 workRate = item.getValue(Integer.class);
                             }
@@ -224,6 +247,8 @@ public class ProfessorDetailFragment extends Fragment {
 
                 }
                 setRatesHelper(myView);
+                updateRecycler(myView);
+
             }
 
             @Override
@@ -231,6 +256,34 @@ public class ProfessorDetailFragment extends Fragment {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
+    }
+
+    public void updateRecycler(View myView) {
+        myList = (RecyclerView) myView.findViewById(R.id.recyclerViewProf);
+        myCard = (CardView) myView.findViewById(R.id.review_card);
+        ArrayList<ReviewItem> myReviewsCopy = new ArrayList<>();
+        myReviewsCopy.addAll(professor.getReviews());
+
+        myReviews = new ArrayList<ReviewItem>();
+        ra = new ReviewAdapter(myAct, context, myReviews);
+        myList.setAdapter(ra);
+        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+
+        int len = reviewContents.size();
+        for (ReviewItem rev : myReviewsCopy) {
+            for (int i = 0; i < len; i++) {
+                if (rev.getReviewContent().equals(reviewContents.get(i))) {
+                    if (rev.getReviewerName().equals(reviewUsers.get(i))) {
+                        if (rev.getDate().equals(reviewDates.get(i))) {
+                            myReviews.add(rev);
+                        }
+                    }
+                }
+            }
+        }
+
+        ra.notifyDataSetChanged();
     }
 
 

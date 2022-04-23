@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewItem;
 import com.example.teame_hopreview.ui.course.CourseItem;
+import com.example.teame_hopreview.ui.professors.Professor;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -48,13 +50,15 @@ import java.util.concurrent.*;
  * Use the {@link CreateReviewFragment} factory method to
  * create an instance of this fragment.
  */
-/*public class CreateReviewFragment extends Fragment {
+public class CreateReviewFragment extends Fragment {
+    private static final String TAG = "dbref: ";
+
 
     private MainActivity mainActivity;
 
     private ListManager listManager;
 
-    private ArrayAdapter<CourseWrapper> courseAdapter;
+    private ArrayAdapter<String> courseAdapter;
 
     private AutoCompleteTextView courseDropdown;
 
@@ -68,6 +72,8 @@ import java.util.concurrent.*;
 
     private CourseItem selectedCourse;
 
+    private Professor selectedProfessor;
+
     private int funRating = 0;
 
     private int workloadRating = 0;
@@ -80,17 +86,35 @@ import java.util.concurrent.*;
         return defaultCourseName;
     }
 
+    public String getDefaultProfessorName() {
+        return defaultProfessorName;
+    }
+
     public void setDefaultCourseName(String defaultCourseName) {
         this.defaultCourseName = defaultCourseName;
     }
 
+    public void setDefaultProfessorName(String defaultProfessorName) {
+        this.defaultProfessorName = defaultProfessorName;
+    }
+
     private String defaultCourseName;
+    private String defaultProfessorName;
 
 
-
-    public CreateReviewFragment() {
+    public CreateReviewFragment(Professor prof) {
         listManager = new ListManager();
         selectedCourse = null;
+        selectedProfessor = prof;
+        dbref = FirebaseDatabase.getInstance().getReference();
+        dbref.addValueEventListener(new DatabaseChangeListener());
+    }
+
+
+    public CreateReviewFragment(CourseItem course) {
+        listManager = new ListManager();
+        selectedCourse = course;
+        selectedProfessor = null;
         dbref = FirebaseDatabase.getInstance().getReference();
         dbref.addValueEventListener(new DatabaseChangeListener());
     }
@@ -153,7 +177,7 @@ import java.util.concurrent.*;
             }
         });
 
-        courseAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getCourseWrappers());
+        courseAdapter = new ArrayAdapter<String>(getContext(), R.layout.create_review_dropdown, listManager.getCoursesList());
         courseDropdown.setAdapter(courseAdapter);
     }
 
@@ -162,30 +186,39 @@ import java.util.concurrent.*;
         professorDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Professor selected = listManager.getProfessors().get(position);
+                selectedProfessor = selected;
+                fillCourseDropdown(selected);
                 //tring professor = listManager.getProfessors().get(position);
                 //fillCourseDropdown(professor);
             }
         });
 
-        professorAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getProfessors());
-
+        professorAdapter = new ArrayAdapter<String>(getContext(), R.layout.create_review_dropdown, listManager.getProfessorsList());
         professorDropdown.setAdapter(professorAdapter);
     }
 
     private void fillProfessorDropdown(CourseItem selectedCourse) {
         //Aim: based on current selected course, fill the professor dropdown
         ArrayList<String> professors = new ArrayList<>();
-        professors.add(selectedCourse.getProfessors());
-        listManager.setProfessors(professors);
+        professors.addAll(selectedCourse.getProfessors());
+        listManager.setProfessorsList(professors);
         professorAdapter.notifyDataSetChanged();
-        professorDropdown.setText(selectedCourse.getProfessors());
+        professorDropdown.setAdapter(professorAdapter);
+        // professorDropdown.setText(selectedCourse.getProfessors());
     }
 
-    private void fillCourseDropdown(String selectedProfessor) {
+    private void fillCourseDropdown(Professor selectedProfessor) {
+        ArrayList<String> courses = new ArrayList<>();
+        courses.addAll(selectedProfessor.getCourseNames());
+        listManager.setCoursesList(courses);
+        courseAdapter.notifyDataSetChanged();
+        courseDropdown.setAdapter(courseAdapter);
         //Aim: based on current selected professor, fill the course dropdown
         //listManager.setCourses(selectedProfessor.getCourses());
         //ourseAdapter.notifyDataSetChanged();
     }
+
 
     private void setupReviews(View view) {
         RatingsView funRatings = view.findViewById(R.id.create_review_fun_rating);
@@ -329,7 +362,7 @@ import java.util.concurrent.*;
                 Iterable<DataSnapshot> list = crs.getChildren();
                 String name = " ";
                 String num = " ";
-                String prof = new String();
+                ArrayList<String> profs = new ArrayList<>();
                 String designation = " ";
                 int avgRate = 0;
                 int funRate = 0;
@@ -355,7 +388,10 @@ import java.util.concurrent.*;
                     } else if (counter == 5) {
                         funRate = item.getValue(Integer.class);
                     } else if (counter == 6) {
-                        prof = ensureStringLengthIsLessThanMax(item.getValue(String.class));
+                        Iterable<DataSnapshot> professors = item.getChildren();
+                        for (DataSnapshot curr : professors) {
+                            profs.add(ensureStringLengthIsLessThanMax(curr.getValue(String.class)));
+                        }
                     } else if (counter == 7) {
                         Iterable<DataSnapshot> reviews = item.getChildren();
                         for (DataSnapshot rev : reviews) {
@@ -410,12 +446,13 @@ import java.util.concurrent.*;
                     }
                     counter++;
                 }
-                CourseItem course = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
-                course = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                CourseItem course = new CourseItem(avgRate, designation, name, num, funRate, profs, workRate);
+                course = new CourseItem(avgRate, designation, name, num, funRate, profs, workRate);
                 for (ReviewItem r : reviewsHolder) {
                     course.addReview(r);
                 }
                 course.setId(id);
+
                 listManager.addCourse(course);
             }
 
@@ -441,4 +478,3 @@ import java.util.concurrent.*;
 
 
 }
-*/

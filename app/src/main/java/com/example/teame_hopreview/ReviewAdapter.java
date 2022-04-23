@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teame_hopreview.ui.course.CourseItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     private AdapterView.OnItemClickListener clickListener;
     private MainActivity mainActivity;
     Context context;
+
+
+    private final View.OnClickListener mOnClickListener = (view) -> {
+        ReviewItem review = (ReviewItem) view.getTag();
+        mainActivity.openReviewDetailFragment(review);
+    };
 
     public ReviewAdapter(MainActivity mainActivity, Context context, List<ReviewItem> items) {
         this.inflater = LayoutInflater.from(context);
@@ -69,7 +77,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
 
         holder.itemView.setTag(reviewData.get(position));
-        // holder.itemView.setOnClickListener(mOnClickListener);
+        holder.itemView.setOnClickListener(mOnClickListener);
 
     }
 

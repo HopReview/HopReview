@@ -13,7 +13,7 @@ import com.example.teame_hopreview.ui.professors.Professor;
 import com.example.teame_hopreview.ui.professors.ProfessorDetailFragment;
 import com.example.teame_hopreview.ui.professors.ProfessorFragment;
 import com.example.teame_hopreview.ui.profile.ProfileFragment;
-// import com.example.teame_hopreview.ui.review.CreateReviewFragment;
+import com.example.teame_hopreview.ui.review.CreateReviewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     private Fragment home;
     private Fragment professors;
     private Fragment profile;
-    // private CreateReviewFragment createReview;
+    private CreateReviewFragment createReview;
     public BottomNavigationView bottomNavigationView;
     private FirebaseDatabase mydbase;
     private DatabaseReference dbRef;
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         home = new HomeFragment();
         professors = new ProfessorFragment();
         profile = new ProfileFragment();
-        // createReview = new CreateReviewFragment();
 
         mydbase = FirebaseDatabase.getInstance();
         dbRef = mydbase.getReference();
@@ -131,23 +130,38 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         transaction = getSupportFragmentManager().beginTransaction();
         CourseDetailFragment courseDetail = new CourseDetailFragment(courseName);
         transaction.replace(R.id.fragment_container, courseDetail).commit();
-        transaction.addToBackStack("createDetailStack");
+        transaction.addToBackStack("createCourseDetailStack");
     }
 
     public void openProfessorDetailFragment(Professor profName) {
         transaction = getSupportFragmentManager().beginTransaction();
         ProfessorDetailFragment professorDetail = new ProfessorDetailFragment(profName);
         transaction.replace(R.id.fragment_container, professorDetail).commit();
-        transaction.addToBackStack("createDetailStack");
+        transaction.addToBackStack("createProfessorDetailStack");
     }
 
-    /*public void openCreateReview(String courseName) {
-        createReview.reset();
-        createReview.setDefaultCourseName(courseName);
+    public void openReviewDetailFragment(ReviewItem review) {
+        transaction = getSupportFragmentManager().beginTransaction();
+        ReviewDetailFragment reviewDetail = new ReviewDetailFragment(review);
+        transaction.replace(R.id.fragment_container, reviewDetail).commit();
+        transaction.addToBackStack("createReviewDetailStack");
+    }
+
+    public void openCreateReview(CourseItem course) {
+        createReview = new CreateReviewFragment(course);
+        createReview.setDefaultCourseName(course.getName());
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, this.createReview).commit();
-        transaction.addToBackStack("createReviewStack");
-    }*/
+        transaction.addToBackStack("createCourseReviewStack");
+    }
+
+    public void openCreateReview(Professor prof) {
+        createReview = new CreateReviewFragment(prof);
+        createReview.setDefaultProfessorName(prof.getProfessorName());
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, this.createReview).commit();
+        transaction.addToBackStack("createProfessorReviewStack");
+    }
 
     public void openMyCourses() {
         transaction = getSupportFragmentManager().beginTransaction();

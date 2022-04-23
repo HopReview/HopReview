@@ -142,6 +142,7 @@ public class CourseFragment extends Fragment {
                                     c2++;
                                 }
                                 reviewItem = new ReviewItem(revAvgRate, date, firstRating, reviewerContent, reviewerName, secondRating);
+                                reviewItem.setCourseName(name);
                                 myReviews.add(reviewItem);
                             }
                         } else if (counter == 8) {
