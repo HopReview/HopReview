@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     }
 
     public void openCreateReview(CourseItem course) {
-        createReview = new CreateReviewFragment(course);
+        createReview = new CreateReviewFragment();
         createReview.setDefaultCourseName(course.getName());
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, this.createReview).commit();
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     }
 
     public void openCreateReview(Professor prof) {
-        createReview = new CreateReviewFragment(prof);
+        createReview = new CreateReviewFragment();
         createReview.setDefaultProfessorName(prof.getProfessorName());
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, this.createReview).commit();
