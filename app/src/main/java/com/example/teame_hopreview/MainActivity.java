@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
     public void openCreateReview(Professor prof) {
         createReview = new CreateReviewFragment();
-        createReview.setDefaultProfessorName(prof.getProfessorName());
+        //createReview.setDefaultProfessorName(prof.getProfessorName());
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, this.createReview).commit();
         transaction.addToBackStack("createProfessorReviewStack");

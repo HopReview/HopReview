@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewItem;
 import com.example.teame_hopreview.ui.course.CourseItem;
-import com.example.teame_hopreview.ui.professors.Professor;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -51,8 +49,6 @@ import java.util.concurrent.*;
  * create an instance of this fragment.
  */
 public class CreateReviewFragment extends Fragment {
-    private static final String TAG = "dbref: ";
-
 
     private MainActivity mainActivity;
 
@@ -62,7 +58,7 @@ public class CreateReviewFragment extends Fragment {
 
     private AutoCompleteTextView courseDropdown;
 
-    private ArrayAdapter<ProfessorWrapper> professorAdapter;
+    private ArrayAdapter<String> professorAdapter;
 
     private AutoCompleteTextView professorDropdown;
 
@@ -71,12 +67,6 @@ public class CreateReviewFragment extends Fragment {
     private TextInputEditText commentEditText;
 
     private CourseItem selectedCourse;
-
-    private String selectedCourseName;
-
-    private Professor selectedProfessor;
-
-    private String selectedProfessorName;
 
     private int funRating = 0;
 
@@ -90,26 +80,17 @@ public class CreateReviewFragment extends Fragment {
         return defaultCourseName;
     }
 
-    public String getDefaultProfessorName() {
-        return defaultProfessorName;
-    }
-
     public void setDefaultCourseName(String defaultCourseName) {
         this.defaultCourseName = defaultCourseName;
     }
 
-    public void setDefaultProfessorName(String defaultProfessorName) {
-        this.defaultProfessorName = defaultProfessorName;
-    }
-
     private String defaultCourseName;
-    private String defaultProfessorName;
+
 
 
     public CreateReviewFragment() {
         listManager = new ListManager();
         selectedCourse = null;
-        selectedProfessor = null;
         dbref = FirebaseDatabase.getInstance().getReference();
         dbref.addValueEventListener(new DatabaseChangeListener());
     }
@@ -144,21 +125,10 @@ public class CreateReviewFragment extends Fragment {
                 professorDropdown.setFocusable(false);
                 if (defaultCourseName != null) {
                     for (CourseItem item: listManager.getCourses()) {
-                        if (defaultCourseName.equals(item.getName())) {
+                        if (defaultCourseName.equals(item.getCourseNumber())) {
                             selectedCourse = item;
                             courseDropdown.setText(selectedCourse.getName(), false);
                             fillProfessorDropdown(selectedCourse);
-                            break;
-                        }
-                    }
-                }
-
-                if (defaultProfessorName != null) {
-                    for (Professor item : listManager.getProfessors()) {
-                        if (defaultProfessorName.equals(item.getProfessorName())) {
-                            selectedProfessor = item;
-                            professorDropdown.setText(selectedProfessor.getProfessorName(), false);
-                            fillCourseDropdown(selectedProfessor);
                             break;
                         }
                     }
@@ -192,221 +162,29 @@ public class CreateReviewFragment extends Fragment {
         professorDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Professor selected = listManager.getProfessors().get(position);
-                selectedProfessor = selected;
-                fillCourseDropdown(selected);
-                //tring professor = listManager.getProfessors().get(position);
-                //fillCourseDropdown(professor);
+                /*tring professor = listManager.getProfessors().get(position);
+                fillCourseDropdown(professor);*/
             }
         });
 
-        professorAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getProfessorWrappers());
+        professorAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getProfessors());
+
         professorDropdown.setAdapter(professorAdapter);
     }
 
     private void fillProfessorDropdown(CourseItem selectedCourse) {
         //Aim: based on current selected course, fill the professor dropdown
-        ArrayList<ProfessorWrapper> professors = new ArrayList<>();
-        ArrayList<String> profStringList = new ArrayList<>();
-        profStringList = selectedCourse.getProfessors();
-        for (String selected : profStringList) {
-            System.out.println("Selected String: " + selected);
-            professors.add(new ProfessorWrapper(findProfessor(selected)));
-        }
-        listManager.setProfessorWrappers(professors);
+        ArrayList<String> professors = new ArrayList<>();
+        professors.add(selectedCourse.getProfessors());
+        listManager.setProfessors(professors);
         professorAdapter.notifyDataSetChanged();
-        professorDropdown.setAdapter(professorAdapter);
-        professorDropdown.setText(selectedCourse.getProfessors().get(0));
+        professorDropdown.setText(selectedCourse.getProfessors());
     }
 
-    private Professor findProfessor(String selected) {
-        final Professor[] toReturn = new Professor[1];
-        dbref.child("professor_data").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> professors = snapshot.getChildren();
-                for (DataSnapshot prof : professors) {
-                    if (!prof.getKey().equals(selected)) {
-                        break;
-                    }
-                    Iterable<DataSnapshot> list = prof.getChildren();
-                    int avg_rating = 0;
-                    ArrayList<String> courses = new ArrayList<>();
-                    String department = "";
-                    int grading_rating = 4;
-                    int knowledge_rating = 5;
-                    ArrayList<ReviewItem> reviews = new ArrayList<>();
-
-                    int counter = 1;
-                    for (DataSnapshot item : list) {
-                        if (counter == 1) {
-                            avg_rating = item.getValue(Integer.class);
-                        } else if (counter == 2) {
-                            Iterable<DataSnapshot> courseContent = item.getChildren();
-                            for (DataSnapshot content : courseContent) {
-                                courses.add(content.getValue(String.class));
-                            }
-                        } else if (counter == 3) {
-                            department = item.getValue(String.class);
-                        } else if (counter == 4) {
-                            grading_rating = item.getValue(Integer.class);
-                        } else if (counter == 5) {
-                            knowledge_rating = item.getValue(Integer.class);
-                        } else if (counter == 6) {
-                            Iterable<DataSnapshot> reviewContent = item.getChildren();
-                            for (DataSnapshot content : reviewContent) {
-                                int revAvg = 0;
-                                String date = "";
-                                int gRating = 0;
-                                int kRating = 0;
-                                String comment = "";
-                                String userName = "";
-
-                                Iterable<DataSnapshot> rev = content.getChildren();
-                                int c2 = 1;
-                                for (DataSnapshot revInfo : rev) {
-                                    if (c2 == 1) {
-                                        revAvg = revInfo.getValue(Integer.class);
-                                    } else if (c2 == 2) {
-                                        date = revInfo.getValue(String.class);
-                                    } else if (c2 == 3) {
-                                        gRating = revInfo.getValue(Integer.class);
-                                    } else if (c2 == 4) {
-                                        kRating = revInfo.getValue(Integer.class);
-                                    } else if (c2 == 5) {
-                                        comment = revInfo.getValue(String.class);
-                                    } else if (c2 == 6) {
-                                        userName = revInfo.getValue(String.class);
-                                    }
-                                    c2++;
-                                }
-                                ReviewItem currRev = new ReviewItem(revAvg, date, gRating, comment, userName, kRating);
-                                currRev.setProfessorName(selected);
-                                reviews.add(currRev);
-                            }
-                        }
-                        counter++;
-                    }
-                    toReturn[0] = new Professor(selected, department, grading_rating, knowledge_rating, avg_rating);
-
-                    for (ReviewItem review : reviews) {
-                        toReturn[0].addReview(review);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return toReturn[0];
-    }
-
-    private void fillCourseDropdown(Professor selectedProfessor) {
-        ArrayList<CourseWrapper> courses = new ArrayList<>();
-        ArrayList<String> courseStringList = new ArrayList<>();
-        courseStringList = selectedProfessor.getCourseNames();
-        for (String selected : courseStringList) {
-            courses.add(new CourseWrapper(findCourse(selected)));
-        }
-        listManager.setCourseWrappers(courses);
-        courseAdapter.notifyDataSetChanged();
-        courseDropdown.setAdapter(courseAdapter);
+    private void fillCourseDropdown(String selectedProfessor) {
         //Aim: based on current selected professor, fill the course dropdown
-        // listManager.setCourses(selectedProfessor.getCourses());
+        //listManager.setCourses(selectedProfessor.getCourses());
         //ourseAdapter.notifyDataSetChanged();
-    }
-
-    private CourseItem findCourse(String selected) {
-        final CourseItem[] toReturn = new CourseItem[1];
-        dbref.child("courses_data").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> courses = snapshot.getChildren();
-
-                for (DataSnapshot crs : courses) {
-                    Iterable<DataSnapshot> list = crs.getChildren();
-
-                    int avgRate = 0;
-                    String designation = "";
-                    String name = "";
-                    String num = "";
-                    int funRate = 0;
-                    ArrayList<String> profs = new ArrayList<>();
-                    ArrayList<ReviewItem> reviews = new ArrayList<>();
-                    int workRate = 0;
-
-                    int counter = 1;
-                    for (DataSnapshot item : list) {
-                        if (counter == 1) {
-                            avgRate = item.getValue(Integer.class);
-                        } else if (counter == 2) {
-                            designation = item.getValue(String.class);
-                        } else if (counter == 3) {
-                            name = item.getValue(String.class);
-                            if (!name.equals(selected)) {
-                                break;
-                            }
-                        } else if (counter == 4) {
-                            num = item.getValue(String.class);
-                        } else if (counter == 5) {
-                            funRate = item.getValue(Integer.class);
-                        } else if (counter == 6) {
-                            Iterable<DataSnapshot> profData = item.getChildren();
-                            for (DataSnapshot prof : profData) {
-                                profs.add(prof.getValue(String.class));
-                            }
-                        } else if (counter == 7) {
-                            Iterable<DataSnapshot> reviewData = item.getChildren();
-                            for (DataSnapshot rev : reviewData) {
-
-                                int revAvgRate = 0;
-                                String date = "";
-                                int firstRating = 0;
-                                String reviewerContent = "";
-                                String reviewerName = "";
-                                int secondRating = 0;
-
-                                Iterable<DataSnapshot> rr = rev.getChildren();
-                                int c2 = 1;
-                                for (DataSnapshot r : rr) {
-                                    if (c2 == 1) {
-                                        revAvgRate = r.getValue(Integer.class);
-                                    } else if (c2 == 2) {
-                                        date = r.getValue(String.class);
-                                    } else if (c2 == 3) {
-                                        firstRating = r.getValue(Integer.class);
-                                    } else if (c2 == 4) {
-                                        reviewerContent = r.getValue(String.class);
-                                    } else if (c2 == 5) {
-                                        reviewerName = r.getValue(String.class);
-                                    } else if (c2 == 6) {
-                                        secondRating = r.getValue(Integer.class);
-                                    }
-                                    c2++;
-                                }
-                                ReviewItem currRev = new ReviewItem(revAvgRate, date, firstRating, reviewerContent, reviewerName, secondRating);
-                                currRev.setCourseName(name);
-                                reviews.add(currRev);
-                            }
-                        } else if (counter == 8) {
-                            workRate = item.getValue(Integer.class);
-                        }
-                        counter++;
-                    }
-                    toReturn[0] = new CourseItem(avgRate, designation, name, num, funRate, profs, workRate);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return toReturn[0];
     }
 
     private void setupReviews(View view) {
@@ -551,7 +329,7 @@ public class CreateReviewFragment extends Fragment {
                 Iterable<DataSnapshot> list = crs.getChildren();
                 String name = " ";
                 String num = " ";
-                ArrayList<String> profs = new ArrayList<>();
+                String prof = new String();
                 String designation = " ";
                 int avgRate = 0;
                 int funRate = 0;
@@ -577,9 +355,10 @@ public class CreateReviewFragment extends Fragment {
                     } else if (counter == 5) {
                         funRate = item.getValue(Integer.class);
                     } else if (counter == 6) {
-                        Iterable<DataSnapshot> professors = item.getChildren();
-                        for (DataSnapshot curr : professors) {
-                            profs.add(ensureStringLengthIsLessThanMax(curr.getValue(String.class)));
+                        Iterable<DataSnapshot> profData = item.getChildren();
+                        for (DataSnapshot tprof : profData) {
+                            prof = tprof.getValue(String.class);
+                            break;
                         }
                     } else if (counter == 7) {
                         Iterable<DataSnapshot> reviews = item.getChildren();
@@ -635,13 +414,12 @@ public class CreateReviewFragment extends Fragment {
                     }
                     counter++;
                 }
-                CourseItem course = new CourseItem(avgRate, designation, name, num, funRate, profs, workRate);
-                course = new CourseItem(avgRate, designation, name, num, funRate, profs, workRate);
+                CourseItem course = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                course = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
                 for (ReviewItem r : reviewsHolder) {
                     course.addReview(r);
                 }
                 course.setId(id);
-
                 listManager.addCourse(course);
             }
 
