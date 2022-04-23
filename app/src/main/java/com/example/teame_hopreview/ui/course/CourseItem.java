@@ -263,4 +263,10 @@ public class CourseItem extends Profile {
     public void setId(String id) {
         this.id = id;
     }
+
+    public CourseItem Copy() {
+        CourseItem item = new CourseItem(averageRating, courseDesignation, courseName, courseNumber, funRating, professor, workloadRating);
+        item.setId(getId());
+        return item;
+    }
 }

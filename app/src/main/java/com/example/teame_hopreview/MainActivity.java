@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         mydbase = FirebaseDatabase.getInstance();
         dbRef = mydbase.getReference();
 
+
+
 //        RecyclerView recyclerView = findViewById(R.id.myList);
 //        assert recyclerView != null;
 //        mAdapt = new SimpleItemRecyclerViewAdapter(this, mItems, mTwoPane);
@@ -149,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
     public void openCreateReview(CourseItem course) {
         createReview = new CreateReviewFragment();
-        createReview.setDefaultCourseName(course.getName());
+        createReview.setDefaultCourseNumber(course.getCourseNumber());
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, this.createReview).commit();
         transaction.addToBackStack("createCourseReviewStack");
@@ -157,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
     public void openCreateReview(Professor prof) {
         createReview = new CreateReviewFragment();
-        //createReview.setDefaultProfessorName(prof.getProfessorName());
+        createReview.setDefaultProfessorName(prof.getProfessorName());
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, this.createReview).commit();
         transaction.addToBackStack("createProfessorReviewStack");

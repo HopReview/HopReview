@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +25,6 @@ import com.example.teame_hopreview.ReviewItem;
 import com.example.teame_hopreview.ui.course.CourseItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,10 +39,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,16 +74,17 @@ public class CreateReviewFragment extends Fragment {
 
     private int gradingRating = 0;
 
-    public String getDefaultCourseName() {
-        return defaultCourseName;
+    public String getDefaultCourseNumber() {
+        return defaultCourseNumber;
     }
 
-    public void setDefaultCourseName(String defaultCourseName) {
-        this.defaultCourseName = defaultCourseName;
+    public void setDefaultCourseNumber(String defaultCourseNumber) {
+        this.defaultCourseNumber = defaultCourseNumber;
     }
 
-    private String defaultCourseName;
+    private String defaultCourseNumber;
 
+    private String defaultProfessorName;
 
 
     public CreateReviewFragment() {
@@ -114,31 +113,59 @@ public class CreateReviewFragment extends Fragment {
         setupProfessorDropdown(view);
         setupReviews(view);
 
-        ViewTreeObserver observer = view.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                courseDropdown.setText(null);
-                courseDropdown.setFocusable(false);
-                professorDropdown.setText(null);
-                professorDropdown.setFocusable(false);
-                if (defaultCourseName != null) {
-                    for (CourseItem item: listManager.getCourses()) {
-                        if (defaultCourseName.equals(item.getCourseNumber())) {
-                            selectedCourse = item;
-                            courseDropdown.setText(selectedCourse.getName(), false);
-                            fillProfessorDropdown(selectedCourse);
-                            break;
-                        }
-                    }
-                }
+        Handler handler = new Handler(Looper.getMainLooper());
 
-            }
-        });
+        Timer t = new java.util.Timer();
+        t.schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                setDropdownDefaultValues();
+                            }
+                        });
+                    }
+                },
+                100
+        );
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void setDropdownDefaultValues() {
+        courseDropdown.setText(null);
+        courseDropdown.setFocusable(false);
+        professorDropdown.setText(null);
+        professorDropdown.setFocusable(false);
+        if (defaultCourseNumber != null) {
+            for (CourseItem item: listManager.getCourses()) {
+                if (defaultCourseNumber.equals(item.getCourseNumber())) {
+                    selectedCourse = item;
+                    courseDropdown.setText(selectedCourse.getName(), false);
+                    fillProfessorDropdown(selectedCourse);
+                    break;
+                }
+            }
+        }
+        Boolean foundProfessor = false;
+        if (defaultCourseNumber == null && defaultProfessorName != null) {
+            for (CourseItem item: listManager.getCourses()) {
+                for (String profName: item.getProfessors()) {
+                    if (defaultProfessorName.equals(profName)) {
+                        professorDropdown.setText(defaultProfessorName, false);
+                        foundProfessor = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (foundProfessor) {
+            fillCourseDropdown(defaultProfessorName);
+        }
+
     }
 
     private void setupCourseDropdown(View view) {
@@ -174,17 +201,31 @@ public class CreateReviewFragment extends Fragment {
 
     private void fillProfessorDropdown(CourseItem selectedCourse) {
         //Aim: based on current selected course, fill the professor dropdown
-        ArrayList<String> professors = new ArrayList<>();
-        professors.add(selectedCourse.getProfessors());
-        listManager.setProfessors(professors);
+        //ArrayList<String> professors = new ArrayList<>();
+        //professors.add(selectedCourse.getProfessors().get(0));
+        listManager.setProfessors(selectedCourse.getProfessors());
         professorAdapter.notifyDataSetChanged();
-        professorDropdown.setText(selectedCourse.getProfessors());
+        if (selectedCourse.getProfessors().size() == 1) {
+            professorDropdown.setText(selectedCourse.getProfessors().get(0));
+        }
     }
 
     private void fillCourseDropdown(String selectedProfessor) {
         //Aim: based on current selected professor, fill the course dropdown
-        //listManager.setCourses(selectedProfessor.getCourses());
-        //ourseAdapter.notifyDataSetChanged();
+        ArrayList<CourseItem> courses = new ArrayList<>();
+        for (CourseItem course: listManager.getCourses()) {
+            for (String profName: course.getProfessors()) {
+                if (selectedProfessor.equals(profName)) {
+                    courses.add(course.Copy());
+                }
+            }
+        }
+        listManager.setCourses(courses);
+        courseAdapter.notifyDataSetChanged();
+        if (courses.size() == 1) {
+            selectedCourse = courses.get(0);
+            courseDropdown.setText(selectedCourse.getName(), false);
+        }
     }
 
     private void setupReviews(View view) {
@@ -303,6 +344,14 @@ public class CreateReviewFragment extends Fragment {
         toast.show();
     }
 
+    public String getDefaultProfessorName() {
+        return defaultProfessorName;
+    }
+
+    public void setDefaultProfessorName(String defaultProfessorName) {
+        this.defaultProfessorName = defaultProfessorName;
+    }
+
     class DatabaseChangeListener implements ValueEventListener {
 
         private static final String TAG = "dbref: ";
@@ -320,11 +369,11 @@ public class CreateReviewFragment extends Fragment {
 
             for (DataSnapshot crs : courses) {
                 reviewsHolder.clear();
-                System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
-                System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
-                System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
-                System.out.println("CourseNum: " + crs.getValue(CourseItem.class).getCourseNumber());
-                System.out.println("CourseDes: " + crs.getValue(CourseItem.class).getDesignation());
+                //System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
+                //System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
+                //System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
+                //System.out.println("CourseNum: " + crs.getValue(CourseItem.class).getCourseNumber());
+                //System.out.println("CourseDes: " + crs.getValue(CourseItem.class).getDesignation());
                 String id = (String) crs.getKey();
                 Iterable<DataSnapshot> list = crs.getChildren();
                 String name = " ";
@@ -342,6 +391,8 @@ public class CreateReviewFragment extends Fragment {
                 String reviewerName = "";
                 int secondRating = 0;
 
+                ArrayList<String> professors = new ArrayList<>();
+
                 int counter = 1;
                 for (DataSnapshot item : list) {
                     if (counter == 1) {
@@ -357,8 +408,7 @@ public class CreateReviewFragment extends Fragment {
                     } else if (counter == 6) {
                         Iterable<DataSnapshot> profData = item.getChildren();
                         for (DataSnapshot tprof : profData) {
-                            prof = tprof.getValue(String.class);
-                            break;
+                            professors.add(tprof.getValue(String.class));
                         }
                     } else if (counter == 7) {
                         Iterable<DataSnapshot> reviews = item.getChildren();
@@ -414,8 +464,8 @@ public class CreateReviewFragment extends Fragment {
                     }
                     counter++;
                 }
-                CourseItem course = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
-                course = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                //CourseItem course = new CourseItem(avgRate, designation, name, num, funRate, prof, workRate);
+                CourseItem course = new CourseItem(avgRate, designation, name, num, funRate, professors, workRate);
                 for (ReviewItem r : reviewsHolder) {
                     course.addReview(r);
                 }
