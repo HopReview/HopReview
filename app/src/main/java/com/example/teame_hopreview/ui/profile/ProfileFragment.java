@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,11 +16,14 @@ import androidx.fragment.app.Fragment;
 import com.example.teame_hopreview.LoginActivity;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
+import com.example.teame_hopreview.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ProfileFragment extends Fragment {
 
@@ -44,6 +48,12 @@ public class ProfileFragment extends Fragment {
                 myAct.openMyCourses();
             }
         });
+
+        TextView usernameTxt = myView.findViewById(R.id.userTxt);
+        TextView emailTxt = myView.findViewById(R.id.emailTxt);
+
+        usernameTxt.setText(myAct.user.getUserName());
+        emailTxt.setText(myAct.user.getEmail());
 
         Button myReviewsBtn = myView.findViewById(R.id.my_reviews_btn);
         myReviewsBtn.setOnClickListener(new View.OnClickListener() {
