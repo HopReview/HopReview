@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private FragmentTransaction transaction;
     private Fragment cFrag;
     private Context context;
+    private User appUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

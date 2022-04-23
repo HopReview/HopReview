@@ -2,6 +2,8 @@ package com.example.teame_hopreview;
 
 import static android.content.ContentValues.TAG;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,11 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class User {
-
-    private static int nextId = 0;
-
     private String userName;
     private String email;
     private String userId;
@@ -32,16 +32,23 @@ public class User {
     public User() {
 
     }
-
+    // Constructor for creating new User
     public User(String userName, String email) {
         dbref = FirebaseDatabase.getInstance().getReference();
         this.userName = userName;
         this.email = email;
-        this.userId = String.valueOf(++nextId);
         bookmarkedCourses = new ArrayList<>();
         userReviews = new ArrayList<>();
         recentlyViewed = new String[3];
+        setUserId(email);
     }
+
+    // Constructor for retrieving existing user
+    public User(String email) {
+        setUserId(email);
+    }
+
+
 
     public void updateFromDatabase() {
         dbref.child("user_data").child(userId).child("bookmarkedCourses").
@@ -135,6 +142,14 @@ public class User {
         return recentlyViewed;
     }
 
+    public void updateUsername() {
+        dbref.child("user_data").child(userId).child("username").setValue(getUserName());
+    }
+
+    public void updateEmail() {
+        dbref.child("user_data").child(userId).child("email").setValue(getEmail());
+    }
+
     public void updateRecentlyViewedDatabase() {
         dbref.child("user_data").child(userId).child("recentlyViewed").setValue(getRecentlyViewed());
     }
@@ -146,5 +161,43 @@ public class User {
     public void updateBookmarkedCoursesDatabase() {
         dbref.child("user_data").child(userId).child("bookmarkedCourses").setValue(getBookmarkedCourses());
     }
+
+    public void retrieveUserData() {
+        dbref.child("user_data").child(userId).child("username").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userName = snapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("The read failed: " + error.getCode());
+            }
+        });
+
+        dbref.child("user_data").child(userId).child("email").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                email = snapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("The read failed: " + error.getCode());
+            }
+        });
+        updateFromDatabase();
+    }
+
+    public String getUserId() {
+        return this.userId;
+    }
+
+    private void setUserId(String email) {
+        int splitIndex = email.indexOf('@');
+        this.userId = email.substring(0, splitIndex);
+    }
+
+
 
 }
