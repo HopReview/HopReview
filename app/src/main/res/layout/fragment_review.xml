@@ -6,33 +6,30 @@
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:rowCount="3"
-        android:columnCount="3"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        >
+        android:columnCount="3"
+        android:rowCount="3">
 
         <TextView
+            style="@style/CreateReview_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Course"
-            android:layout_gravity="left | center_vertical"
             android:layout_columnWeight="1"
-            style="@style/CreateReview_Text"
-            />
+            android:layout_gravity="left | center_vertical"
+            android:text="Course" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:layout_columnWeight="1"
             android:layout_columnSpan="2"
-            app:startIconDrawable="@drawable/folder"
-            app:startIconTint="@color/md_theme_light_primary"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:hint="Courses"
             app:boxStrokeColor="@color/md_theme_light_primary"
-            android:hint="Courses">
+            app:startIconDrawable="@drawable/folder"
+            app:startIconTint="@color/md_theme_light_primary">
 
 
             <AutoCompleteTextView
@@ -40,49 +37,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
-                android:textAppearance="@style/CreateReview_Text_Dropdown"
-                />
+                android:textAppearance="@style/CreateReview_Text_Dropdown" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:layout_gravity="left | center_vertical"
             android:layout_columnSpan="3"
-            />
+            android:layout_gravity="left | center_vertical"
+            android:text="" />
 
 
         <TextView
+            style="@style/CreateReview_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Professor"
-            android:layout_gravity="left | center_vertical"
             android:layout_columnWeight="1"
-            style="@style/CreateReview_Text"
-            />
+            android:layout_gravity="left | center_vertical"
+            android:text="Professor" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:layout_columnWeight="1"
             android:layout_columnSpan="2"
-            app:startIconDrawable="@drawable/person"
-            app:startIconTint="@color/md_theme_light_primary"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:hint="Professors"
             app:boxStrokeColor="@color/md_theme_light_primary"
-            android:hint="Professors">
+            app:startIconDrawable="@drawable/person"
+            app:startIconTint="@color/md_theme_light_primary">
 
 
             <AutoCompleteTextView
                 android:id="@+id/create_review_professor_dropdown"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:inputType="none"
-                android:textAppearance="@style/CreateReview_Text_Dropdown"
-                />
+                android:textAppearance="@style/CreateReview_Text_Dropdown" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

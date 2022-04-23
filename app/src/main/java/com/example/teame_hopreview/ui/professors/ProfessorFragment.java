@@ -139,6 +139,7 @@ public class ProfessorFragment extends Fragment {
                                 }
 
                                 reviewItem = new ReviewItem(revAvgRate, date, revGradeRate, reviewerContent, reviewerName, revKnowRate);
+                                reviewItem.setProfessorName(professor);
                                 myReviews.add(reviewItem);
                             }
                         }
