@@ -40,7 +40,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/course1"
         android:layout_width="315dp"
-        android:layout_height="71dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,8 +62,8 @@
                 android:id="@+id/designationHome"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/circular_background"
                 android:gravity="center"
                 android:text="H"
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="5dp"
                     android:text="Course Name"
                     android:textColor="@color/md_theme_light_onPrimaryContainer"
                     android:textSize="16sp"
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
 
@@ -117,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
 
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
 
@@ -135,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
 
@@ -144,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
 
@@ -156,60 +156,627 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/course2"
         android:layout_width="315dp"
-        android:layout_height="71dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.274">
+        app:layout_constraintVertical_bias="0.274"
+        android:layout_margin="1dp"
+        app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/designationHome2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/circular_background"
+                android:gravity="center"
+                android:text="H"
+                android:textColor="@color/md_theme_light_onPrimary"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameHome2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Course Name"
+                    android:textColor="@color/md_theme_light_onPrimaryContainer"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/profsHome2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Professors"
+                    android:textColor="@color/md_theme_light_onSurfaceVariant"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/avg_star1Home2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star2Home2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star3Home2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star4Home2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star5Home2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/course3"
         android:layout_width="315dp"
-        android:layout_height="71dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.396">
+        app:layout_constraintVertical_bias="0.396"
+        android:layout_margin="1dp"
+        app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/designationHome3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/circular_background"
+                android:gravity="center"
+                android:text="H"
+                android:textColor="@color/md_theme_light_onPrimary"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameHome3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Course Name"
+                    android:textColor="@color/md_theme_light_onPrimaryContainer"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/profsHome3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Professors"
+                    android:textColor="@color/md_theme_light_onSurfaceVariant"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/avg_star1Home3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star2Home3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star3Home3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star4Home3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+                <ImageView
+                    android:id="@+id/avg_star5Home3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/star_filled"
+                    app:tint="@color/md_theme_light_primary" />
+
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/review1"
         android:layout_width="315dp"
-        android:layout_height="71dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.598">
+        app:layout_constraintVertical_bias="0.598"
+        android:layout_margin="1dp"
+        app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/userName1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/username"
+                    android:textColor="@color/md_theme_dark_inversePrimary"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/date1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/date_format"
+                    android:textColor="@color/md_theme_dark_inverseOnSurface"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/avg_star1Home4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="57.5dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star2Home4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star3Home4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star4Home4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star5Home4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameHome4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Course Name"
+                    android:textColor="@color/md_theme_dark_inverseOnSurface"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/contentHome1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Content"
+                    android:textColor="@color/md_theme_dark_inverseOnSurface"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/review2"
         android:layout_width="315dp"
-        android:layout_height="71dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.725">
+        app:layout_constraintVertical_bias="0.725"
+        android:layout_margin="1dp"
+        app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/userName2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/username"
+                    android:textColor="@color/md_theme_dark_inversePrimary"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/date2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/date_format"
+                    android:textColor="@color/md_theme_dark_inverseOnSurface"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/avg_star1Home5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="57.5dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star2Home5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star3Home5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star4Home5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star5Home5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameHome5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Course Name"
+                    android:textColor="@color/md_theme_dark_inverseOnSurface"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/contentHome2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Content"
+                    android:textColor="@color/md_theme_dark_inverseOnSurface"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/review3"
         android:layout_width="315dp"
-        android:layout_height="71dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.851" />
+        app:layout_constraintVertical_bias="0.851"
+        android:layout_margin="1dp"
+        app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/userName3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/username"
+                    android:textColor="@color/md_theme_dark_inversePrimary"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/date3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/date_format"
+                    android:textColor="@color/md_theme_dark_inverseOnSurface"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/avg_star1Home6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="57.5dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star2Home6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star3Home6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star4Home6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                    <ImageView
+                        android:id="@+id/avg_star5Home6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2.5dp"
+                        android:src="@drawable/star_filled"
+                        app:tint="@color/md_theme_light_primary" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameHome6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Course Name"
+                    android:textColor="@color/md_theme_dark_inverseOnSurface"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/contentHome3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Content"
+                    android:textColor="@color/md_theme_dark_inverseOnSurface"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

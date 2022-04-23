@@ -39,6 +39,7 @@
     <string name="my_courses">My Courses</string>
     <string name="my_reviews">My Reviews</string>
     <string name="review_by">Review by:</string>
+    <string name="date_format">MM/DD/YYYY</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
