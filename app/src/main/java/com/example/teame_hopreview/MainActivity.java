@@ -24,6 +24,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.teame_hopreview.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     public BottomNavigationView bottomNavigationView;
     private FirebaseDatabase mydbase;
     private DatabaseReference dbRef;
+    public User user;
     private FragmentTransaction transaction;
     private SearchView searchView;
 
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         mydbase = FirebaseDatabase.getInstance();
         dbRef = mydbase.getReference();
+
+        user = retrieveUserData();
+
 
 //        RecyclerView recyclerView = findViewById(R.id.myList);
 //        assert recyclerView != null;
@@ -97,6 +103,14 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnItemSelectedListener(this);
 
+    }
+
+    public User retrieveUserData() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert currentUser != null;
+        User user = new User(currentUser.getEmail());
+        user.retrieveUserData();
+        return user;
     }
 
     @Override

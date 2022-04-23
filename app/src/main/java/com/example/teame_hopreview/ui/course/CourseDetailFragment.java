@@ -105,70 +105,76 @@ public class CourseDetailFragment extends Fragment {
         myAct = (MainActivity) getActivity();
         context = myAct.getApplicationContext();
 
-        professors[0].setBackground(myAct.getResources().getDrawable(R.drawable.selected_item_background));
+        //
         setCourseProfessors(currProfessor);
         myDbHelper(myView, currProfessor);
 
-        professors[0].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (professors[0].getVisibility() != View.GONE) {
-                    professors[0].setBackground(myAct.getResources().
-                            getDrawable(R.drawable.selected_item_background));
-                    professors[1].setBackground(null);
-                    professors[2].setBackground(null);
-                    professors[3].setBackground(null);
-                    currProfessor = professors[0].getText().toString();
-                    setCourseProfessors(currProfessor);
-                    myDbHelper(myView, currProfessor);
+        System.out.println(professorsHolder.size());
+
+        if (professorsHolder.size() > 1) {
+            professors[0].setBackground(myAct.getResources().getDrawable(R.drawable.selected_item_background));
+            professors[0].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (professors[0].getVisibility() != View.GONE) {
+                        professors[0].setBackground(myAct.getResources().
+                                getDrawable(R.drawable.selected_item_background));
+                        professors[1].setBackground(null);
+                        professors[2].setBackground(null);
+                        professors[3].setBackground(null);
+                        currProfessor = professors[0].getText().toString();
+                        setCourseProfessors(currProfessor);
+                        myDbHelper(myView, currProfessor);
+                    }
                 }
-            }
-        });
-        professors[1].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (professors[1].getVisibility() != View.GONE) {
-                    professors[1].setBackground(myAct.getResources().
-                            getDrawable(R.drawable.selected_item_background));
-                    professors[0].setBackground(null);
-                    professors[2].setBackground(null);
-                    professors[3].setBackground(null);
-                    currProfessor = professors[1].getText().toString();
-                    setCourseProfessors(currProfessor);
-                    myDbHelper(myView, currProfessor);
+            });
+            professors[1].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (professors[1].getVisibility() != View.GONE) {
+                        professors[1].setBackground(myAct.getResources().
+                                getDrawable(R.drawable.selected_item_background));
+                        professors[0].setBackground(null);
+                        professors[2].setBackground(null);
+                        professors[3].setBackground(null);
+                        currProfessor = professors[1].getText().toString();
+                        setCourseProfessors(currProfessor);
+                        myDbHelper(myView, currProfessor);
+                    }
                 }
-            }
-        });
-        professors[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (professors[2].getVisibility() != View.GONE) {
-                    professors[2].setBackground(myAct.getResources().
-                            getDrawable(R.drawable.selected_item_background));
-                    professors[0].setBackground(null);
-                    professors[1].setBackground(null);
-                    professors[3].setBackground(null);
-                    currProfessor = professors[2].getText().toString();
-                    setCourseProfessors(currProfessor);
-                    myDbHelper(myView, currProfessor);
+            });
+            professors[2].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (professors[2].getVisibility() != View.GONE) {
+                        professors[2].setBackground(myAct.getResources().
+                                getDrawable(R.drawable.selected_item_background));
+                        professors[0].setBackground(null);
+                        professors[1].setBackground(null);
+                        professors[3].setBackground(null);
+                        currProfessor = professors[2].getText().toString();
+                        setCourseProfessors(currProfessor);
+                        myDbHelper(myView, currProfessor);
+                    }
                 }
-            }
-        });
-        professors[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (professors[3].getVisibility() != View.GONE) {
-                    professors[3].setBackground(myAct.getResources().
-                            getDrawable(R.drawable.selected_item_background));
-                    professors[0].setBackground(null);
-                    professors[1].setBackground(null);
-                    professors[2].setBackground(null);
-                    currProfessor = professors[3].getText().toString();
-                    setCourseProfessors(currProfessor);
-                    myDbHelper(myView, currProfessor);
+            });
+            professors[3].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (professors[3].getVisibility() != View.GONE) {
+                        professors[3].setBackground(myAct.getResources().
+                                getDrawable(R.drawable.selected_item_background));
+                        professors[0].setBackground(null);
+                        professors[1].setBackground(null);
+                        professors[2].setBackground(null);
+                        currProfessor = professors[3].getText().toString();
+                        setCourseProfessors(currProfessor);
+                        myDbHelper(myView, currProfessor);
+                    }
                 }
-            }
-        });
+            });
+
+        }
 
 
         myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton);

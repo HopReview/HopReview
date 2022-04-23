@@ -29,9 +29,12 @@ public class CreateAccountActivity extends AppCompatActivity {
     private FragmentTransaction transaction;
     private Fragment cFrag;
     private Context context;
+    private String email;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
@@ -85,6 +88,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
+                        createUserData(email, username);
                         updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
@@ -114,8 +118,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         TextInputEditText passwordEt =  findViewById(R.id.password_sign);
         TextInputEditText passwordConfirmEt = findViewById(R.id.passwordConfirm_sign);
 
-        String username = usernameEt.getText().toString();
-        String email = emailEt.getText().toString();
+        username = usernameEt.getText().toString();
+        email = emailEt.getText().toString();
         String emailConfirm = emailConfirmEt.getText().toString();
         String password = passwordEt.getText().toString();
         String passwordConfirm = passwordConfirmEt.getText().toString();
@@ -141,5 +145,11 @@ public class CreateAccountActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void createUserData(String email, String username) {
+        User user = new User(username, email);
+        user.updateEmail();
+        user.updateUsername();
     }
 }

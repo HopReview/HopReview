@@ -19,16 +19,18 @@
             android:paddingEnd="10dp">
 
             <TextView
+                android:id="@+id/userTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="40sp"
-                android:text="@string/username"
                 android:layout_centerHorizontal="true"
-                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:text="@string/username"
                 android:textColor="?attr/colorOnBackground"
-                android:layout_marginTop="10dp"/>
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/emailTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
