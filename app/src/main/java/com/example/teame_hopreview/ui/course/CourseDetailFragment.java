@@ -215,10 +215,6 @@ public class CourseDetailFragment extends Fragment {
                         Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-
         return myView;
     }
 
@@ -305,12 +301,15 @@ public class CourseDetailFragment extends Fragment {
                 if (rev.getReviewContent().equals(reviewContents.get(i))) {
                     if (rev.getReviewerName().equals(reviewUsers.get(i))) {
                         if (rev.getDate().equals(reviewDates.get(i))) {
-                            myReviews.add(rev);
+                            if (!myReviews.contains(rev)) {
+                                myReviews.add(rev);
+                            }
                         }
                     }
                 }
             }
         }
+
         ra = new ReviewAdapter(myAct, context, myReviews);
         myList.setAdapter(ra);
         myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
