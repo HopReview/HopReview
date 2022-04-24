@@ -17,21 +17,21 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Stack;
 
 public class User {
     private String userName;
     private String email;
     private String userId;
     private ArrayList<String> bookmarkedCourses;
-    private ArrayList<String> userReviews;
+    private ArrayList<ReviewItem> userReviews;
     private String[] recentlyViewed;
     DatabaseReference dbref;
+    Stack<String> rVHelper;
 
 
 
-    public User() {
-
-    }
+    public User() { }
     // Constructor for creating new User
     public User(String userName, String email) {
         dbref = FirebaseDatabase.getInstance().getReference();
@@ -88,9 +88,39 @@ public class User {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ReviewItem newRev = new ReviewItem();
+                        int avgRating = 0;
+                        String date = "";
+                        int firstRating = 0;
+                        String revMessage = "";
+                        String revUser = userName;
+                        int secondRating = 0;
+
                         Iterable<DataSnapshot> reviews = snapshot.getChildren();
+                        boolean isEmpty = true;
                         for (DataSnapshot rev : reviews) {
-                            addUserReview(rev.getValue(String.class));
+                            Iterable<DataSnapshot> revContent = rev.getChildren();
+                            int counter = 1;
+                            for (DataSnapshot content : revContent) {
+                                isEmpty = false;
+                                if (counter == 1) {
+                                    avgRating = content.getValue(Integer.class);
+                                } else if (counter == 2) {
+                                    date = content.getValue(String.class);
+                                } else if (counter == 3) {
+                                    firstRating = content.getValue(Integer.class);
+                                } else if (counter == 4) {
+                                    revMessage = content.getValue(String.class);
+                                } else if (counter == 6) {
+                                    secondRating = content.getValue(Integer.class);
+                                }
+                                counter++;
+                            }
+                        }
+
+                        if (!isEmpty) {
+                            newRev = new ReviewItem(avgRating, date, firstRating, revMessage, revUser, secondRating);
+                            addUserReview(newRev);
                         }
                     }
 
@@ -111,32 +141,54 @@ public class User {
     }
 
     public void addBookmarkedCourse (String newCourse) {
+        if (bookmarkedCourses == null) {
+            bookmarkedCourses = new ArrayList<>();
+        }
         bookmarkedCourses.add(newCourse);
     }
 
-    public ArrayList<String> getBookmarkedCourses() {
-        return bookmarkedCourses;
-    }
+    public ArrayList<String> getBookmarkedCourses() { return bookmarkedCourses; }
 
-    public void addUserReview (String newReview) {
+    public void addUserReview (ReviewItem newReview) {
+        if (userReviews == null) {
+            userReviews = new ArrayList<>();
+        }
         userReviews.add(newReview);
     }
 
-    public ArrayList<String> getUserReviews() {
+    public ArrayList<ReviewItem> getUserReviews() {
         return userReviews;
     }
 
     public void addRecentlyViewed(String recent) {
-        if (recentlyViewed[0] == null) {
-            recentlyViewed[0] = recent;
-        } else if (recentlyViewed[1] == null) {
-            recentlyViewed[1] = recentlyViewed[0];
-            recentlyViewed[0] = recent;
-        } else {
-            recentlyViewed[2] = recentlyViewed[1];
-            recentlyViewed[1] = recentlyViewed[0];
-            recentlyViewed[0] = recent;
+        if (recentlyViewed == null) {
+            recentlyViewed = new String[3];
+            rVHelper = new Stack<>();
         }
+        if (rVHelper.contains(recent)) {
+            rVHelper.remove(recent);
+        } else {
+            if (rVHelper.size() == 3) {
+                rVHelper.remove(rVHelper.get(0));
+            }
+        }
+        rVHelper.add(recent);
+        for (int i = 0; i < 3; i++) {
+            if (i < rVHelper.size()) {
+                recentlyViewed[i] = rVHelper.get(i);
+            }
+        }
+    }
+
+    public ArrayList<String> getRecentlyViewedList() {
+        ArrayList<String> toReturn = new ArrayList<>();
+        if (recentlyViewed != null) {
+            for (String str : recentlyViewed) {
+                toReturn.add(str);
+            }
+        }
+
+        return toReturn;
     }
 
     public String[] getRecentlyViewed() {
@@ -152,7 +204,7 @@ public class User {
     }
 
     public void updateRecentlyViewedDatabase() {
-        dbref.child("user_data").child(userId).child("recentlyViewed").setValue(getRecentlyViewed());
+        dbref.child("user_data").child(userId).child("recentlyViewed").setValue(getRecentlyViewedList());
     }
 
     public void updateUserReviewDatabase() {
