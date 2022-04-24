@@ -184,6 +184,9 @@ public class User {
         ArrayList<String> toReturn = new ArrayList<>();
         if (recentlyViewed != null) {
             for (String str : recentlyViewed) {
+                if (str == null) {
+                    break;
+                }
                 toReturn.add(str);
             }
         }
