@@ -14,6 +14,7 @@ import com.example.teame_hopreview.ui.professors.ProfessorDetailFragment;
 import com.example.teame_hopreview.ui.professors.ProfessorFragment;
 import com.example.teame_hopreview.ui.profile.MyReviewsFrag;
 import com.example.teame_hopreview.ui.profile.ProfileFragment;
+import com.example.teame_hopreview.ui.profile.UpdatePasswordFragment;
 import com.example.teame_hopreview.ui.review.CreateReviewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -190,5 +191,12 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         MyReviewsFrag myReviews = new MyReviewsFrag();
         transaction.replace(R.id.fragment_container, myReviews).commit();
         transaction.addToBackStack("myReviewsStack");
+    }
+
+    public void openUpdatePass() {
+        transaction = getSupportFragmentManager().beginTransaction();
+        UpdatePasswordFragment updatePass = new UpdatePasswordFragment();
+        transaction.replace(R.id.fragment_container, updatePass).commit();
+        transaction.addToBackStack("updatePassStack");
     }
 }
