@@ -12,6 +12,7 @@ import com.example.teame_hopreview.ui.home.HomeFragment;
 import com.example.teame_hopreview.ui.professors.Professor;
 import com.example.teame_hopreview.ui.professors.ProfessorDetailFragment;
 import com.example.teame_hopreview.ui.professors.ProfessorFragment;
+import com.example.teame_hopreview.ui.profile.MyReviewsFrag;
 import com.example.teame_hopreview.ui.profile.ProfileFragment;
 import com.example.teame_hopreview.ui.review.CreateReviewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -184,4 +185,10 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         transaction.addToBackStack("myCoursesStack");
     }
 
+    public void openMyReviews() {
+        transaction = getSupportFragmentManager().beginTransaction();
+        MyReviewsFrag myReviews = new MyReviewsFrag();
+        transaction.replace(R.id.fragment_container, myReviews).commit();
+        transaction.addToBackStack("myReviewsStack");
+    }
 }

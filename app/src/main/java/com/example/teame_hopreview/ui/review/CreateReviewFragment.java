@@ -23,6 +23,7 @@ import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewItem;
 import com.example.teame_hopreview.ui.course.CourseItem;
+import com.example.teame_hopreview.ui.professors.Professor;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -52,6 +53,10 @@ public class CreateReviewFragment extends Fragment {
 
     private ListManager listManager;
 
+    private ArrayList<CourseItem> masterCourseCopy = new ArrayList<>();
+
+    private ArrayList<String> masterProfessorCopy = new ArrayList<>();
+
     private ArrayAdapter<CourseWrapper> courseAdapter;
 
     private AutoCompleteTextView courseDropdown;
@@ -73,6 +78,9 @@ public class CreateReviewFragment extends Fragment {
     private int knowledgeRating = 0;
 
     private int gradingRating = 0;
+
+    // if 0, coming from a course; if 1, coming from a professor
+    private int setValue = 0;
 
     public String getDefaultCourseNumber() {
         return defaultCourseNumber;
@@ -141,6 +149,7 @@ public class CreateReviewFragment extends Fragment {
         professorDropdown.setText(null);
         professorDropdown.setFocusable(false);
         if (defaultCourseNumber != null) {
+            setValue = 0;
             for (CourseItem item: listManager.getCourses()) {
                 if (defaultCourseNumber.equals(item.getCourseNumber())) {
                     selectedCourse = item;
@@ -152,6 +161,7 @@ public class CreateReviewFragment extends Fragment {
         }
         Boolean foundProfessor = false;
         if (defaultCourseNumber == null && defaultProfessorName != null) {
+            setValue = 1;
             for (CourseItem item: listManager.getCourses()) {
                 for (String profName: item.getProfessors()) {
                     if (defaultProfessorName.equals(profName)) {
@@ -165,7 +175,6 @@ public class CreateReviewFragment extends Fragment {
         if (foundProfessor) {
             fillCourseDropdown(defaultProfessorName);
         }
-
     }
 
     private void setupCourseDropdown(View view) {
@@ -176,7 +185,9 @@ public class CreateReviewFragment extends Fragment {
                 //Get course item
                 CourseItem selected = listManager.getCourses().get(position);
                 selectedCourse = selected;
-                fillProfessorDropdown(selected);
+                if (setValue == 0) {
+                    fillProfessorDropdown(selected);
+                }
             }
         });
 
@@ -189,13 +200,14 @@ public class CreateReviewFragment extends Fragment {
         professorDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                /*tring professor = listManager.getProfessors().get(position);
-                fillCourseDropdown(professor);*/
+                String professor = listManager.getProfessors().get(position);
+                if (setValue == 1) {
+                    fillCourseDropdown(professor);
+                }
             }
         });
 
         professorAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getProfessors());
-
         professorDropdown.setAdapter(professorAdapter);
     }
 
@@ -205,15 +217,15 @@ public class CreateReviewFragment extends Fragment {
         //professors.add(selectedCourse.getProfessors().get(0));
         listManager.setProfessors(selectedCourse.getProfessors());
         professorAdapter.notifyDataSetChanged();
-        if (selectedCourse.getProfessors().size() == 1) {
-            professorDropdown.setText(selectedCourse.getProfessors().get(0));
-        }
+        professorDropdown.setText(selectedCourse.getProfessors().get(0));
+        professorAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getProfessors());
+        professorDropdown.setAdapter(professorAdapter);
     }
 
     private void fillCourseDropdown(String selectedProfessor) {
         //Aim: based on current selected professor, fill the course dropdown
         ArrayList<CourseItem> courses = new ArrayList<>();
-        for (CourseItem course: listManager.getCourses()) {
+        for (CourseItem course: masterCourseCopy) {
             for (String profName: course.getProfessors()) {
                 if (selectedProfessor.equals(profName)) {
                     courses.add(course.Copy());
@@ -222,10 +234,10 @@ public class CreateReviewFragment extends Fragment {
         }
         listManager.setCourses(courses);
         courseAdapter.notifyDataSetChanged();
-        if (courses.size() == 1) {
-            selectedCourse = courses.get(0);
-            courseDropdown.setText(selectedCourse.getName(), false);
-        }
+        courseAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getCourseWrappers());
+        selectedCourse = courses.get(0);
+        courseDropdown.setText(selectedCourse.getName(), false);
+        courseDropdown.setAdapter(courseAdapter);
     }
 
     private void setupReviews(View view) {
@@ -473,7 +485,19 @@ public class CreateReviewFragment extends Fragment {
                 listManager.addCourse(course);
             }
 
+            masterCourseCopy.addAll(listManager.getCourses());
+
             if (courseAdapter != null) courseAdapter.notifyDataSetChanged();
+
+            listManager.getProfessors().clear();
+            Iterable<DataSnapshot> professors = snapshot.child("professors_data").getChildren();
+            for (DataSnapshot profs : professors) {
+                listManager.addProfessor( profs.getKey());
+            }
+
+            masterProfessorCopy.addAll(listManager.getProfessors());
+
+            if (professorAdapter != null) professorAdapter.notifyDataSetChanged();
         }
 
         @Override
