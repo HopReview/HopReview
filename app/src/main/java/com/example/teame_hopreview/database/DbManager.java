@@ -4,9 +4,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.teame_hopreview.ReviewItem;
-import com.example.teame_hopreview.ui.course.CourseItem;
-import com.example.teame_hopreview.ui.professors.Professor;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,15 +12,46 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DbManager {
 
     private DatabaseReference dbRef;
 
-    public DbManager() {
+    private List<Course> courses;
+
+    private List<Professor> professors;
+
+    private ArrayList<CoursesOnChangeListener> coursesOnChangeListeners;
+
+    private ArrayList<ProfessorsOnChangeListener> professorsOnChangeListeners;
+
+    private static DbManager dbManager;
+
+    public static DbManager getDbManager() {
+        if (dbManager == null) {
+            dbManager = new DbManager();
+        }
+        return dbManager;
+    }
+
+    public void addCoursesOnChangeListener(CoursesOnChangeListener coursesOnChangeListener) {
+        coursesOnChangeListeners.add(coursesOnChangeListener);
+    }
+
+    public void addProfessorsOnChangeListener(ProfessorsOnChangeListener professorsOnChangeListener) {
+        professorsOnChangeListeners.add(professorsOnChangeListener);
+    }
+
+    private DbManager() {
+        courses = new ArrayList<>();
+        professors = new ArrayList<>();
         dbRef = FirebaseDatabase.getInstance().getReference();
         dbRef.addValueEventListener(new DatabaseChangeListener());
+        coursesOnChangeListeners = new ArrayList<>();
+        professorsOnChangeListeners = new ArrayList<>();
+
     }
 
     //Creates a review for a course and professor
@@ -45,7 +73,13 @@ public class DbManager {
         dbRef.updateChildren(childUpdates);
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
 
+    public List<Professor> getProfessors() {
+        return professors;
+    }
 
     class DatabaseChangeListener implements ValueEventListener {
 
@@ -53,45 +87,51 @@ public class DbManager {
 
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
+            Iterable<DataSnapshot> coursesSnapshot = snapshot.child("courses_data").getChildren();
 
             ArrayList<Course> courseList = new ArrayList<>();
-            for (DataSnapshot crs : courses) {
+            for (DataSnapshot crs : coursesSnapshot) {
                 Course course = crs.getValue(Course.class);
                 course.setKey(crs.getKey());
 
-                for (Review review: course.getReviews()) {
-                    review.setCourse(course);
-                }
+
+                /*for (Review review: course.getReviews()) {
+                    if (review != null) review.setCourse(course);
+                }*/
+
+                while (course.getProfessor().remove(null));
                 courseList.add(course);
             }
 
             Iterable<DataSnapshot> professorsSnapshot = snapshot.child("professors_data").getChildren();
 
+            ArrayList<Professor> professorList = new ArrayList<>();
             for (DataSnapshot prof : professorsSnapshot) {
-                Professor professor = prof.getValue(Pr.class);
-                course.setKey(prof.getKey());
+                Professor professor = prof.getValue(Professor.class);
+                professor.setKey(prof.getKey());
+                professor.setName(professor.getKey());
 
-                for (Review review: course.getReviews()) {
-                    review.setCourse(course);
+                for (Review review: professor.getReviews()) {
+                    if (review != null) review.setProfessor(professor);
                 }
+                professorList.add(professor);
+            }
+
+            courses = courseList;
+            professors = professorList;
+
+            for (CoursesOnChangeListener listener: coursesOnChangeListeners) {
+                listener.onChange(courses);
+            }
+
+            for (ProfessorsOnChangeListener listener: professorsOnChangeListeners) {
+                listener.onChange(professors);
             }
         }
 
         @Override
         public void onCancelled(DatabaseError error) {
             Log.w(TAG, "Failed to read value.", error.toException());
-        }
-
-        private String ensureStringLengthIsLessThanMax(String string) {
-            int maxLength = 30;
-            String result = new String(string);
-            if (string.length() > maxLength) {
-                result = string.substring(0, maxLength - 3 - 1);
-                //Add three dots to end
-                result = result + "...";
-            }
-            return result;
         }
     }
 

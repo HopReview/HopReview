@@ -1,7 +1,6 @@
 package com.example.teame_hopreview.database;
 
-import com.example.teame_hopreview.ui.course.CourseItem;
-import com.example.teame_hopreview.ui.professors.Professor;
+
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
@@ -27,7 +26,7 @@ public class Review {
 
     private String key;
 
-    public CourseItem getCourse() {
+    public Course getCourse() {
         return course;
     }
 

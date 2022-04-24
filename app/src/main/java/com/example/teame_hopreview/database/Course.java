@@ -10,7 +10,7 @@ public class Course {
     private String courseNumber;
     private String courseDesignation;
     private ArrayList<String> professor;
-    private ArrayList<Review> reviews;
+    //private ArrayList<Review> reviews;
     private int funRating;
     private int workloadRating;
     private int averageRating;
@@ -25,7 +25,7 @@ public class Course {
         this.courseNumber = courseNumber;
         this.courseDesignation = courseDesignation;
         this.professor = professor;
-        this.reviews = reviews;
+        //this.reviews = reviews;
         this.funRating = funRating;
         this.workloadRating = workloadRating;
         this.averageRating = averageRating;
@@ -65,13 +65,13 @@ public class Course {
         this.professor = professor;
     }
 
-    public ArrayList<Review> getReviews() {
+    /*public ArrayList<Review> getReviews() {
         return reviews;
     }
 
     public void setReviews(ArrayList<Review> reviews) {
         this.reviews = reviews;
-    }
+    }*/
 
     public int getFunRating() {
         return funRating;
@@ -103,5 +103,20 @@ public class Course {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getDisplayName() {
+        int maxLength = 30;
+        String result = new String(courseName);
+        if (result.length() > maxLength) {
+            result = result.substring(0, maxLength - 3 - 1);
+            //Add three dots to end
+            result = result + "...";
+        }
+        return result;
+    }
+
+    public Course copy() {
+        return new Course(courseName, courseNumber, courseDesignation, professor, new ArrayList<>(), funRating, workloadRating, averageRating, key);
     }
 }

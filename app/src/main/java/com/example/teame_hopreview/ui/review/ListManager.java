@@ -1,12 +1,13 @@
 package com.example.teame_hopreview.ui.review;
 
-import com.example.teame_hopreview.ui.course.CourseItem;
+import com.example.teame_hopreview.database.Course;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListManager {
 
-    private ArrayList<CourseItem> courses;
+    private ArrayList<Course> courses;
 
     private ArrayList<CourseWrapper> courseWrappers;
 
@@ -15,13 +16,13 @@ public class ListManager {
     private ArrayList<ProfessorWrapper> professorWrappers;
 
     public ListManager() {
-        courses = new ArrayList<CourseItem>();
+        courses = new ArrayList<Course>();
         courseWrappers = new ArrayList<CourseWrapper>();
         professors = new ArrayList<String>();
         professorWrappers = new ArrayList<>();
     }
 
-    public void addCourse(CourseItem course) {
+    public void addCourse(Course course) {
         courses.add(course);
         courseWrappers.add(new CourseWrapper(course));
     }
@@ -31,14 +32,14 @@ public class ListManager {
         //professorWrappers.add(new ProfessorWrapper(professor));
     }
 
-    public ArrayList<CourseItem> getCourses() {
+    public ArrayList<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(ArrayList<CourseItem> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses.clear();
         this.courseWrappers.clear();
-        for (CourseItem course: courses) {
+        for (Course course: courses) {
             addCourse(course);
         }
     }
@@ -55,7 +56,7 @@ public class ListManager {
         return professors;
     }
 
-    public void setProfessors(ArrayList<String> professors) {
+    public void setProfessors(List<String> professors) {
         this.professors.clear();
         //this.professorWrappers.clear();
         for (String prof: professors) {
