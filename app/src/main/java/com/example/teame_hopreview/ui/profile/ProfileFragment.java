@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
@@ -85,7 +87,51 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 // Intent intent = new Intent(context, UpdatePasswordFragment.class);
                 // startActivity(intent);
-                myAct.openUpdatePass();
+                // myAct.openUpdatePass();
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Update Password");
+                builder.setMessage("Are you sure that you want to update your password?" + "\n\n"
+                        + "You will be sent an email to update your password shortly after");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mAuth.sendPasswordResetEmail(currentUser.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(myAct,"Reset Email Password Sent",Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(myAct,"Invalid Request",Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(myAct,"Error Failed",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.md_theme_dark_inversePrimary));
+                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.md_theme_dark_inversePrimary));
+                    }
+                });
+                alert.show();
             }
         });
 
@@ -94,7 +140,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Logging Out");
+                builder.setTitle("Log Out");
                 builder.setMessage("Are you sure you want to log out?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -130,7 +176,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 // TODO: add "Are you sure?" pop-up before performing action
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Deleting Account");
+                builder.setTitle("Delete Account");
                 builder.setMessage("Are you sure that you want to delete your account?" + "\n\n"
                         + "Your account settings and saved preferences will be permanently gone." + "\n\n"
                         + "And more importantly we will miss you!");
