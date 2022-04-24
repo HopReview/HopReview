@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 //            }
 //        });
 
+        user.retrieveUserData();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, this.home).addToBackStack(null).commit();
 
 
