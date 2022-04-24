@@ -1,6 +1,8 @@
 package com.example.teame_hopreview.ui.profile;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,7 +61,7 @@ public class ProfileFragment extends Fragment {
         myReviewsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                myAct.openMyReviews();
 
 //                Intent intent = new Intent(context, LoginActivity.class);
 //                startActivity(intent);
@@ -94,18 +96,48 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO: add "Are you sure?" pop-up before performing action
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Deleting Account");
+                builder.setMessage("Are you sure that you want to delete your account?" + "\n\n"
+                        + "Your account settings and saved preferences will be permanently gone." + "\n\n"
+                        + "And more importantly we will miss you!");
 
-                user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                builder.setPositiveButton("Yes, delete my account", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "User account deleted.");
-                        }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "User account deleted.");
+                                }
+                            }
+                        });
+
+                        dialogInterface.dismiss();
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        startActivity(intent);
                     }
                 });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.md_theme_dark_inversePrimary));
+                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.md_theme_dark_inversePrimary));
+                    }
+                });
+                alert.show();
 
-                Intent intent = new Intent(context, LoginActivity.class);
-                startActivity(intent);
+
+                /*Intent intent = new Intent(getActivity().getApplicationContext(), DeleteAccountActivity.class);
+                myAct.startActivity(intent);*/
             }
         });
 

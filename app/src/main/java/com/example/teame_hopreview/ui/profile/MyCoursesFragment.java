@@ -54,8 +54,7 @@ public class MyCoursesFragment extends Fragment {
         dbref = FirebaseDatabase.getInstance().getReference();
 
         myAct = (MainActivity) getActivity();
-        myAct.getSupportActionBar().setTitle("Courses");
-        System.out.println("Reached here");
+        myAct.getSupportActionBar().setTitle("My Courses");
         myCourses = new ArrayList<CourseItem>();
         myCoursesCopy = new ArrayList<CourseItem>();
         myReviews = new ArrayList<ReviewItem>();

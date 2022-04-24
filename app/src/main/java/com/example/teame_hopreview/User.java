@@ -46,6 +46,7 @@ public class User {
     // Constructor for retrieving existing user
     public User(String email) {
         setUserId(email);
+        dbref = FirebaseDatabase.getInstance().getReference();
     }
 
 
@@ -163,10 +164,34 @@ public class User {
     }
 
     public void retrieveUserData() {
-        dbref.child("user_data").child(userId).child("username").addValueEventListener(new ValueEventListener() {
+        dbref.child("user_data").child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userName = snapshot.getValue(String.class);
+
+                Iterable<DataSnapshot> userData = snapshot.getChildren();
+                int counter = 1;
+                for (DataSnapshot data : userData) {
+                    if (counter == 1) {
+                        Iterable<DataSnapshot> bmCourses = data.getChildren();
+                        for (DataSnapshot crs : bmCourses) {
+                            addBookmarkedCourse(crs.getValue(String.class));
+                        }
+                    } else if (counter == 2) {
+                        email = data.getValue(String.class);
+                    } else if (counter == 3) {
+                        Iterable<DataSnapshot> rvCourses = data.getChildren();
+                        for (DataSnapshot crs : rvCourses) {
+                            addRecentlyViewed(crs.getValue(String.class));
+                        }
+                    } else if (counter == 4) {
+                        Iterable<DataSnapshot> reviews = data.getChildren();
+                        // for (DataSnapshot rev : reviews) {
+                        //     for now omitted
+                        // }
+                    }
+                    counter++;
+                }
+
             }
 
             @Override
@@ -197,7 +222,4 @@ public class User {
         int splitIndex = email.indexOf('@');
         this.userId = email.substring(0, splitIndex);
     }
-
-
-
 }

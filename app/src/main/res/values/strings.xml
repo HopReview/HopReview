@@ -40,6 +40,9 @@
     <string name="my_reviews">My Reviews</string>
     <string name="review_by">Review by:</string>
     <string name="date_format">MM/DD/YYYY</string>
+    <string name="delete_account_1">Are you sure that you want to delete your account?</string>
+    <string name="delete_account_2">Your account settings and saved preferences will be permanently gone.</string>
+    <string name="delete_account_3">And more importantly we will miss you!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
