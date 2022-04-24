@@ -86,10 +86,12 @@ public class CourseDetailFragment extends Fragment {
         ImageButton bookmark = (ImageButton) myView.findViewById(R.id.bookmark_det);
 
 
+        myAct.user.retrieveUserData();
         if (myAct.user.getBookmarkedCourses() != null) {
             for (String crs : myAct.user.getBookmarkedCourses()) {
                 if (crs.equals(courseItem.getName())) {
                     bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
+                    break;
                 } else {
                     bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_unfilled));
                 }
