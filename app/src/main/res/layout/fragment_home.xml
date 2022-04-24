@@ -68,7 +68,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Course Name"
                     android:textColor="@color/md_theme_light_onPrimaryContainer"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -79,7 +79,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Professors"
                     android:textColor="@color/md_theme_light_onSurfaceVariant"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -92,7 +92,7 @@
                     android:id="@+id/avg_star1Home2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
@@ -186,7 +186,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Course Name"
                     android:textColor="@color/md_theme_light_onPrimaryContainer"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -197,7 +197,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Professors"
                     android:textColor="@color/md_theme_light_onSurfaceVariant"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -210,7 +210,7 @@
                     android:id="@+id/avg_star1Home3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
@@ -304,7 +304,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Course Name"
                     android:textColor="@color/md_theme_light_onPrimaryContainer"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -315,7 +315,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Professors"
                     android:textColor="@color/md_theme_light_onSurfaceVariant"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -328,7 +328,7 @@
                     android:id="@+id/avg_star1Home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
