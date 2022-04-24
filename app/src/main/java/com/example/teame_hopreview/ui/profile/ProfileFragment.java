@@ -79,7 +79,15 @@ public class ProfileFragment extends Fragment {
             }
         });*/
 
-
+        Button updatePassBtn = myView.findViewById(R.id.change_pass_btn);
+        updatePassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Intent intent = new Intent(context, UpdatePasswordFragment.class);
+                // startActivity(intent);
+                myAct.openUpdatePass();
+            }
+        });
 
         Button logoutBtn = myView.findViewById(R.id.logout_btn);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
