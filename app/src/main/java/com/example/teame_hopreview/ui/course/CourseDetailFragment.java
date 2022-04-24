@@ -95,6 +95,8 @@ public class CourseDetailFragment extends Fragment {
                 }
             }
         }
+
+
         designation.setText(courseItem.getDesignation());
         courseName.setText(courseItem.getName());
         courseNum.setText(courseItem.getCourseNumber());
@@ -216,6 +218,7 @@ public class CourseDetailFragment extends Fragment {
 
 
 
+
         return myView;
     }
 
@@ -294,9 +297,7 @@ public class CourseDetailFragment extends Fragment {
         myReviewsCopy.addAll(courseItem.getReviews());
 
         myReviews = new ArrayList<ReviewItem>();
-        ra = new ReviewAdapter(myAct, context, myReviews);
-        myList.setAdapter(ra);
-        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+
 
         int len = reviewContents.size();
         for (ReviewItem rev : myReviewsCopy) {
@@ -310,6 +311,9 @@ public class CourseDetailFragment extends Fragment {
                 }
             }
         }
+        ra = new ReviewAdapter(myAct, context, myReviews);
+        myList.setAdapter(ra);
+        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
         ra.notifyDataSetChanged();
     }
 

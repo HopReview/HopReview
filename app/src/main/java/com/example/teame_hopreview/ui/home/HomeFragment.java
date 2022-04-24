@@ -84,7 +84,6 @@ public class HomeFragment extends Fragment {
 
                 firstCourse = recentlyViewed.get(0);
                 findCourse(firstCourse);
-
                 TextView designation1 = (TextView) myView.findViewById(R.id.designationHome);
                 TextView name1 = (TextView) myView.findViewById(R.id.nameHome);
                 TextView profs1 = (TextView) myView.findViewById(R.id.profsHome);
@@ -349,11 +348,12 @@ public class HomeFragment extends Fragment {
     }
 
     public void findCourse(String courseName) {
+        System.out.println("NOW WE HERE!");
         courseItem = new CourseItem();
-        dbref.child("courses_data").addValueEventListener(new ValueEventListener() {
+        dbref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> courses = snapshot.getChildren();
+                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
                 for (DataSnapshot crs : courses) {
                     String name = "";
                     String num = "";
