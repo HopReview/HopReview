@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -20,6 +21,7 @@ import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewAdapter;
 import com.example.teame_hopreview.ReviewItem;
+import com.example.teame_hopreview.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -67,6 +69,10 @@ public class CourseDetailFragment extends Fragment {
 
         View myView = inflater.inflate(R.layout.course_detail_frag, container, false);
 
+        myAct = (MainActivity) getActivity();
+        context = myAct.getApplicationContext();
+        myAct.user.addRecentlyViewed(courseItem.getName());
+        myAct.user.updateRecentlyViewedDatabase();
 
         TextView designation = (TextView) myView.findViewById(R.id.course_designation);
         TextView courseName = (TextView) myView.findViewById(R.id.course_name);
@@ -79,6 +85,16 @@ public class CourseDetailFragment extends Fragment {
         professors[3] = (TextView) myView.findViewById(R.id.professor4);
         ImageButton bookmark = (ImageButton) myView.findViewById(R.id.bookmark_det);
 
+
+        if (myAct.user.getBookmarkedCourses() != null) {
+            for (String crs : myAct.user.getBookmarkedCourses()) {
+                if (crs.equals(courseItem.getName())) {
+                    bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
+                } else {
+                    bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_unfilled));
+                }
+            }
+        }
         designation.setText(courseItem.getDesignation());
         courseName.setText(courseItem.getName());
         courseNum.setText(courseItem.getCourseNumber());
@@ -102,8 +118,7 @@ public class CourseDetailFragment extends Fragment {
         reviewUsers = new ArrayList<>();
         reviewDates = new ArrayList<>();
 
-        myAct = (MainActivity) getActivity();
-        context = myAct.getApplicationContext();
+
 
         //
         setCourseProfessors(currProfessor);
@@ -191,7 +206,11 @@ public class CourseDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO: IMPLEMENT, change bookmark icon so its filled, etc.
-
+                bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
+                myAct.user.addBookmarkedCourse(courseItem.getName());
+                myAct.user.updateBookmarkedCoursesDatabase();
+                Toast.makeText(myAct, "Course Saved",
+                        Toast.LENGTH_LONG).show();
             }
         });
 

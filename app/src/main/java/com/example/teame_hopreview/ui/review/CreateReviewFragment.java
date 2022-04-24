@@ -325,6 +325,10 @@ public class CreateReviewFragment extends Fragment {
         Task<Void> task6 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("secondRating").setValue(secondRating);
 
 
+        MainActivity myAct = (MainActivity) getActivity();
+        ReviewItem toAdd = new ReviewItem(avgRating, date, firstRating, reviewContent, reviewerName, secondRating);
+        myAct.user.addUserReview(toAdd);
+
         Task<Void> mainTask = Tasks.whenAll(task1, task2, task3, task4, task5, task6);
         mainTask.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
             @Override

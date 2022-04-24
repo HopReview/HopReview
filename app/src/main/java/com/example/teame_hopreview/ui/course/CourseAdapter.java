@@ -34,14 +34,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private MainActivity mainActivity;
     Context context;
 
-    private final View.OnClickListener bookmarkListener = (view) -> {
+    /*private final View.OnClickListener bookmarkListener = (view) -> {
         CourseItem course = (CourseItem) view.getTag();
 
         // TODO: add to user's dataset
 
         Toast.makeText(mainActivity, "COURSE SAVED",
                 Toast.LENGTH_LONG).show();
-    };
+    };*/
 
 
     private final View.OnClickListener mOnClickListener = (view) -> {
@@ -132,7 +132,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
         holder.itemView.setTag(courseData.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);
-        holder.bookmark.setOnClickListener(bookmarkListener);
     }
 
     @Override
@@ -155,7 +154,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         private final ImageView avgStar1, avgStar2, avgStar3, avgStar4, avgStar5;
         private final ImageView workStar1, workStar2, workStar3, workStar4, workStar5;
         private final ImageView funStar1, funStar2, funStar3, funStar4, funStar5;
-        private final ImageButton bookmark;
 
 
         public ViewHolder(@NonNull View courseView) {
@@ -166,7 +164,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             num = (TextView) courseView.findViewById(R.id.num);
             professorNames = (TextView) courseView.findViewById(R.id.professor_names);
             reviewNum = (TextView) courseView.findViewById(R.id.review_count);
-            bookmark = (ImageButton) courseView.findViewById(R.id.bookmark);
 
             avgStar1 = (ImageView) courseView.findViewById(R.id.avg_star1);
             avgStar2 = (ImageView) courseView.findViewById(R.id.avg_star2);
@@ -238,10 +235,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             fun[4] = funStar5;
 
             return fun;
-        }
-
-        public ImageButton getBookmark() {
-            return bookmark;
         }
     }
     private Filter courseFilter = new Filter() {
