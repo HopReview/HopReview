@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -22,11 +21,9 @@ import android.widget.Toast;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewItem;
+import com.example.teame_hopreview.database.DbManager;
+import com.example.teame_hopreview.database.Review;
 import com.example.teame_hopreview.ui.course.CourseItem;
-import com.example.teame_hopreview.ui.professors.Professor;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -82,6 +79,8 @@ public class CreateReviewFragment extends Fragment {
     // if 0, coming from a course; if 1, coming from a professor
     private int setValue = 0;
 
+    private DbManager manager;
+
     public String getDefaultCourseNumber() {
         return defaultCourseNumber;
     }
@@ -100,6 +99,7 @@ public class CreateReviewFragment extends Fragment {
         selectedCourse = null;
         dbref = FirebaseDatabase.getInstance().getReference();
         dbref.addValueEventListener(new DatabaseChangeListener());
+        manager = new DbManager();
     }
 
     @Override
@@ -305,7 +305,6 @@ public class CreateReviewFragment extends Fragment {
             return;
         }
 
-
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         String date = dateFormat.format(Calendar.getInstance().getTime());
 
@@ -316,26 +315,8 @@ public class CreateReviewFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String reviewerName = user.getEmail();
 
-        Integer reviewId = selectedCourse.getReviews().size()+1;
-        Task<Void> task1 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("reviewContent").setValue(reviewContent);
-        Task<Void> task2 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("date").setValue(date);
-        Task<Void> task3 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("avgRating").setValue(avgRating);
-        Task<Void> task4 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("firstRating").setValue(firstRating);
-        Task<Void> task5 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("reviewerName").setValue(reviewerName);
-        Task<Void> task6 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("secondRating").setValue(secondRating);
-
-
-        MainActivity myAct = (MainActivity) getActivity();
-        ReviewItem toAdd = new ReviewItem(avgRating, date, firstRating, reviewContent, reviewerName, secondRating);
-        myAct.user.addUserReview(toAdd);
-
-        Task<Void> mainTask = Tasks.whenAll(task1, task2, task3, task4, task5, task6);
-        mainTask.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                showToast("Review published!");
-            }
-        });
+        Review review = new Review(selectedCourse, avgRating, firstRating, secondRating, reviewContent, date, reviewerName);
+        manager.createReview(review);
     }
 
     public void reset() {
@@ -485,7 +466,7 @@ public class CreateReviewFragment extends Fragment {
                 for (ReviewItem r : reviewsHolder) {
                     course.addReview(r);
                 }
-                course.setId(id);
+                course.setKey(id);
                 listManager.addCourse(course);
             }
 

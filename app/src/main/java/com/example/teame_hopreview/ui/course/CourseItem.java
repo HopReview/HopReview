@@ -16,7 +16,7 @@ public class CourseItem extends Profile {
     private int funRating;
     private int workloadRating;
     private int averageRating;
-    private String id;
+    private String key;
 
     /**
      * Constructor to create a Course object
@@ -256,17 +256,17 @@ public class CourseItem extends Profile {
         return holderRatings;
     }
 
-    public String getId() {
-        return id;
+    public String getKey() {
+        return key;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public CourseItem Copy() {
         CourseItem item = new CourseItem(averageRating, courseDesignation, courseName, courseNumber, funRating, professor, workloadRating);
-        item.setId(getId());
+        item.setKey(getKey());
         return item;
     }
 }

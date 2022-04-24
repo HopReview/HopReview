@@ -2,7 +2,6 @@ package com.example.teame_hopreview.ui.professors;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -81,10 +80,11 @@ public class ProfessorFragment extends Fragment {
                 myProfessors.clear();
                 Iterable<DataSnapshot> professors = snapshot.child("professors_data").getChildren();
 
-
+                Integer professorId = 0;
                 for (DataSnapshot profs : professors) {
                     myReviews.clear();
                     String professor = profs.getKey();
+                    String key = profs.getKey();
                     String department = "";
                     ArrayList<String> courseNames = new ArrayList<String>();
                     int avgRate = 0;
@@ -147,6 +147,8 @@ public class ProfessorFragment extends Fragment {
                         counter++;
                     }
                     professorItem = new Professor(professor, department, gradeRate, knowledgeRate, avgRate);
+                    professorItem.setKey(key);
+                    professorId++;
 
                     for (ReviewItem review : myReviews) {
                         professorItem.addReview(review);

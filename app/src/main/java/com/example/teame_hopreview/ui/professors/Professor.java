@@ -5,7 +5,6 @@ import com.example.teame_hopreview.ReviewItem;
 import com.example.teame_hopreview.ui.course.CourseItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +20,8 @@ public class Professor extends Profile {
     private int averageRating;
     private int gRating;
     private int kRating;
-    private String id;
+
+    private String key;
 
     /**
      * Constructor to create a Professor object
@@ -233,5 +233,13 @@ public class Professor extends Profile {
         holderRatings.put("RateCount", 0);
 
         return holderRatings;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
