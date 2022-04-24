@@ -14,10 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewItem;
+import com.example.teame_hopreview.User;
 import com.example.teame_hopreview.ui.course.CourseAdapter;
 import com.example.teame_hopreview.ui.course.CourseItem;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +35,7 @@ public class MyCoursesFragment extends Fragment {
 
     private static final String TAG = "dbref: ";
 
+    private RecyclerView myList;
     private MainActivity myAct;
     private CourseItem courseItem;
     private ReviewItem reviewItem;
@@ -40,8 +44,8 @@ public class MyCoursesFragment extends Fragment {
     protected ArrayList<ReviewItem> myReviews;
     private CourseBMAdapter ca;
     private ArrayList<String> professors;
-    private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
+    private User user;
     Context context;
 
     @Override
@@ -61,7 +65,14 @@ public class MyCoursesFragment extends Fragment {
         professors = new ArrayList<>();
         setHasOptionsMenu(true);
 
+        user = myAct.user;
+        System.out.println(user.getBookmarkedCourses());
+
         ca = new CourseBMAdapter(myAct, context, myCourses, myCoursesCopy);
+        myList = (RecyclerView) myView.findViewById(R.id.myCoursesList);
+
+        myList.setAdapter(ca);
+        myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,6 +91,11 @@ public class MyCoursesFragment extends Fragment {
                 for (DataSnapshot crs : courses) {
                     myReviews.clear();
                     professors.clear();
+
+                    if (null == user.getBookmarkedCourses()) {
+                        break;
+                    }
+
                     Iterable<DataSnapshot> list = crs.getChildren();
                     String name = " ";
                     String num = " ";
@@ -141,6 +157,10 @@ public class MyCoursesFragment extends Fragment {
                             workRate = item.getValue(Integer.class);
                         }
                         counter++;
+                    }
+
+                    if (!user.getBookmarkedCourses().contains(name)) {
+                        continue;
                     }
 
                     courseItem = new CourseItem(avgRate, designation, name, num, funRate, professors, workRate);
