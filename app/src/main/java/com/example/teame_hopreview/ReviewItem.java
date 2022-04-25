@@ -1,10 +1,6 @@
 package com.example.teame_hopreview;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import com.example.teame_hopreview.database.Professor;
 
 public class ReviewItem extends Profile {
     private String reviewerName;
@@ -14,7 +10,7 @@ public class ReviewItem extends Profile {
     private int secondRating; // workload or knowledge
     private String date;
     private String course = new String();
-    private String professor = new String();
+    private Professor professor = new String();
 
 
     /**
@@ -48,11 +44,11 @@ public class ReviewItem extends Profile {
         return this.course;
     }
 
-    public void setProfessorName(String prof) {
+    public void setProfessorName(Professor prof) {
         this.professor = prof;
     }
 
-    public String getProfessorName() {
+    public Professor getProfessorName() {
         return this.professor;
     }
 

@@ -21,7 +21,7 @@ import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewAdapter;
 import com.example.teame_hopreview.ReviewItem;
-import com.example.teame_hopreview.User;
+import com.example.teame_hopreview.database.Professor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,7 +46,7 @@ public class CourseDetailFragment extends Fragment {
     Context context;
     String courseName;
     private ReviewAdapter ra;
-    private String currProfessor;
+    private Professor currProfessor;
     DatabaseReference dbref;
     private ArrayList<String> reviewContents;
     private ArrayList<String> reviewUsers;
@@ -220,14 +220,14 @@ public class CourseDetailFragment extends Fragment {
     }
 
 
-    public void setCourseProfessors(String currProfessor) {
+    public void setCourseProfessors(Professor currProfessor) {
         for (ReviewItem rev : courseItem.getReviews()) {
             rev.setProfessorName(currProfessor);
         }
     }
 
 
-    public void myDbHelper(View myView, String currProfessor) {
+    public void myDbHelper(View myView, Professor currProfessor) {
         reviewContents.clear();
         reviewUsers.clear();
         reviewDates.clear();

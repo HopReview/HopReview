@@ -27,14 +27,12 @@ import com.example.teame_hopreview.database.DbManager;
 import com.example.teame_hopreview.database.Professor;
 import com.example.teame_hopreview.database.ProfessorsOnChangeListener;
 import com.example.teame_hopreview.database.Review;
-import com.example.teame_hopreview.ui.course.CourseItem;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
@@ -57,13 +55,13 @@ public class CreateReviewFragment extends Fragment {
 
     private ArrayList<Course> masterCourseCopy = new ArrayList<Course>();
 
-    private ArrayList<String> masterProfessorCopy = new ArrayList<>();
+    private ArrayList<Professor> masterProfessorCopy = new ArrayList<Professor>();
 
     private ArrayAdapter<CourseWrapper> courseAdapter;
 
     private AutoCompleteTextView courseDropdown;
 
-    private ArrayAdapter<String> professorAdapter;
+    private ArrayAdapter<ProfessorWrapper> professorAdapter;
 
     private AutoCompleteTextView professorDropdown;
 
@@ -114,11 +112,7 @@ public class CreateReviewFragment extends Fragment {
         manager.addProfessorsOnChangeListener(new ProfessorsOnChangeListener() {
             @Override
             public void onChange(List<Professor> newProfessors) {
-                List<String> profNames = new ArrayList<>();
-                for (Professor prof: manager.getProfessors()) {
-                    if (prof.getName() != null) profNames.add(prof.getName());
-                }
-                listManager.setProfessors(profNames);
+                listManager.setProfessors(manager.getProfessors());
             }
         });
     }
@@ -221,14 +215,14 @@ public class CreateReviewFragment extends Fragment {
         professorDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String professor = listManager.getProfessors().get(position);
+                Professor professor = listManager.getProfessors().get(position);
                 if (setValue == 1) {
                     fillCourseDropdown(professor);
                 }
             }
         });
 
-        professorAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getProfessors());
+        professorAdapter = new ArrayAdapter<ProfessorWrapper>(getContext(), R.layout.create_review_dropdown, listManager.getProfessors());
         professorDropdown.setAdapter(professorAdapter);
     }
 
@@ -236,19 +230,19 @@ public class CreateReviewFragment extends Fragment {
         //Aim: based on current selected course, fill the professor dropdown
         //ArrayList<String> professors = new ArrayList<>();
         //professors.add(selectedCourse.getProfessors().get(0));
-        listManager.setProfessors(selectedCourse.getProfessor());
+        listManager.setProfessors(selectedCourse.getProfessor();
         professorAdapter.notifyDataSetChanged();
         professorDropdown.setText(selectedCourse.getProfessor().get(0));
-        professorAdapter = new ArrayAdapter<>(getContext(), R.layout.create_review_dropdown, listManager.getProfessors());
+        professorAdapter = new ArrayAdapter<ProfessorWrapper>(getContext(), R.layout.create_review_dropdown, listManager.getProfessors());
         professorDropdown.setAdapter(professorAdapter);
     }
 
-    private void fillCourseDropdown(String selectedProfessor) {
+    private void fillCourseDropdown(Professor selectedProfessor) {
         //Aim: based on current selected professor, fill the course dropdown
         ArrayList<Course> courses = new ArrayList<>();
         for (Course course: masterCourseCopy) {
             for (String profName: course.getProfessor()) {
-                if (selectedProfessor.equals(profName)) {
+                if (selectedProfessor.getName().equals(profName)) {
                     courses.add(course.copy());
                 }
             }
@@ -362,11 +356,11 @@ public class CreateReviewFragment extends Fragment {
         toast.show();
     }
 
-    public String getDefaultProfessorName() {
+    public Professor getDefaultProfessorName() {
         return defaultProfessorName;
     }
 
-    public void setDefaultProfessorName(String defaultProfessorName) {
+    public void setDefaultProfessorName(Professor defaultProfessorName) {
         this.defaultProfessorName = defaultProfessorName;
     }
 

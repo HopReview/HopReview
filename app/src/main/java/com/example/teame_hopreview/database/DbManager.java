@@ -59,16 +59,16 @@ public class DbManager {
         String courseReviewKey = dbRef.child("courses_data").child(review.getCourse().getKey()).child("reviews").push().getKey();
         Map<String, Object> courseReviewValues = review.toMap();
         //Add professor key to course review values
-        //courseReviewValues.put("professorKey", review.getProfessor().getKey());
+        courseReviewValues.put("professorKey", review.getProfessor().getKey());
 
-        //String professorReviewKey = dbRef.child("professors_data").child(review.getProfessor().getKey()).child("reviews").push().getKey();
-        //Map<String, Object> professorReviewValues = review.toMap();
+        String professorReviewKey = dbRef.child("professors_data").child(review.getProfessor().getKey()).child("reviews").push().getKey();
+        Map<String, Object> professorReviewValues = review.toMap();
         //Add professor key to course review values
-        //professorReviewValues.put("courseKey", review.getCourse().getKey());
+        professorReviewValues.put("courseKey", review.getCourse().getKey());
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/courses_data/" + review.getCourse().getKey() + "/reviews/" + courseReviewKey, courseReviewValues);
-        //childUpdates.put("/professors_data/" + review.getProfessor().getKey() + "/reviews/" + professorReviewKey, professorReviewValues);
+        childUpdates.put("/professors_data/" + review.getProfessor().getKey() + "/reviews/" + professorReviewKey, professorReviewValues);
 
         dbRef.updateChildren(childUpdates);
     }
@@ -95,9 +95,9 @@ public class DbManager {
                 course.setKey(crs.getKey());
 
 
-                /*for (Review review: course.getReviews()) {
+                for (Review review: course.getReviews().values()) {
                     if (review != null) review.setCourse(course);
-                }*/
+                }
 
                 while (course.getProfessor().remove(null));
                 courseList.add(course);
@@ -111,8 +111,10 @@ public class DbManager {
                 professor.setKey(prof.getKey());
                 professor.setName(professor.getKey());
 
-                for (Review review: professor.getReviews()) {
-                    if (review != null) review.setProfessor(professor);
+                if (professor.getReviews() != null) {
+                    for (Review review: professor.getReviews().values()) {
+                        if (review != null) review.setProfessor(professor);
+                    }
                 }
                 professorList.add(professor);
             }

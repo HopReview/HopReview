@@ -1,7 +1,6 @@
 package com.example.teame_hopreview.ui.professors;
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +38,7 @@ public class ProfessorDetailFragment extends Fragment {
     private ReviewItem ReviewItem;
     protected ArrayList<ReviewItem> myReviews;
     Context context;
-    String professorName;
+    com.example.teame_hopreview.database.Professor professorName;
     private ReviewAdapter ra;
     DatabaseReference dbref;
     private String currCourse;

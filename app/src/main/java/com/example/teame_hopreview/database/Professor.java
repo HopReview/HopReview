@@ -1,25 +1,26 @@
 package com.example.teame_hopreview.database;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Professor {
 
-    private String name;
+    private Professor name;
 
-    private String key;
+    private Professor key;
     private int avg_rating;
     private String department;
     private int grading_rating;
     private int knowledge_rating;
 
     private ArrayList<String> courses;
-    private ArrayList<Review> reviews;
+    private Map<String, Review> reviews;
 
     public Professor() {
 
     }
 
-    public Professor(String name, String key, int avg_rating, String department, int grading_rating, int knowledge_rating, ArrayList<String> courses, ArrayList<Review> reviews) {
+    public Professor(Professor name, Professor key, int avg_rating, String department, int grading_rating, int knowledge_rating, ArrayList<String> courses, Map<String, Review> reviews) {
         this.name = name;
         this.key = key;
         this.avg_rating = avg_rating;
@@ -30,11 +31,11 @@ public class Professor {
         this.reviews = reviews;
     }
 
-    public String getName() {
+    public Professor getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Professor name) {
         this.name = name;
     }
 
@@ -78,19 +79,19 @@ public class Professor {
         this.courses = courses;
     }
 
-    public ArrayList<Review> getReviews() {
+    public Map<String, Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(ArrayList<Review> reviews) {
+    public void setReviews(Map<String, Review> reviews) {
         this.reviews = reviews;
     }
 
-    public String getKey() {
+    public Professor getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(Professor key) {
         this.key = key;
     }
 }

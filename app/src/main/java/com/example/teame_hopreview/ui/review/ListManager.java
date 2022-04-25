@@ -1,6 +1,7 @@
 package com.example.teame_hopreview.ui.review;
 
 import com.example.teame_hopreview.database.Course;
+import com.example.teame_hopreview.database.Professor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,14 @@ public class ListManager {
 
     private ArrayList<CourseWrapper> courseWrappers;
 
-    private ArrayList<String> professors;
+    private ArrayList<Professor> professors;
 
     private ArrayList<ProfessorWrapper> professorWrappers;
 
     public ListManager() {
         courses = new ArrayList<Course>();
         courseWrappers = new ArrayList<CourseWrapper>();
-        professors = new ArrayList<String>();
+        professors = new ArrayList<Professor>();
         professorWrappers = new ArrayList<>();
     }
 
@@ -27,9 +28,9 @@ public class ListManager {
         courseWrappers.add(new CourseWrapper(course));
     }
 
-    public void addProfessor(String professor) {
+    public void addProfessor(Professor professor) {
         professors.add(professor);
-        //professorWrappers.add(new ProfessorWrapper(professor));
+        professorWrappers.add(new ProfessorWrapper(professor));
     }
 
     public ArrayList<Course> getCourses() {
@@ -52,14 +53,14 @@ public class ListManager {
         this.courseWrappers = courseWrappers;
     }
 
-    public ArrayList<String> getProfessors() {
+    public ArrayList<Professor> getProfessors() {
         return professors;
     }
 
-    public void setProfessors(List<String> professors) {
+    public void setProfessors(List<Professor> professors) {
         this.professors.clear();
-        //this.professorWrappers.clear();
-        for (String prof: professors) {
+        this.professorWrappers.clear();
+        for (Professor prof: professors) {
             addProfessor(prof);
         }
     }

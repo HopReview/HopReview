@@ -83,7 +83,7 @@ public class ProfessorFragment extends Fragment {
                 Integer professorId = 0;
                 for (DataSnapshot profs : professors) {
                     myReviews.clear();
-                    String professor = profs.getKey();
+                    com.example.teame_hopreview.database.Professor professor = profs.getKey();
                     String key = profs.getKey();
                     String department = "";
                     ArrayList<String> courseNames = new ArrayList<String>();

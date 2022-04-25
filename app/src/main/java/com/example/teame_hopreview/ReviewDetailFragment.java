@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.teame_hopreview.database.Professor;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +26,7 @@ public class ReviewDetailFragment extends Fragment {
     private String reviewerName;
     private String reviewContent;
     private String course;
-    private String professor;
+    private Professor professor;
     private int gradeRate;
     private int knowRate;
     private int funRate;

@@ -78,7 +78,7 @@ public class Review {
 
     }
 
-    public Review(Course course, int avgRating, int firstRating, int secondRating, String reviewerContent, String date, String reviewerName) {
+    public Review(Course course, Professor professor, int avgRating, int firstRating, int secondRating, String reviewerContent, String date, String reviewerName) {
         this.course = course;
         this.avgRating = avgRating;
         this.firstRating = firstRating;
@@ -86,6 +86,7 @@ public class Review {
         this.reviewerContent = reviewerContent;
         this.date = date;
         this.reviewerName = reviewerName;
+        this.professor = professor;
     }
 
     public String getReviewerName() {

@@ -1,16 +1,14 @@
 package com.example.teame_hopreview.database;
 
-import com.example.teame_hopreview.ReviewItem;
-import com.example.teame_hopreview.ui.course.CourseItem;
-
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Course {
     private String courseName;
     private String courseNumber;
     private String courseDesignation;
     private ArrayList<String> professor;
-    //private ArrayList<Review> reviews;
+    private Map<String, Review> reviews;
     private int funRating;
     private int workloadRating;
     private int averageRating;
@@ -20,12 +18,12 @@ public class Course {
 
     }
 
-    public Course(String courseName, String courseNumber, String courseDesignation, ArrayList<String> professor, ArrayList<Review> reviews, int funRating, int workloadRating, int averageRating, String key) {
+    public Course(String courseName, String courseNumber, String courseDesignation, ArrayList<String> professor, Map<String, Review> reviews, int funRating, int workloadRating, int averageRating, String key) {
         this.courseName = courseName;
         this.courseNumber = courseNumber;
         this.courseDesignation = courseDesignation;
         this.professor = professor;
-        //this.reviews = reviews;
+        this.reviews = reviews;
         this.funRating = funRating;
         this.workloadRating = workloadRating;
         this.averageRating = averageRating;
@@ -65,13 +63,13 @@ public class Course {
         this.professor = professor;
     }
 
-    /*public ArrayList<Review> getReviews() {
+    public Map<String, Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(ArrayList<Review> reviews) {
+    public void setReviews(Map<String, Review> reviews) {
         this.reviews = reviews;
-    }*/
+    }
 
     public int getFunRating() {
         return funRating;
