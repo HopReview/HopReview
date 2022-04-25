@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private FragmentTransaction transaction;
     private Fragment cFrag;
     private Context context;
-    private User appUser;
+    private User newUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +109,8 @@ public class LoginActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
-        email = emailEt.getText().toString();
-        password = passwordEt.getText().toString();
+        email = emailEt.getText().toString().trim();
+        password = passwordEt.getText().toString().trim();
 
         signIn(email, password);
     }

@@ -1,16 +1,21 @@
 package com.example.teame_hopreview.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
@@ -24,7 +29,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "dbref: ";
@@ -34,10 +42,16 @@ public class HomeFragment extends Fragment {
     DatabaseReference dbref;
     private MainActivity myAct;
     private CourseItem courseItem;
+    private CourseItem courseItem1;
+    private CourseItem courseItem2;
+    private CourseItem courseItem3;
+    private ArrayList<CourseItem> myCourses;
     private Context context;
     private CardView[] courseCards = new CardView[3];
     private CardView[] reviewCards = new CardView[3];
 
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -47,6 +61,10 @@ public class HomeFragment extends Fragment {
         myAct.getSupportActionBar().setTitle("Home");
         dbref = FirebaseDatabase.getInstance().getReference();
         courseItem = new CourseItem();
+        courseItem1 = new CourseItem();
+        courseItem2 = new CourseItem();
+        courseItem3 = new CourseItem();
+        myCourses = new ArrayList<>();
 
         ImageView nothingCourses = (ImageView) myView.findViewById(R.id.nothing_1);
         ImageView nothingReviews = (ImageView) myView.findViewById(R.id.nothing_2);
@@ -68,22 +86,153 @@ public class HomeFragment extends Fragment {
         reviewCards[1].setVisibility(View.GONE);
         reviewCards[2].setVisibility(View.GONE);
 
-
         String firstCourse = "";
         String secondCourse = "";
         String thirdCourse = "";
+        myAct.user.retrieveUserData();
+        // ArrayList<String> recentlyViewed = null;
+        int count = 0;        
         ArrayList<String> recentlyViewed = myAct.user.getRecentlyViewedList();
-        if (recentlyViewed != null) { System.out.println("SIZE: " + recentlyViewed.size()); }
+        if (recentlyViewed != null) {
+            findCourse(recentlyViewed, recentlyViewed.size(), myView, nothingCourses, notCrsTxt);
+        }
 
-        if (recentlyViewed != null && recentlyViewed.size() != 0) {
+
+
+
+        // For now, otherwise have a shared preference for it
+        // and create or initilize from database upon login/signup
+        User currUser = new User("bluejay01", "bluejay01@jhu.edu");
+
+        courseCards[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAct.openCourseDetailFragment(courseItem1);
+            }
+        });
+
+        courseCards[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAct.openCourseDetailFragment(courseItem2);
+            }
+        });
+
+        courseCards[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAct.openCourseDetailFragment(courseItem3);
+            }
+        });
+
+        return myView;
+    }
+
+    public void findCourse(ArrayList<String >courseNames, int size, View myView, ImageView nothingCourses, TextView notCrsTxt) {
+        if (courseNames == null || size == 0) {
+            return;
+        }
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                Collections.reverse(courseNames);
+                myCourses.clear();
+                for (String str : courseNames) {
+                    Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
+                    for (DataSnapshot crs : courses) {
+                        String name = "";
+                        String num = "";
+                        String designation = "";
+                        ArrayList<String> professors = new ArrayList<>();
+                        ArrayList<ReviewItem> myReviews = new ArrayList<>();
+                        int avgRate = 0;
+                        int funRate = 0;
+                        int workRate = 0;
+                        int revAvgRate = 0;
+                        String date = "";
+                        int firstRating = 0;
+                        String reviewerContent = "";
+                        String reviewerName = "";
+                        int secondRating = 0;
+                        boolean toAdd = false;
+
+                        int counter = 1;
+                        Iterable<DataSnapshot> list = crs.getChildren();
+                        for (DataSnapshot item : list) {
+                            if (counter == 1) {
+                                avgRate = item.getValue(Integer.class);
+                            } else if (counter == 2) {
+                                designation = item.getValue(String.class);
+                            } else if (counter == 3) {
+                                name = item.getValue(String.class);
+                                toAdd = name.equals(str);
+                            } else if (counter == 4) {
+                                num = item.getValue(String.class);
+                            } else if (counter == 5) {
+                                funRate = item.getValue(Integer.class);
+                            } else if (counter == 6) {
+                                Iterable<DataSnapshot> profs = item.getChildren();
+                                for (DataSnapshot prof : profs) {
+                                    professors.add(prof.getValue(String.class));
+                                }
+                            } else if (counter == 7) {
+                                Iterable<DataSnapshot> reviews = item.getChildren();
+                                for (DataSnapshot rev : reviews) {
+                                    Iterable<DataSnapshot> rr = rev.getChildren();
+                                    int c2 = 1;
+                                    for (DataSnapshot r : rr) {
+                                        if (c2 == 1) {
+                                            revAvgRate = r.getValue(Integer.class);
+                                        } else if (c2 == 2) {
+                                            date = r.getValue(String.class);
+                                        } else if (c2 == 3) {
+                                            firstRating = r.getValue(Integer.class);
+                                        } else if (c2 == 4) {
+                                            reviewerContent = r.getValue(String.class);
+                                        } else if (c2 == 5) {
+                                            reviewerName = r.getValue(String.class);
+                                        } else if (c2 == 6) {
+                                            secondRating = r.getValue(Integer.class);
+                                        }
+                                        c2++;
+                                    }
+                                    ReviewItem reviewItem = new ReviewItem(revAvgRate, date, firstRating, reviewerContent, reviewerName, secondRating);
+                                    reviewItem.setCourseName(name);
+                                    myReviews.add(reviewItem);
+                                }
+                            } else if (counter == 8) {
+                                workRate = item.getValue(Integer.class);
+                            }
+                            counter++;
+                        }
+
+                        courseItem = new CourseItem(avgRate, designation, name, num, funRate, professors, workRate);
+                        for (ReviewItem r : myReviews) {
+                            courseItem.addReview(r);
+                        }
+                        if (toAdd) {
+                            myCourses.add(courseItem);
+                        }
+                    }
+                }
+                setDetailsHelper(myCourses, size, myView, nothingCourses, notCrsTxt);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void setDetailsHelper(ArrayList<CourseItem> myCourses, int size, View myView, ImageView nothingCourses, TextView notCrsTxt) {
+        if (size != 0) {
             nothingCourses.setVisibility(View.GONE);
             notCrsTxt.setVisibility(View.GONE);
 
-            if (recentlyViewed.size() == 1) {
+            if (size == 1) {
                 courseCards[0].setVisibility(View.VISIBLE);
-
-                firstCourse = recentlyViewed.get(0);
-                findCourse(firstCourse);
 
                 TextView designation1 = (TextView) myView.findViewById(R.id.designationHome);
                 TextView name1 = (TextView) myView.findViewById(R.id.nameHome);
@@ -95,15 +244,21 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home),
                         (ImageView) myView.findViewById(R.id.avg_star5Home),
                 };
-
-
-
-                designation1.setText(courseItem.getDesignation());
-                name1.setText(courseItem.getName());
+                courseItem1 = myCourses.get(0);
+                designation1.setText(myCourses.get(0).getDesignation());
+                StringBuilder myName = new StringBuilder();
+                for (int i = 0; i < 21; i++) {
+                    if (i < myCourses.get(0).getName().length()) {
+                        myName.append(myCourses.get(0).getName().charAt(i));
+                    } else {
+                        myName.append(" ");
+                    }
+                }
+                myName.append(" . .");
+                name1.setText(myName.toString());
                 StringBuilder strBldr = new StringBuilder();
                 int counter = 1;
-                ArrayList<String> profsss = courseItem.getProfessors();
-                for (String prof : courseItem.getProfessors()) {
+                for (String prof : myCourses.get(0).getProfessors()) {
                     if (counter == 1) {
                         strBldr.append(prof);
                     } else {
@@ -112,7 +267,7 @@ public class HomeFragment extends Fragment {
                     counter++;
                 }
                 profs1.setText(strBldr.toString());
-                int avg = courseItem.getAverageRating();
+                int avg = myCourses.get(0).getAverageRating();
                 for (int i = 0; i < 5; i++) {
                     if (i < avg) {
                         stars1[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
@@ -124,12 +279,9 @@ public class HomeFragment extends Fragment {
                 courseCards[1].setVisibility(View.GONE);
                 courseCards[2].setVisibility(View.GONE);
                 // set the course card details
-            } else if (recentlyViewed.size() == 2) {
+            } else if (size == 2) {
                 courseCards[0].setVisibility(View.VISIBLE);
                 courseCards[1].setVisibility(View.VISIBLE);
-
-                firstCourse = recentlyViewed.get(1);
-                findCourse(firstCourse);
 
                 TextView designation1 = (TextView) myView.findViewById(R.id.designationHome);
                 TextView name1 = (TextView) myView.findViewById(R.id.nameHome);
@@ -141,14 +293,21 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home),
                         (ImageView) myView.findViewById(R.id.avg_star5Home),
                 };
-
-
-
-                designation1.setText(courseItem.getDesignation());
-                name1.setText(courseItem.getName());
+                courseItem1 = myCourses.get(0);
+                designation1.setText(myCourses.get(0).getDesignation());
+                StringBuilder myName = new StringBuilder();
+                for (int i = 0; i < 21; i++) {
+                    if (i < myCourses.get(0).getName().length()) {
+                        myName.append(myCourses.get(0).getName().charAt(i));
+                    } else {
+                        myName.append(" ");
+                    }
+                }
+                myName.append(" . .");
+                name1.setText(myName.toString());
                 StringBuilder strBldr = new StringBuilder();
                 int counter = 1;
-                for (String prof : courseItem.getProfessors()) {
+                for (String prof : myCourses.get(0).getProfessors()) {
                     if (counter == 1) {
                         strBldr.append(prof);
                     } else {
@@ -157,7 +316,7 @@ public class HomeFragment extends Fragment {
                     counter++;
                 }
                 profs1.setText(strBldr.toString());
-                int avg = courseItem.getAverageRating();
+                int avg = myCourses.get(0).getAverageRating();
                 for (int i = 0; i < 5; i++) {
                     if (i < avg) {
                         stars1[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
@@ -166,9 +325,6 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-
-                secondCourse = recentlyViewed.get(0);
-                findCourse(secondCourse);
 
                 TextView designation2 = (TextView) myView.findViewById(R.id.designationHome2);
                 TextView name2 = (TextView) myView.findViewById(R.id.nameHome2);
@@ -180,14 +336,21 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home2),
                         (ImageView) myView.findViewById(R.id.avg_star5Home2),
                 };
-
-
-
-                designation2.setText(courseItem.getDesignation());
-                name2.setText(courseItem.getName());
+                courseItem2 = myCourses.get(1);
+                designation2.setText(myCourses.get(1).getDesignation());
+                StringBuilder myName2 = new StringBuilder();
+                for (int i = 0; i < 21; i++) {
+                    if (i < myCourses.get(1).getName().length()) {
+                        myName2.append(myCourses.get(1).getName().charAt(i));
+                    } else {
+                        myName2.append(" ");
+                    }
+                }
+                myName2.append(" . .");
+                name2.setText(myName2.toString());
                 StringBuilder strBldr2 = new StringBuilder();
                 int counter2 = 1;
-                for (String prof : courseItem.getProfessors()) {
+                for (String prof : myCourses.get(1).getProfessors()) {
                     if (counter2 == 1) {
                         strBldr2.append(prof);
                     } else {
@@ -196,7 +359,7 @@ public class HomeFragment extends Fragment {
                     counter2++;
                 }
                 profs2.setText(strBldr2.toString());
-                int avg2 = courseItem.getAverageRating();
+                int avg2 = myCourses.get(1).getAverageRating();
                 for (int i = 0; i < 5; i++) {
                     if (i < avg2) {
                         stars2[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
@@ -207,13 +370,10 @@ public class HomeFragment extends Fragment {
 
                 courseCards[2].setVisibility(View.GONE);
                 // set the course card details
-            } else if (recentlyViewed.size() == 3) {
+            } else if (size == 3) {
                 courseCards[0].setVisibility(View.VISIBLE);
                 courseCards[1].setVisibility(View.VISIBLE);
                 courseCards[2].setVisibility(View.VISIBLE);
-
-                firstCourse = recentlyViewed.get(2);
-                findCourse(firstCourse);
 
                 TextView designation1 = (TextView) myView.findViewById(R.id.designationHome);
                 TextView name1 = (TextView) myView.findViewById(R.id.nameHome);
@@ -225,14 +385,21 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home),
                         (ImageView) myView.findViewById(R.id.avg_star5Home),
                 };
-
-
-
-                designation1.setText(courseItem.getDesignation());
-                name1.setText(courseItem.getName());
+                courseItem1 = myCourses.get(0);
+                designation1.setText(myCourses.get(0).getDesignation());
+                StringBuilder myName = new StringBuilder();
+                for (int i = 0; i < 21; i++) {
+                    if (i < myCourses.get(0).getName().length()) {
+                        myName.append(myCourses.get(0).getName().charAt(i));
+                    } else {
+                        myName.append(" ");
+                    }
+                }
+                myName.append(" . .");
+                name1.setText(myName.toString());
                 StringBuilder strBldr = new StringBuilder();
                 int counter = 1;
-                for (String prof : courseItem.getProfessors()) {
+                for (String prof : myCourses.get(0).getProfessors()) {
                     if (counter == 1) {
                         strBldr.append(prof);
                     } else {
@@ -241,7 +408,7 @@ public class HomeFragment extends Fragment {
                     counter++;
                 }
                 profs1.setText(strBldr.toString());
-                int avg = courseItem.getAverageRating();
+                int avg = myCourses.get(0).getAverageRating();
                 for (int i = 0; i < 5; i++) {
                     if (i < avg) {
                         stars1[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
@@ -250,8 +417,6 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                secondCourse = recentlyViewed.get(1);
-                findCourse(secondCourse);
 
                 TextView designation2 = (TextView) myView.findViewById(R.id.designationHome2);
                 TextView name2 = (TextView) myView.findViewById(R.id.nameHome2);
@@ -263,14 +428,21 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home2),
                         (ImageView) myView.findViewById(R.id.avg_star5Home2),
                 };
-
-
-
-                designation2.setText(courseItem.getDesignation());
-                name2.setText(courseItem.getName());
+                courseItem2 = myCourses.get(1);
+                designation2.setText(myCourses.get(1).getDesignation());
+                StringBuilder myName2 = new StringBuilder();
+                for (int i = 0; i < 21; i++) {
+                    if (i < myCourses.get(1).getName().length()) {
+                        myName2.append(myCourses.get(1).getName().charAt(i));
+                    } else  {
+                        myName2.append(" ");
+                    }
+                }
+                myName2.append(" . .");
+                name2.setText(myName2.toString());
                 StringBuilder strBldr2 = new StringBuilder();
                 int counter2 = 1;
-                for (String prof : courseItem.getProfessors()) {
+                for (String prof : myCourses.get(1).getProfessors()) {
                     if (counter2 == 1) {
                         strBldr2.append(prof);
                     } else {
@@ -279,7 +451,7 @@ public class HomeFragment extends Fragment {
                     counter2++;
                 }
                 profs2.setText(strBldr2.toString());
-                int avg2 = courseItem.getAverageRating();
+                int avg2 = myCourses.get(1).getAverageRating();
                 for (int i = 0; i < 5; i++) {
                     if (i < avg2) {
                         stars2[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
@@ -288,9 +460,6 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-
-                thirdCourse = recentlyViewed.get(0);
-                findCourse(thirdCourse);
 
                 TextView designation3 = (TextView) myView.findViewById(R.id.designationHome3);
                 TextView name3 = (TextView) myView.findViewById(R.id.nameHome3);
@@ -302,14 +471,21 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home3),
                         (ImageView) myView.findViewById(R.id.avg_star5Home3),
                 };
-
-
-
-                designation3.setText(courseItem.getDesignation());
-                name3.setText(courseItem.getName());
+                courseItem3 = myCourses.get(2);
+                designation3.setText(myCourses.get(2).getDesignation());
+                StringBuilder myName3 = new StringBuilder();
+                for (int i = 0; i < 21; i++) {
+                    if (i < myCourses.get(2).getName().length()) {
+                        myName3.append(myCourses.get(2).getName().charAt(i));
+                    } else {
+                        myName3.append(" ");
+                    }
+                }
+                myName3.append(" . .");
+                name3.setText(myName3.toString());
                 StringBuilder strBldr3 = new StringBuilder();
                 int counter3 = 1;
-                for (String prof : courseItem.getProfessors()) {
+                for (String prof : myCourses.get(2).getProfessors()) {
                     if (counter3 == 1) {
                         strBldr3.append(prof);
                     } else {
@@ -318,7 +494,7 @@ public class HomeFragment extends Fragment {
                     counter3++;
                 }
                 profs3.setText(strBldr3.toString());
-                int avg3 = courseItem.getAverageRating();
+                int avg3 = myCourses.get(2).getAverageRating();
                 for (int i = 0; i < 5; i++) {
                     if (i < avg3) {
                         stars3[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
@@ -326,6 +502,7 @@ public class HomeFragment extends Fragment {
                         stars3[i].setImageDrawable(getResources().getDrawable(R.drawable.star_unfilled));;
                     }
                 }
+
                 // set the course card details
 
             }
@@ -339,100 +516,5 @@ public class HomeFragment extends Fragment {
 
 
 
-
-        // For now, otherwise have a shared preference for it
-        // and create or initilize from database upon login/signup
-        User currUser = new User("bluejay01", "bluejay01@jhu.edu");
-
-
-        return myView;
-    }
-
-    public void findCourse(String courseName) {
-        courseItem = new CourseItem();
-        dbref.child("courses_data").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> courses = snapshot.getChildren();
-                for (DataSnapshot crs : courses) {
-                    String name = "";
-                    String num = "";
-                    String designation = "";
-                    ArrayList<String> professors = new ArrayList<>();
-                    ArrayList<ReviewItem> myReviews = new ArrayList<>();
-                    int avgRate = 0;
-                    int funRate = 0;
-                    int workRate = 0;
-                    int revAvgRate = 0;
-                    String date = "";
-                    int firstRating = 0;
-                    String reviewerContent = "";
-                    String reviewerName = "";
-                    int secondRating = 0;
-
-                    int counter = 1;
-                    Iterable<DataSnapshot> list = crs.getChildren();
-                    for (DataSnapshot item : list) {
-                        if (counter == 1) {
-                            avgRate = item.getValue(Integer.class);
-                        } else if (counter == 2) {
-                            designation = item.getValue(String.class);
-                        } else if (counter == 3) {
-                            name = item.getValue(String.class);
-                            if (!name.equals(courseName)) {
-                                break;
-                            }
-                        } else if (counter == 4) {
-                            num = item.getValue(String.class);
-                        } else if (counter == 5) {
-                            funRate = item.getValue(Integer.class);
-                        } else if (counter == 6) {
-                            Iterable<DataSnapshot> profs = item.getChildren();
-                            for (DataSnapshot prof : profs) {
-                                professors.add(prof.getValue(String.class));
-                            }
-                        } else if (counter == 7) {
-                            Iterable<DataSnapshot> reviews = item.getChildren();
-                            for (DataSnapshot rev : reviews) {
-                                Iterable<DataSnapshot> rr = rev.getChildren();
-                                int c2 = 1;
-                                for (DataSnapshot r : rr) {
-                                    if (c2 == 1) {
-                                        revAvgRate = r.getValue(Integer.class);
-                                    } else if (c2 == 2) {
-                                        date = r.getValue(String.class);
-                                    } else if (c2 == 3) {
-                                        firstRating = r.getValue(Integer.class);
-                                    } else if (c2 == 4) {
-                                        reviewerContent = r.getValue(String.class);
-                                    } else if (c2 == 5) {
-                                        reviewerName = r.getValue(String.class);
-                                    } else if (c2 == 6) {
-                                        secondRating = r.getValue(Integer.class);
-                                    }
-                                    c2++;
-                                }
-                                ReviewItem reviewItem = new ReviewItem(revAvgRate, date, firstRating, reviewerContent, reviewerName, secondRating);
-                                reviewItem.setCourseName(name);
-                                myReviews.add(reviewItem);
-                            }
-                        } else if (counter == 8) {
-                            workRate = item.getValue(Integer.class);
-                        }
-                        counter++;
-                    }
-
-                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, professors, workRate);
-                    for (ReviewItem r : myReviews) {
-                        courseItem.addReview(r);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 }

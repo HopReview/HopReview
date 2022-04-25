@@ -86,15 +86,19 @@ public class CourseDetailFragment extends Fragment {
         ImageButton bookmark = (ImageButton) myView.findViewById(R.id.bookmark_det);
 
 
+        myAct.user.retrieveUserData();
         if (myAct.user.getBookmarkedCourses() != null) {
             for (String crs : myAct.user.getBookmarkedCourses()) {
                 if (crs.equals(courseItem.getName())) {
                     bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
+                    break;
                 } else {
                     bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_unfilled));
                 }
             }
         }
+
+
         designation.setText(courseItem.getDesignation());
         courseName.setText(courseItem.getName());
         courseNum.setText(courseItem.getCourseNumber());
@@ -206,16 +210,20 @@ public class CourseDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO: IMPLEMENT, change bookmark icon so its filled, etc.
-                bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
-                myAct.user.addBookmarkedCourse(courseItem.getName());
-                myAct.user.updateBookmarkedCoursesDatabase();
-                Toast.makeText(myAct, "Course Saved",
-                        Toast.LENGTH_LONG).show();
+                if (myAct.user.getBookmarkedCourses().contains(courseItem.getName())) {
+                    bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_unfilled));
+                    myAct.user.removeBookmarkedCourse(courseItem.getName());
+                    myAct.user.updateBookmarkedCoursesDatabase();
+                    Toast.makeText(myAct, "Course Removed", Toast.LENGTH_LONG).show();
+                } else {
+                    bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
+                    myAct.user.addBookmarkedCourse(courseItem.getName());
+                    myAct.user.updateBookmarkedCoursesDatabase();
+                    Toast.makeText(myAct, "Course Saved",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
-
-
-
         return myView;
     }
 
@@ -294,9 +302,7 @@ public class CourseDetailFragment extends Fragment {
         myReviewsCopy.addAll(courseItem.getReviews());
 
         myReviews = new ArrayList<ReviewItem>();
-        ra = new ReviewAdapter(myAct, context, myReviews);
-        myList.setAdapter(ra);
-        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+
 
         int len = reviewContents.size();
         for (ReviewItem rev : myReviewsCopy) {
@@ -304,12 +310,18 @@ public class CourseDetailFragment extends Fragment {
                 if (rev.getReviewContent().equals(reviewContents.get(i))) {
                     if (rev.getReviewerName().equals(reviewUsers.get(i))) {
                         if (rev.getDate().equals(reviewDates.get(i))) {
-                            myReviews.add(rev);
+                            if (!myReviews.contains(rev)) {
+                                myReviews.add(rev);
+                            }
                         }
                     }
                 }
             }
         }
+
+        ra = new ReviewAdapter(myAct, context, myReviews);
+        myList.setAdapter(ra);
+        myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
         ra.notifyDataSetChanged();
     }
 

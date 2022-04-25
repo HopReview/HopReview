@@ -28,6 +28,8 @@ public class User {
     private String[] recentlyViewed;
     DatabaseReference dbref;
     Stack<String> rVHelper;
+    ArrayList<String> toReturn;
+
 
 
 
@@ -144,7 +146,15 @@ public class User {
         if (bookmarkedCourses == null) {
             bookmarkedCourses = new ArrayList<>();
         }
-        bookmarkedCourses.add(newCourse);
+        if (!bookmarkedCourses.contains(newCourse)) {
+            bookmarkedCourses.add(newCourse);
+        }
+    }
+
+    public void removeBookmarkedCourse (String removeCourse) {
+        if (bookmarkedCourses != null) {
+            bookmarkedCourses.remove(removeCourse);
+        }
     }
 
     public ArrayList<String> getBookmarkedCourses() { return bookmarkedCourses; }
@@ -181,6 +191,7 @@ public class User {
     }
 
     public ArrayList<String> getRecentlyViewedList() {
+        this.retrieveUserData();
         ArrayList<String> toReturn = new ArrayList<>();
         if (recentlyViewed != null) {
             for (String str : recentlyViewed) {
@@ -226,25 +237,26 @@ public class User {
                 Iterable<DataSnapshot> userData = snapshot.getChildren();
                 int counter = 1;
                 for (DataSnapshot data : userData) {
-                    if (counter == 1) {
+                    if (data.getKey().equals("bookmarkedCourses")) {
                         Iterable<DataSnapshot> bmCourses = data.getChildren();
                         for (DataSnapshot crs : bmCourses) {
                             addBookmarkedCourse(crs.getValue(String.class));
                         }
-                    } else if (counter == 2) {
+                    } else if (data.getKey().equals("email")) {
                         email = data.getValue(String.class);
-                    } else if (counter == 3) {
+                    } else if (data.getKey().equals("recentlyViewed")) {
                         Iterable<DataSnapshot> rvCourses = data.getChildren();
                         for (DataSnapshot crs : rvCourses) {
                             addRecentlyViewed(crs.getValue(String.class));
                         }
-                    } else if (counter == 4) {
+                    } else if (data.getKey().equals("userReviews")) {
                         Iterable<DataSnapshot> reviews = data.getChildren();
                         // for (DataSnapshot rev : reviews) {
                         //     for now omitted
                         // }
+                    } else if (data.getKey().equals("username")) {
+                        userName = data.getValue(String.class);
                     }
-                    counter++;
                 }
 
             }
@@ -267,6 +279,29 @@ public class User {
             }
         });
         updateFromDatabase();
+    }
+
+
+    public ArrayList<String> retrieveUserDataRV() {
+        dbref.child("user_data").child(userId).child("recentlyViewed").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    toReturn = new ArrayList<>();
+                    Iterable<DataSnapshot> rvCourses = snapshot.getChildren();
+                    for (DataSnapshot crs : rvCourses) {
+                        addRecentlyViewed(crs.getValue(String.class));
+                        toReturn = getRecentlyViewedList();
+                    }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("The read failed: " + error.getCode());
+            }
+        });
+
+
+        return toReturn;
     }
 
     public String getUserId() {

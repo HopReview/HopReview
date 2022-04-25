@@ -55,7 +55,7 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
     @NonNull
     @Override
     public CourseBMAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.frag_course_item, parent, false);
+        View view = inflater.inflate(R.layout.frag_bookmark_course, parent, false);
         return new CourseBMAdapter.ViewHolder(view);
     }
 
@@ -69,7 +69,7 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
         ArrayList<String> professors = currCourse.getProfessors();
 
         StringBuilder profNamesStr = new StringBuilder();
-        int counter = 1;
+        int counter = 0;
         int len = professors.size();
         for (String prof : professors) {
             if (counter + 1 == len) {
@@ -79,8 +79,6 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
             }
             counter++;
         }
-
-
 
         holder.getProfessorNames().setText(profNamesStr.toString());
 
@@ -96,8 +94,6 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
                 avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
         }
-
-        ArrayList<ReviewItem> reviews = currCourse.getReviews();
 
         holder.itemView.setTag(courseData.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);

@@ -30,13 +30,16 @@
         app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
         app:cardPreventCornerOverlap="true"
+        android:clickable="true"
+        android:focusable="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.265">
+        app:layout_constraintVertical_bias="0.265"
+        >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -68,7 +71,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Course Name"
                     android:textColor="@color/md_theme_light_onPrimaryContainer"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -79,7 +82,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Professors"
                     android:textColor="@color/md_theme_light_onSurfaceVariant"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -92,7 +95,7 @@
                     android:id="@+id/avg_star1Home2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
@@ -147,6 +150,8 @@
         app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
         app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
+        android:clickable="true"
+        android:focusable="true"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -186,7 +191,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Course Name"
                     android:textColor="@color/md_theme_light_onPrimaryContainer"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -197,7 +202,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Professors"
                     android:textColor="@color/md_theme_light_onSurfaceVariant"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -210,7 +215,7 @@
                     android:id="@+id/avg_star1Home3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
@@ -265,6 +270,8 @@
         app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
         app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
+        android:clickable="true"
+        android:focusable="true"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -304,7 +311,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Course Name"
                     android:textColor="@color/md_theme_light_onPrimaryContainer"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -315,7 +322,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Professors"
                     android:textColor="@color/md_theme_light_onSurfaceVariant"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -328,7 +335,7 @@
                     android:id="@+id/avg_star1Home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
@@ -381,6 +388,8 @@
         android:layout_height="wrap_content"
         android:text="@string/recent_reviews"
         android:textAlignment="center"
+        android:clickable="true"
+        android:focusable="true"
         android:textAllCaps="false"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -530,6 +539,8 @@
         app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
+        android:clickable="true"
+        android:focusable="true"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -663,6 +674,8 @@
         app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
+        android:clickable="true"
+        android:focusable="true"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
