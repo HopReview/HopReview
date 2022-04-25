@@ -210,11 +210,18 @@ public class CourseDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO: IMPLEMENT, change bookmark icon so its filled, etc.
-                bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
-                myAct.user.addBookmarkedCourse(courseItem.getName());
-                myAct.user.updateBookmarkedCoursesDatabase();
-                Toast.makeText(myAct, "Course Saved",
-                        Toast.LENGTH_LONG).show();
+                if (myAct.user.getBookmarkedCourses().contains(courseItem.getName())) {
+                    bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_unfilled));
+                    myAct.user.removeBookmarkedCourse(courseItem.getName());
+                    myAct.user.updateBookmarkedCoursesDatabase();
+                    Toast.makeText(myAct, "Course Removed", Toast.LENGTH_LONG).show();
+                } else {
+                    bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
+                    myAct.user.addBookmarkedCourse(courseItem.getName());
+                    myAct.user.updateBookmarkedCoursesDatabase();
+                    Toast.makeText(myAct, "Course Saved",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
         return myView;

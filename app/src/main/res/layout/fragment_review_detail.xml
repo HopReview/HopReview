@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="53dp"
-        android:layout_height="58dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@drawable/circle"
         android:backgroundTint="@color/md_theme_light_inversePrimary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -469,35 +469,35 @@
         android:id="@+id/label_professor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:labelFor="@id/professor_box"
         android:text="@string/title_professor"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textSize="12sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/professor_box"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.083"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/course_box" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.292" />
 
     <TextView
         android:id="@+id/label_professor2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
         android:labelFor="@id/course_box"
         android:text="@string/title_course"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textSize="12sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/course_box"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.191" />
 
     <TextView
         android:id="@+id/professor_box"
