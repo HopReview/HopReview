@@ -109,8 +109,8 @@ public class LoginActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
-        email = emailEt.getText().toString();
-        password = passwordEt.getText().toString();
+        email = emailEt.getText().toString().trim();
+        password = passwordEt.getText().toString().trim();
 
         signIn(email, password);
     }
