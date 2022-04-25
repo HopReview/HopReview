@@ -28,6 +28,8 @@ public class User {
     private String[] recentlyViewed;
     DatabaseReference dbref;
     Stack<String> rVHelper;
+    ArrayList<String> toReturn;
+
 
 
 
@@ -183,6 +185,7 @@ public class User {
     }
 
     public ArrayList<String> getRecentlyViewedList() {
+        this.retrieveUserData();
         ArrayList<String> toReturn = new ArrayList<>();
         if (recentlyViewed != null) {
             for (String str : recentlyViewed) {
@@ -248,16 +251,6 @@ public class User {
                     } else if (data.getKey().equals("username")) {
                         userName = data.getValue(String.class);
                     }
-
-                    if (counter == 1) {
-
-                    } else if (counter == 2) {
-                    } else if (counter == 3) {
-
-                    } else if (counter == 4) {
-
-                    }
-                    counter++;
                 }
 
             }
@@ -280,6 +273,29 @@ public class User {
             }
         });
         updateFromDatabase();
+    }
+
+
+    public ArrayList<String> retrieveUserDataRV() {
+        dbref.child("user_data").child(userId).child("recentlyViewed").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    toReturn = new ArrayList<>();
+                    Iterable<DataSnapshot> rvCourses = snapshot.getChildren();
+                    for (DataSnapshot crs : rvCourses) {
+                        addRecentlyViewed(crs.getValue(String.class));
+                        toReturn = getRecentlyViewedList();
+                    }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("The read failed: " + error.getCode());
+            }
+        });
+
+
+        return toReturn;
     }
 
     public String getUserId() {

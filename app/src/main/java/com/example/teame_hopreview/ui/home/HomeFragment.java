@@ -1,16 +1,21 @@
 package com.example.teame_hopreview.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
@@ -37,11 +42,16 @@ public class HomeFragment extends Fragment {
     DatabaseReference dbref;
     private MainActivity myAct;
     private CourseItem courseItem;
+    private CourseItem courseItem1;
+    private CourseItem courseItem2;
+    private CourseItem courseItem3;
     private ArrayList<CourseItem> myCourses;
     private Context context;
     private CardView[] courseCards = new CardView[3];
     private CardView[] reviewCards = new CardView[3];
 
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -51,8 +61,10 @@ public class HomeFragment extends Fragment {
         myAct.getSupportActionBar().setTitle("Home");
         dbref = FirebaseDatabase.getInstance().getReference();
         courseItem = new CourseItem();
+        courseItem1 = new CourseItem();
+        courseItem2 = new CourseItem();
+        courseItem3 = new CourseItem();
         myCourses = new ArrayList<>();
-        System.out.println("EVERYBODY CLAP YO HANDS");
 
         ImageView nothingCourses = (ImageView) myView.findViewById(R.id.nothing_1);
         ImageView nothingReviews = (ImageView) myView.findViewById(R.id.nothing_2);
@@ -74,13 +86,13 @@ public class HomeFragment extends Fragment {
         reviewCards[1].setVisibility(View.GONE);
         reviewCards[2].setVisibility(View.GONE);
 
-
         String firstCourse = "";
         String secondCourse = "";
         String thirdCourse = "";
         myAct.user.retrieveUserData();
+        // ArrayList<String> recentlyViewed = null;
+        int count = 0;        
         ArrayList<String> recentlyViewed = myAct.user.getRecentlyViewedList();
-
         if (recentlyViewed != null) {
             findCourse(recentlyViewed, recentlyViewed.size(), myView, nothingCourses, notCrsTxt);
         }
@@ -92,6 +104,26 @@ public class HomeFragment extends Fragment {
         // and create or initilize from database upon login/signup
         User currUser = new User("bluejay01", "bluejay01@jhu.edu");
 
+        courseCards[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAct.openCourseDetailFragment(courseItem1);
+            }
+        });
+
+        courseCards[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAct.openCourseDetailFragment(courseItem2);
+            }
+        });
+
+        courseCards[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAct.openCourseDetailFragment(courseItem3);
+            }
+        });
 
         return myView;
     }
@@ -134,12 +166,7 @@ public class HomeFragment extends Fragment {
                                 designation = item.getValue(String.class);
                             } else if (counter == 3) {
                                 name = item.getValue(String.class);
-                                System.out.println(str);
-                                if (!name.equals(str)) {
-                                    toAdd = false;
-                                } else {
-                                    toAdd = true;
-                                }
+                                toAdd = name.equals(str);
                             } else if (counter == 4) {
                                 num = item.getValue(String.class);
                             } else if (counter == 5) {
@@ -217,7 +244,7 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home),
                         (ImageView) myView.findViewById(R.id.avg_star5Home),
                 };
-
+                courseItem1 = myCourses.get(0);
                 designation1.setText(myCourses.get(0).getDesignation());
                 StringBuilder myName = new StringBuilder();
                 for (int i = 0; i < 21; i++) {
@@ -266,7 +293,7 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home),
                         (ImageView) myView.findViewById(R.id.avg_star5Home),
                 };
-
+                courseItem1 = myCourses.get(0);
                 designation1.setText(myCourses.get(0).getDesignation());
                 StringBuilder myName = new StringBuilder();
                 for (int i = 0; i < 21; i++) {
@@ -309,7 +336,7 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home2),
                         (ImageView) myView.findViewById(R.id.avg_star5Home2),
                 };
-
+                courseItem2 = myCourses.get(1);
                 designation2.setText(myCourses.get(1).getDesignation());
                 StringBuilder myName2 = new StringBuilder();
                 for (int i = 0; i < 21; i++) {
@@ -358,7 +385,7 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home),
                         (ImageView) myView.findViewById(R.id.avg_star5Home),
                 };
-
+                courseItem1 = myCourses.get(0);
                 designation1.setText(myCourses.get(0).getDesignation());
                 StringBuilder myName = new StringBuilder();
                 for (int i = 0; i < 21; i++) {
@@ -401,7 +428,7 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home2),
                         (ImageView) myView.findViewById(R.id.avg_star5Home2),
                 };
-
+                courseItem2 = myCourses.get(1);
                 designation2.setText(myCourses.get(1).getDesignation());
                 StringBuilder myName2 = new StringBuilder();
                 for (int i = 0; i < 21; i++) {
@@ -444,7 +471,7 @@ public class HomeFragment extends Fragment {
                         (ImageView) myView.findViewById(R.id.avg_star4Home3),
                         (ImageView) myView.findViewById(R.id.avg_star5Home3),
                 };
-
+                courseItem3 = myCourses.get(2);
                 designation3.setText(myCourses.get(2).getDesignation());
                 StringBuilder myName3 = new StringBuilder();
                 for (int i = 0; i < 21; i++) {
