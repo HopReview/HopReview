@@ -1,6 +1,8 @@
 package com.example.teame_hopreview;
 
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         Toolbar toolbar = (Toolbar) findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);
 
+
+
         course = new CourseFragment();
         home = new HomeFragment();
         professors = new ProfessorFragment();
@@ -62,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         mydbase = FirebaseDatabase.getInstance();
         dbRef = mydbase.getReference();
-
-        user = retrieveUserData();
 
 
 //        RecyclerView recyclerView = findViewById(R.id.myList);
@@ -99,22 +101,25 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 //            }
 //        });
 
-        user.retrieveUserData();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, this.home).addToBackStack(null).commit();
+        // user.retrieveUserData();
 
 
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnItemSelectedListener(this);
+        retrieveUserData();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, this.home).addToBackStack(null).commit();
+
 
     }
 
-    public User retrieveUserData() {
+    public void retrieveUserData() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         assert currentUser != null;
-        User user = new User(currentUser.getEmail());
+        user = new User(currentUser.getEmail());
         user.retrieveUserData();
-        return user;
+        // return user;
     }
+
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

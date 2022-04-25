@@ -69,7 +69,7 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
         ArrayList<String> professors = currCourse.getProfessors();
 
         StringBuilder profNamesStr = new StringBuilder();
-        int counter = 1;
+        int counter = 0;
         int len = professors.size();
         for (String prof : professors) {
             if (counter + 1 == len) {
