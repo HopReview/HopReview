@@ -38,7 +38,7 @@ public class ProfessorDetailFragment extends Fragment {
     private ReviewItem ReviewItem;
     protected ArrayList<ReviewItem> myReviews;
     Context context;
-    com.example.teame_hopreview.database.Professor professorName;
+    String professorName;
     private ReviewAdapter ra;
     DatabaseReference dbref;
     private String currCourse;

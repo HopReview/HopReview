@@ -1,6 +1,6 @@
 package com.example.teame_hopreview;
 
-import com.example.teame_hopreview.database.Professor;
+import com.example.teame_hopreview.ui.professors.Professor;
 
 public class ReviewItem extends Profile {
     private String reviewerName;
@@ -10,7 +10,7 @@ public class ReviewItem extends Profile {
     private int secondRating; // workload or knowledge
     private String date;
     private String course = new String();
-    private Professor professor = new String();
+    private String professor = new String();
 
 
     /**
@@ -44,11 +44,11 @@ public class ReviewItem extends Profile {
         return this.course;
     }
 
-    public void setProfessorName(Professor prof) {
+    public void setProfessorName(String prof) {
         this.professor = prof;
     }
 
-    public Professor getProfessorName() {
+    public String getProfessorName() {
         return this.professor;
     }
 

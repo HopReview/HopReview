@@ -26,7 +26,7 @@ public class ReviewDetailFragment extends Fragment {
     private String reviewerName;
     private String reviewContent;
     private String course;
-    private Professor professor;
+    private String professor;
     private int gradeRate;
     private int knowRate;
     private int funRate;

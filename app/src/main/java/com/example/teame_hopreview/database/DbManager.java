@@ -81,6 +81,13 @@ public class DbManager {
         return professors;
     }
 
+    public Professor getProfessorByName(String name) {
+        for (Professor prof: professors) {
+            if (prof != null && prof.getName().equals(name)) return prof;
+        }
+        return null;
+    }
+
     class DatabaseChangeListener implements ValueEventListener {
 
         private static final String TAG = "dbref: ";

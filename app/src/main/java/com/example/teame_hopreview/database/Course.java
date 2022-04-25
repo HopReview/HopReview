@@ -1,6 +1,7 @@
 package com.example.teame_hopreview.database;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Course {
@@ -115,6 +116,6 @@ public class Course {
     }
 
     public Course copy() {
-        return new Course(courseName, courseNumber, courseDesignation, professor, new ArrayList<>(), funRating, workloadRating, averageRating, key);
+        return new Course(courseName, courseNumber, courseDesignation, professor, new HashMap<>(), funRating, workloadRating, averageRating, key);
     }
 }

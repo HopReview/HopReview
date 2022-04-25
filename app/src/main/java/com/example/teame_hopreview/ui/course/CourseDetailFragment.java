@@ -46,7 +46,7 @@ public class CourseDetailFragment extends Fragment {
     Context context;
     String courseName;
     private ReviewAdapter ra;
-    private Professor currProfessor;
+    private String currProfessor;
     DatabaseReference dbref;
     private ArrayList<String> reviewContents;
     private ArrayList<String> reviewUsers;
@@ -220,14 +220,14 @@ public class CourseDetailFragment extends Fragment {
     }
 
 
-    public void setCourseProfessors(Professor currProfessor) {
+    public void setCourseProfessors(String currProfessor) {
         for (ReviewItem rev : courseItem.getReviews()) {
             rev.setProfessorName(currProfessor);
         }
     }
 
 
-    public void myDbHelper(View myView, Professor currProfessor) {
+    public void myDbHelper(View myView, String currProfessor) {
         reviewContents.clear();
         reviewUsers.clear();
         reviewDates.clear();

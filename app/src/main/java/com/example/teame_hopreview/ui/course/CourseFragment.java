@@ -137,7 +137,7 @@ public class CourseFragment extends Fragment {
                                     } else if (c2 == 5) {
                                         reviewerName = r.getValue(String.class);
                                     } else if (c2 == 6) {
-                                        secondRating = r.getValue(Integer.class);
+                                        secondRating = 0;
                                     }
                                     c2++;
                                 }

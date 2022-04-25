@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Professor extends Profile {
     private String initials;
-    private com.example.teame_hopreview.database.Professor professorName;
+    private String professorName;
     private String department;
     private ArrayList<CourseItem> courses;
     private ArrayList<String> courseNames;
@@ -33,7 +33,7 @@ public class Professor extends Profile {
      * @param name : indicating the Professor's name
      * @param department : indicating the department of the Professor
      */
-    public Professor(com.example.teame_hopreview.database.Professor name, String department, int grading, int knowledge, int avg) {
+    public Professor(String name, String department, int grading, int knowledge, int avg) {
         this.professorName = name;
         this.department = department;
         // TODO: might remove courses parameter as requirement
@@ -61,7 +61,7 @@ public class Professor extends Profile {
      * Method for getting a Professor's name
      * @return String name of the Professor
      */
-    public com.example.teame_hopreview.database.Professor getProfessorName() {
+    public String getProfessorName() {
         return this.professorName;
     }
 

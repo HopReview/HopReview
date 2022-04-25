@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class Professor {
 
-    private Professor name;
+    private String name;
 
-    private Professor key;
+    private String key;
     private int avg_rating;
     private String department;
     private int grading_rating;
@@ -20,7 +20,7 @@ public class Professor {
 
     }
 
-    public Professor(Professor name, Professor key, int avg_rating, String department, int grading_rating, int knowledge_rating, ArrayList<String> courses, Map<String, Review> reviews) {
+    public Professor(String name, String key, int avg_rating, String department, int grading_rating, int knowledge_rating, ArrayList<String> courses, Map<String, Review> reviews) {
         this.name = name;
         this.key = key;
         this.avg_rating = avg_rating;
@@ -31,11 +31,11 @@ public class Professor {
         this.reviews = reviews;
     }
 
-    public Professor getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Professor name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -87,11 +87,11 @@ public class Professor {
         this.reviews = reviews;
     }
 
-    public Professor getKey() {
+    public String getKey() {
         return key;
     }
 
-    public void setKey(Professor key) {
+    public void setKey(String key) {
         this.key = key;
     }
 }
