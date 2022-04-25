@@ -151,6 +151,12 @@ public class User {
         }
     }
 
+    public void removeBookmarkedCourse (String removeCourse) {
+        if (bookmarkedCourses != null) {
+            bookmarkedCourses.remove(removeCourse);
+        }
+    }
+
     public ArrayList<String> getBookmarkedCourses() { return bookmarkedCourses; }
 
     public void addUserReview (ReviewItem newReview) {
