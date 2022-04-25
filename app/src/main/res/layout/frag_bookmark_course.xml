@@ -3,14 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bookmark_course_card"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_height="80dp"
     android:layout_margin="1dp"
     app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
     app:cardCornerRadius="20dp"
     app:cardElevation="2dp"
     app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.494"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.265">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -21,8 +27,8 @@
                 android:id="@+id/designationBM"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/circular_background"
                 android:gravity="center"
                 android:text="H"
@@ -39,11 +45,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="5dp"
+                    android:maxLength="28"
                     android:text="Course Name"
                     android:textColor="@color/md_theme_light_onPrimaryContainer"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp"
+                    android:textStyle="bold"  />
 
                 <TextView
                     android:id="@+id/profsBM"
@@ -53,7 +60,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Professors"
                     android:textColor="@color/md_theme_light_onSurfaceVariant"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -66,8 +73,8 @@
                     android:id="@+id/avg_star1BM"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
 
@@ -76,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
 
@@ -85,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
 
@@ -94,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="2.5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
 
@@ -103,7 +110,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="2.5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/star_filled"
                     app:tint="@color/md_theme_light_primary" />
 
