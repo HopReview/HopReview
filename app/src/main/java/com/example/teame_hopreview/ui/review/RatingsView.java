@@ -18,6 +18,8 @@ public class RatingsView extends LinearLayout {
     private ImageView star4;
     private ImageView star5;
 
+    private Boolean disabled;
+
     public int getRating() {
         return rating;
     }
@@ -53,11 +55,13 @@ public class RatingsView extends LinearLayout {
     }
 
     private void setupView() {
+        disabled = false;
         inflate(getContext(), R.layout.create_review_ratings_view_layout,this);
         star1 = (ImageView) findViewById(R.id.ratings_view_star1);
         star1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (disabled) return;
                 updateStarIcons(1);
             }
         });
@@ -66,6 +70,7 @@ public class RatingsView extends LinearLayout {
         star2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (disabled) return;
                 updateStarIcons(2);
             }
         });
@@ -74,6 +79,7 @@ public class RatingsView extends LinearLayout {
         star3.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (disabled) return;
                 updateStarIcons(3);
             }
         });
@@ -82,6 +88,7 @@ public class RatingsView extends LinearLayout {
         star4.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (disabled) return;
                 updateStarIcons(4);
             }
         });
@@ -90,6 +97,7 @@ public class RatingsView extends LinearLayout {
         star5.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (disabled) return;
                 updateStarIcons(5);
             }
         });
@@ -111,6 +119,14 @@ public class RatingsView extends LinearLayout {
 
     public void setOnRatingChangedListener(OnRatingChangedListener onRatingChangedListener) {
         this.onRatingChangedListener = onRatingChangedListener;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 }
 

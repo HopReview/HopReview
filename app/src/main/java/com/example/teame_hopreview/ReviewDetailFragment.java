@@ -6,12 +6,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.teame_hopreview.ui.review.OnRatingChangedListener;
+import com.example.teame_hopreview.ui.review.RatingsView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +37,10 @@ public class ReviewDetailFragment extends Fragment {
     DatabaseReference dbref;
     Context context;
 
+    RatingsView funRatings;
+    RatingsView workloadRatings;
+    RatingsView gradingRatings;
+    RatingsView knowledgeRatings;
 
 
     public ReviewDetailFragment(ReviewItem review) {
@@ -41,7 +49,6 @@ public class ReviewDetailFragment extends Fragment {
         this.reviewContent = review.getReviewContent();
         this.course = review.getCourseName();
         this.professor = review.getProfessorName();
-
     }
 
     @Override
@@ -54,23 +61,45 @@ public class ReviewDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_review_detail, container, false);
+
         myAct = (MainActivity) getActivity();
+        myAct.getSupportActionBar().setTitle("Review");
         context = myAct.getApplicationContext();
 
-        TextView userName = (TextView) myView.findViewById(R.id.userName);
-        userName.setText(reviewerName);
+        TextView userName = (TextView) myView.findViewById(R.id.review_by);
+        userName.setText("Review by: " + reviewerName);
 
-        TextView course = (TextView) myView.findViewById(R.id.course_box);
+        TextView course = (TextView) myView.findViewById(R.id.ReviewDetail_CourseText);
         course.setText(reviewItem.getCourseName());
 
-        TextView professor = (TextView) myView.findViewById(R.id.professor_box);
+        TextView professor = (TextView) myView.findViewById(R.id.ReviewDetail_ProfessorText);
         professor.setText(reviewItem.getProfessorName());
 
-        TextView comment = (TextView) myView.findViewById(R.id.comment_box);
+        TextInputEditText comment = (TextInputEditText) myView.findViewById(R.id.create_review_comment);
         comment.setText(reviewContent);
+
+        setupReviews(myView);
 
         myDbHelper(myView);
         return myView;
+    }
+
+    private void setupReviews(View view) {
+        funRatings = view.findViewById(R.id.review_detail_fun_rating);
+        funRatings.setDisabled(true);
+        workloadRatings = view.findViewById(R.id.review_detail_workload_rating);
+        workloadRatings.setDisabled(true);
+        gradingRatings = view.findViewById(R.id.review_detail_grading_rating);
+        gradingRatings.setDisabled(true);
+        knowledgeRatings = view.findViewById(R.id.review_detail_knowledge_rating);
+        knowledgeRatings.setDisabled(true);
+    }
+
+    private void setRatings() {
+        funRatings.setRating(funRate);
+        workloadRatings.setRating(workRate);
+        gradingRatings.setRating(gradeRate);
+        knowledgeRatings.setRating(knowRate);
     }
 
     public void myDbHelper(View myView) {
@@ -160,7 +189,7 @@ public class ReviewDetailFragment extends Fragment {
                         counter++;
                     }
                 }
-                setRatesHelper(myView);
+                setRatings();
             }
 
             @Override
@@ -168,65 +197,6 @@ public class ReviewDetailFragment extends Fragment {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
-    }
-
-    public void setRatesHelper(View myView) {
-        // course related stars
-        ImageView[] workloadStars = new ImageView[5];
-        workloadStars[0] = (ImageView) myView.findViewById(R.id.rev_work_1);
-        workloadStars[1] = (ImageView) myView.findViewById(R.id.rev_work_2);
-        workloadStars[2] = (ImageView) myView.findViewById(R.id.rev_work_3);
-        workloadStars[3] = (ImageView) myView.findViewById(R.id.rev_work_4);
-        workloadStars[4] = (ImageView) myView.findViewById(R.id.rev_work_5);
-
-        ImageView[] funStars = new ImageView[5];
-        funStars[0] = (ImageView) myView.findViewById(R.id.rev_fun_1);
-        funStars[1] = (ImageView) myView.findViewById(R.id.rev_fun_2);
-        funStars[2] = (ImageView) myView.findViewById(R.id.rev_fun_3);
-        funStars[3] = (ImageView) myView.findViewById(R.id.rev_fun_4);
-        funStars[4] = (ImageView) myView.findViewById(R.id.rev_fun_5);
-
-        // professor related stars
-        ImageView[] gradeStars = new ImageView[5];
-        gradeStars[0] = (ImageView) myView.findViewById(R.id.rev_gr_1);
-        gradeStars[1] = (ImageView) myView.findViewById(R.id.rev_gr_2);
-        gradeStars[2] = (ImageView) myView.findViewById(R.id.rev_gr_3);
-        gradeStars[3] = (ImageView) myView.findViewById(R.id.rev_gr_4);
-        gradeStars[4] = (ImageView) myView.findViewById(R.id.rev_gr_5);
-
-        ImageView[] knowledgeStars = new ImageView[5];
-        knowledgeStars[0] = (ImageView) myView.findViewById(R.id.rev_know_1);
-        knowledgeStars[1] = (ImageView) myView.findViewById(R.id.rev_know_2);
-        knowledgeStars[2] = (ImageView) myView.findViewById(R.id.rev_know_3);
-        knowledgeStars[3] = (ImageView) myView.findViewById(R.id.rev_know_4);
-        knowledgeStars[4] = (ImageView) myView.findViewById(R.id.rev_know_5);
-
-        for (int i = 0; i < 5; i++) {
-            if (i < gradeRate) {
-                gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
-            } else {
-                gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
-            }
-
-            if (i < knowRate) {
-                knowledgeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
-            } else {
-                knowledgeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
-            }
-
-            if (i < workRate) {
-                workloadStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
-            } else {
-                workloadStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
-            }
-
-            if (i < funRate) {
-                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
-            } else {
-                funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
-            }
-        }
 
     }
 }
