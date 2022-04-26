@@ -20,16 +20,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewItem;
+import com.example.teame_hopreview.database.Course;
+import com.example.teame_hopreview.database.Review;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> implements Filterable {
 
-    private List<CourseItem> courseData;
-    private List<CourseItem> courseDataCopy;
+    private List<Course> courseData;
+    private List<Course> courseDataCopy;
     private LayoutInflater inflater;
     private MainActivity mainActivity;
     Context context;
@@ -49,7 +52,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         mainActivity.openCourseDetailFragment(course);
     };
 
-    public CourseAdapter(MainActivity mainActivity, Context context, ArrayList<CourseItem> items, List<CourseItem> itemsCopy) {
+    public CourseAdapter(MainActivity mainActivity, Context context, ArrayList<Course> items, List<Course> itemsCopy) {
         this.inflater = LayoutInflater.from(context);
         this.courseData = items;
         this.mainActivity = mainActivity;
@@ -65,13 +68,13 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
-        CourseItem currCourse = courseData.get(position);
-        holder.getDesignation().setText(currCourse.getDesignation());
-        System.out.println(currCourse.getName());
-        holder.getName().setText(currCourse.getName());
+        Course currCourse = courseData.get(position);
+        holder.getDesignation().setText(currCourse.getCourseDesignation());
+        System.out.println(currCourse.getCourseName());
+        holder.getName().setText(currCourse.getCourseName());
         holder.getNum().setText(currCourse.getCourseNumber());
 
-        ArrayList<String> professors = currCourse.getProfessors();
+        ArrayList<String> professors = currCourse.getProfessor();
 
         StringBuilder profNamesStr = new StringBuilder();
         int counter = 1;
@@ -122,7 +125,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             }
         }
 
-        ArrayList<ReviewItem> reviews = currCourse.getReviews();
+        Map<String, Review> reviews = currCourse.getReviews();
 
         if (reviews == null) {
             holder.getReviewNum().setText("0 reviews");
@@ -237,18 +240,19 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             return fun;
         }
     }
+
     private Filter courseFilter = new Filter() {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<CourseItem> filteredList = new ArrayList<>();
+            List<Course> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(courseDataCopy);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (CourseItem item : courseDataCopy) {
-                    if (item.getName().toLowerCase().contains(filterPattern)) {
+                for (Course item : courseDataCopy) {
+                    if (item.getCourseName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }

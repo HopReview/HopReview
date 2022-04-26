@@ -10,6 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.teame_hopreview.ReviewItem;
+import com.example.teame_hopreview.database.Course;
+import com.example.teame_hopreview.database.CoursesOnChangeListener;
+import com.example.teame_hopreview.database.DbManager;
+import com.example.teame_hopreview.database.Review;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +31,9 @@ import com.example.teame_hopreview.R;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import kotlin.DslMarker;
 
 public class CourseFragment extends Fragment {
 
@@ -35,14 +42,13 @@ public class CourseFragment extends Fragment {
     private RecyclerView myList;
     private CardView myCard;
     private MainActivity myAct;
-    private CourseItem courseItem;
-    private ReviewItem reviewItem;
-    protected ArrayList<CourseItem> myCourses;
-    protected ArrayList<CourseItem> myCoursesCopy;
-    protected ArrayList<ReviewItem> myReviews;
+    protected ArrayList<Course> myCourses;
+    protected ArrayList<Course> myCoursesCopy;
+    protected ArrayList<Review> myReviews;
     private ArrayList<String> professors;
+
     private CourseAdapter ca;
-    private DatabaseReference dbref;
+    private DbManager dbManager;
     Context context;
 
     @Override
@@ -52,121 +58,21 @@ public class CourseFragment extends Fragment {
         View myView = inflater.inflate(R.layout.frag_course, container, false);
 
         context = getActivity().getApplicationContext();
-        dbref = FirebaseDatabase.getInstance().getReference();
+
 
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");
-        System.out.println("Reached here");
         myList = (RecyclerView) myView.findViewById(R.id.myReviewsList);
         myCard = (CardView) myView.findViewById(R.id.course_card);
-        myCourses = new ArrayList<CourseItem>();
-        myCoursesCopy = new ArrayList<CourseItem>();
-        myReviews = new ArrayList<ReviewItem>();
-        professors = new ArrayList<>();
+
+        setupData();
+
         setHasOptionsMenu(true);
 
         ca = new CourseAdapter(myAct, context, myCourses, myCoursesCopy);
 
         myList.setAdapter(ca);
         myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-
-        dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
-
-                myCourses.clear();
-
-                Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
-
-                for (DataSnapshot crs : courses) {
-                    myReviews.clear();
-                    professors.clear();
-                    Iterable<DataSnapshot> list = crs.getChildren();
-                    String name = " ";
-                    String num = " ";
-                    // String prof = new String();
-                    String designation = " ";
-                    int avgRate = 0;
-                    int funRate = 0;
-                    int workRate = 0;
-
-                    int revAvgRate = 0;
-                    String date = "";
-                    int firstRating = 0;
-                    String reviewerContent = "";
-                    String reviewerName = "";
-                    int secondRating = 0;
-
-                    int counter = 1;
-
-                    for (DataSnapshot item : list) {
-                        if (counter == 1) {
-                            avgRate = item.getValue(Integer.class);
-                        } else if (counter == 2) {
-                            designation = item.getValue(String.class);
-                        } else if (counter == 3) {
-                            name = item.getValue(String.class);
-                        } else if (counter == 4) {
-                            num = item.getValue(String.class);
-                        } else if (counter == 5) {
-                            funRate = item.getValue(Integer.class);
-                        } else if (counter == 6) {
-                            Iterable<DataSnapshot> profs = item.getChildren();
-                            for (DataSnapshot prof : profs) {
-                                professors.add(prof.getValue(String.class));
-                            }
-                            // prof = item.getValue(String.class);
-                        } else if (counter == 7) {
-                            Iterable<DataSnapshot> reviews = item.getChildren();
-                            for (DataSnapshot rev : reviews) {
-                                Iterable<DataSnapshot> rr = rev.getChildren();
-                                int c2 = 1;
-                                for (DataSnapshot r : rr) {
-                                    if (c2 == 1) {
-                                        revAvgRate = r.getValue(Integer.class);
-                                    } else if (c2 == 2) {
-                                        date = r.getValue(String.class);
-                                    } else if (c2 == 3) {
-                                        firstRating = r.getValue(Integer.class);
-                                    } else if (c2 == 4) {
-                                        reviewerContent = r.getValue(String.class);
-                                    } else if (c2 == 5) {
-                                        reviewerName = r.getValue(String.class);
-                                    } else if (c2 == 6) {
-                                        secondRating = 0;
-                                    }
-                                    c2++;
-                                }
-                                reviewItem = new ReviewItem(revAvgRate, date, firstRating, reviewerContent, reviewerName, secondRating);
-                                reviewItem.setCourseName(name);
-                                myReviews.add(reviewItem);
-                            }
-                        } else if (counter == 8) {
-                            workRate = item.getValue(Integer.class);
-                        }
-                        counter++;
-                    }
-
-                    courseItem = new CourseItem(avgRate, designation, name, num, funRate, professors, workRate);
-                    for (ReviewItem r : myReviews) {
-                        courseItem.addReview(r);
-                    }
-                    myCourses.add(courseItem);
-                    myCoursesCopy.add(courseItem);
-                }
-
-                ca.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
 
         return myView;
     }
@@ -193,6 +99,25 @@ public class CourseFragment extends Fragment {
             }
         });
 
+    }
+
+    private void setupData() {
+        professors = new ArrayList<>();
+        myCourses = new ArrayList<>();
+        myCoursesCopy = new ArrayList<>();
+        dbManager = DbManager.getDbManager();
+        myCourses.addAll(dbManager.getCourses());
+        myCoursesCopy.addAll(dbManager.getCourses());
+        dbManager.addCoursesOnChangeListener(new CoursesOnChangeListener() {
+            @Override
+            public void onChange(List<Course> newCourses) {
+                myCoursesCopy.clear();
+                myCoursesCopy.clear();
+                myCourses.addAll(dbManager.getCourses());
+                myCoursesCopy.addAll(dbManager.getCourses());
+                ca.notifyDataSetChanged();
+            }
+        });
     }
 
 
