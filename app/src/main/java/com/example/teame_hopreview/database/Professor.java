@@ -94,4 +94,13 @@ public class Professor {
     public void setKey(String key) {
         this.key = key;
     }
+
+    public String getInitials() {
+        String[] names = name.split(" ");
+        String initials = "";
+        for (String s : names) {
+            initials += String.valueOf(s.charAt(0));
+        }
+        return initials;
+    }
 }

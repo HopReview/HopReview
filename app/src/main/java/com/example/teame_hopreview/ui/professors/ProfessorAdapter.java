@@ -18,16 +18,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewItem;
+import com.example.teame_hopreview.database.Review;
 import com.example.teame_hopreview.ui.professors.Professor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.ViewHolder> implements Filterable {
 
-    private List<Professor> professorData;
-    private List<Professor> professorDataCopy;
+    private List<com.example.teame_hopreview.database.Professor> professorData;
+    private List<com.example.teame_hopreview.database.Professor> professorDataCopy;
     private LayoutInflater inflater;
     private AdapterView.OnItemClickListener clickListener;
     private MainActivity mainActivity;
@@ -38,7 +40,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.View
         mainActivity.openProfessorDetailFragment(professor);
     };
 
-    public ProfessorAdapter(MainActivity mainActivity, Context context, ArrayList<Professor> items, List<Professor> itemsCopy) {
+    public ProfessorAdapter(MainActivity mainActivity, Context context, ArrayList<com.example.teame_hopreview.database.Professor> items, List<com.example.teame_hopreview.database.Professor> itemsCopy) {
         this.inflater = LayoutInflater.from(context);
         this.professorData = items;
         this.mainActivity = mainActivity;
@@ -54,11 +56,11 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ProfessorAdapter.ViewHolder holder, int position) {
-        Professor currProfessor = professorData.get(position);
+        com.example.teame_hopreview.database.Professor currProfessor = professorData.get(position);
         holder.getInitials().setText(currProfessor.getInitials());
-        holder.getName().setText(currProfessor.getProfessorName());
+        holder.getName().setText(currProfessor.getName());
         holder.getDepartment().setText(currProfessor.getDepartment());
-        ArrayList<String> courseNames = currProfessor.getCourseNames();
+        ArrayList<String> courseNames = currProfessor.getCourses();
 
         StringBuilder courseNamesStr = new StringBuilder();
         int counter = 0;
@@ -81,19 +83,19 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.View
         context = mainActivity.getApplicationContext();
 
         for (int i = 0; i < 5; i++) {
-            if (i < currProfessor.getAverageRating()) {
+            if (i < currProfessor.getAvg_rating()) {
                 avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 avgStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
                 avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
-            if (i < currProfessor.getGradeRating()) {
+            if (i < currProfessor.getGrading_rating()) {
                 gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 gradeStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
                 gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
-            if (i < currProfessor.getKnowledgeRating()) {
+            if (i < currProfessor.getKnowledge_rating()) {
                 knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                 knowStars[i].setColorFilter(R.color.md_theme_light_primary);
             } else {
@@ -101,7 +103,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.View
             }
         }
 
-        ArrayList<ReviewItem> reviews = currProfessor.getReviews();
+        Map<String, Review> reviews = currProfessor.getReviews();
 
         if (reviews == null) {
             holder.getReviewNum().setText("0 reviews");
@@ -221,14 +223,14 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.View
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Professor> filteredList = new ArrayList<>();
+            List<com.example.teame_hopreview.database.Professor> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(professorDataCopy);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (Professor item : professorDataCopy) {
-                    if (item.getProfessorName().toLowerCase().contains(filterPattern)) {
+                for (com.example.teame_hopreview.database.Professor item : professorDataCopy) {
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }

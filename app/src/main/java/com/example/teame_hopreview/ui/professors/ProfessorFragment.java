@@ -19,30 +19,35 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
-import com.example.teame_hopreview.ReviewItem;
+import com.example.teame_hopreview.database.DbManager;
+import com.example.teame_hopreview.database.ProfessorsOnChangeListener;
+import com.example.teame_hopreview.database.Review;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProfessorFragment extends Fragment {
 
     private static final String TAG = "dbref: ";
 
+    //Views
     private RecyclerView myList;
     private CardView myCard;
     private MainActivity myAct;
-    private Professor professorItem;
-    private ReviewItem reviewItem;
-    protected ArrayList<Professor> myProfessors;
-    protected ArrayList<Professor> myProfessorsCopy;
-    protected ArrayList<ReviewItem> myReviews;
+
+    //Models
+    private com.example.teame_hopreview.database.Professor professorItem;
+    private Review reviewItem;
+    protected ArrayList<com.example.teame_hopreview.database.Professor> myProfessors;
+    protected ArrayList<com.example.teame_hopreview.database.Professor> myProfessorsCopy;
+    protected ArrayList<Review> myReviews;
+
+    //Adapter and misc
     private ProfessorAdapter pa;
-    private FirebaseDatabase mdbase;
-    private DatabaseReference dbref;
+    private DbManager dbManager;
     Context context;
 
     @Override
@@ -52,127 +57,43 @@ public class ProfessorFragment extends Fragment {
         View myView = inflater.inflate(R.layout.fragment_professors, container, false);
 
         context = getActivity().getApplicationContext();
-        dbref = FirebaseDatabase.getInstance().getReference();
-
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Professors");
-
-        myList = (RecyclerView) myView.findViewById(R.id.myReviewsList);
-        myCard = (CardView) myView.findViewById(R.id.professor_card);
-        myProfessors = new ArrayList<Professor>();
-        myProfessorsCopy = new ArrayList<Professor>();
-        myReviews = new ArrayList<ReviewItem>();
         setHasOptionsMenu(true);
 
-        pa = new ProfessorAdapter(myAct, context, myProfessors, myProfessorsCopy);
-
-        myList.setAdapter(pa);
-        myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-
-        dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Course count: " + snapshot.child("professors_data").getChildrenCount());
-
-                myProfessors.clear();
-                Iterable<DataSnapshot> professors = snapshot.child("professors_data").getChildren();
-
-                Integer professorId = 0;
-                for (DataSnapshot profs : professors) {
-                    myReviews.clear();
-                    String professor = profs.getKey();
-                    String key = profs.getKey();
-                    String department = "";
-                    ArrayList<String> courseNames = new ArrayList<String>();
-                    int avgRate = 0;
-                    int gradeRate = 0;
-                    int knowledgeRate = 0;
-
-
-                    String date = "";
-                    int revAvgRate = 0;
-                    int revGradeRate = 0;
-                    int revKnowRate = 0;
-                    String reviewerContent = "";
-                    String reviewerName = "";
-
-                    Iterable<DataSnapshot> list = profs.getChildren();
-                    int counter = 1;
-                    for (DataSnapshot item : list) {
-                        if (counter == 1) {
-                            avgRate = item.getValue(Integer.class);
-                        } else if (counter == 2) {
-                            Iterable<DataSnapshot> crs = item.getChildren();
-                            for (DataSnapshot course : crs) {
-                                courseNames.add(course.getValue(String.class));
-                            }
-                        } else if (counter == 3) {
-                            department = item.getValue(String.class);
-                        } else if (counter == 4) {
-                            gradeRate = item.getValue(Integer.class);
-                        } else if (counter == 5) {
-                            knowledgeRate = item.getValue(Integer.class);
-                        } else {
-                            Iterable<DataSnapshot> rev = item.getChildren();
-                            for (DataSnapshot review : rev) {
-                                Iterable<DataSnapshot> currRev = review.getChildren();
-                                int counter2 = 1;
-                                for (DataSnapshot curr : currRev) {
-                                    if (counter2 == 1) {
-                                        revAvgRate = curr.getValue(Integer.class);
-                                    } else if (counter2 == 2) {
-                                        date = curr.getValue(String.class);
-                                    } else if (counter2 == 3) {
-                                        revGradeRate = curr.getValue(Integer.class);
-                                    } else if (counter2 == 4) {
-                                        revKnowRate = curr.getValue(Integer.class);
-                                    } else if (counter2 == 5) {
-                                        reviewerContent = curr.getValue(String.class);
-                                    } else {
-                                        reviewerName = curr.getValue(String.class);
-                                    }
-
-                                    counter2++;
-                                }
-
-                                reviewItem = new ReviewItem(revAvgRate, date, revGradeRate, reviewerContent, reviewerName, revKnowRate);
-                                reviewItem.setProfessorName(professor);
-                                myReviews.add(reviewItem);
-                            }
-                        }
-
-                        counter++;
-                    }
-                    professorItem = new Professor(professor, department, gradeRate, knowledgeRate, avgRate);
-                    professorItem.setKey(key);
-                    professorId++;
-
-                    for (ReviewItem review : myReviews) {
-                        professorItem.addReview(review);
-                    }
-
-                    for (String str : courseNames) {
-                        professorItem.addCourseNames(str);
-                    }
-
-                    myProfessors.add(professorItem);
-                    myProfessorsCopy.add(professorItem);
-                }
-
-                pa.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+        setupData();
+        setupViews(myView);
+        setupAdapters();
 
         return myView;
+    }
+
+    private void setupData() {
+        dbManager = DbManager.getDbManager();
+        myProfessors = new ArrayList<com.example.teame_hopreview.database.Professor>();
+        myProfessorsCopy = new ArrayList<com.example.teame_hopreview.database.Professor>();
+        myReviews = new ArrayList<Review>();
+        dbManager.addProfessorsOnChangeListener(new ProfessorsOnChangeListener() {
+            @Override
+            public void onChange(List<com.example.teame_hopreview.database.Professor> newProfessors) {
+                myProfessors.clear();
+                myProfessorsCopy.clear();
+                myProfessors.addAll(dbManager.getProfessors());
+                myProfessorsCopy.addAll(dbManager.getProfessors());
+                pa.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void setupViews(View myView) {
+        myList = (RecyclerView) myView.findViewById(R.id.myReviewsList);
+        myCard = (CardView) myView.findViewById(R.id.professor_card);
+    }
+
+    private void setupAdapters() {
+        pa = new ProfessorAdapter(myAct, context, myProfessors, myProfessorsCopy);
+        myList.setAdapter(pa);
+        myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
     }
 
     @Override
