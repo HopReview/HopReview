@@ -73,6 +73,7 @@ public class CourseDetailFragment extends Fragment {
         context = myAct.getApplicationContext();
         myAct.user.addRecentlyViewed(courseItem.getName());
         myAct.user.updateRecentlyViewedDatabase();
+        myAct.getSupportActionBar().setTitle("Course");
 
         TextView designation = (TextView) myView.findViewById(R.id.course_designation);
         TextView courseName = (TextView) myView.findViewById(R.id.course_name);

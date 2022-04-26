@@ -104,6 +104,7 @@ public class ProfessorDetailFragment extends Fragment {
 
         myAct = (MainActivity) getActivity();
         context = myAct.getApplicationContext();
+        myAct.getSupportActionBar().setTitle("Professor");
 
         courses[0].setBackground(myAct.getResources().getDrawable(R.drawable.selected_item_background));
         setProfessorCourses(currCourse);
