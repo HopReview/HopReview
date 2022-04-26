@@ -347,6 +347,8 @@ public class CreateReviewFragment extends Fragment {
         ReviewItem toAdd = new ReviewItem(avgRating, date, firstRating, reviewContent, reviewerName, secondRating);
         myAct.user.addUserReview(toAdd);
 
+
+
         /*Task<Void> mainTask = Tasks.whenAll(task1, task2, task3, task4, task5, task6, task7, task8, task9, task10, task11, task12);
         mainTask.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
             @Override
@@ -363,9 +365,12 @@ public class CreateReviewFragment extends Fragment {
         String professorReviewKey = dbref.child("professors_data").child(professorKey).child("reviews").push().getKey();
         Map<String, Object> professorReviewValues = profReview.toMap();
 
+        String recentReviewsKey = dbref.child("app_data").child("recentReviews").push().getKey();
+
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/courses_data/" + courseKey + "/reviews/" + courseReviewKey, courseReviewValues);
         childUpdates.put("/professors_data/" + professorKey + "/reviews/" + professorReviewKey, professorReviewValues);
+        childUpdates.put("/app_data/recentReviews/" + courseReviewKey, courseReviewValues);
 
         dbref.updateChildren(childUpdates);
     }
