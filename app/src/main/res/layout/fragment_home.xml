@@ -393,6 +393,8 @@
         android:textAllCaps="false"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.500"
@@ -401,8 +403,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/review1"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_margin="1dp"
         app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
         app:cardCornerRadius="10dp"
@@ -454,7 +456,7 @@
                         android:id="@+id/avg_star1Home4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="75dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="2.5dp"
                         android:src="@drawable/star_filled"
                         app:tint="@color/md_theme_light_primary" />
@@ -522,10 +524,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:text="Content"
                     android:textColor="@color/md_theme_dark_inverseOnSurface"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -533,8 +535,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/review2"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_margin="1dp"
         app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
         app:cardCornerRadius="10dp"
@@ -589,7 +591,7 @@
                         android:id="@+id/avg_star1Home5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="75dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="2.5dp"
                         android:src="@drawable/star_filled"
                         app:tint="@color/md_theme_light_primary" />
@@ -657,10 +659,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:text="Content"
                     android:textColor="@color/md_theme_dark_inverseOnSurface"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -668,8 +670,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/review3"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_margin="1dp"
         app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
         app:cardCornerRadius="10dp"
@@ -724,7 +726,7 @@
                         android:id="@+id/avg_star1Home6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="75dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="2.5dp"
                         android:src="@drawable/star_filled"
                         app:tint="@color/md_theme_light_primary" />
@@ -792,10 +794,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:text="Content"
                     android:textColor="@color/md_theme_dark_inverseOnSurface"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
