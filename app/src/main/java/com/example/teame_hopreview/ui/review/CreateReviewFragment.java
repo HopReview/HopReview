@@ -341,9 +341,12 @@ public class CreateReviewFragment extends Fragment {
         String professorReviewKey = dbref.child("professors_data").child(professorKey).child("reviews").push().getKey();
         Map<String, Object> professorReviewValues = profReview.toMap();
 
+        String recentReviewsKey = dbref.child("app_data").child("recentReviews").push().getKey();
+
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/courses_data/" + courseKey + "/reviews/" + courseReviewKey, courseReviewValues);
         childUpdates.put("/professors_data/" + professorKey + "/reviews/" + professorReviewKey, professorReviewValues);
+        childUpdates.put("/app_data/recentReviews/" + courseReviewKey, courseReviewValues);
 
         dbref.updateChildren(childUpdates);
 

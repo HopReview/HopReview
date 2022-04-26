@@ -9,6 +9,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.teame_hopreview.ui.course.CourseItem;
+import com.example.teame_hopreview.ui.review.DbReview;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,7 +17,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Stack;
 
 public class User {

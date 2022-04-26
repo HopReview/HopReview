@@ -33,12 +33,16 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "dbref: ";
 
     private CardView myCard;
     private ReviewItem reviewItem;
+    private ReviewItem reviewItem1;
+    private ReviewItem reviewItem2;
+    private ReviewItem reviewItem3;
     DatabaseReference dbref;
     private MainActivity myAct;
     private CourseItem courseItem;
@@ -46,10 +50,19 @@ public class HomeFragment extends Fragment {
     private CourseItem courseItem2;
     private CourseItem courseItem3;
     private ArrayList<CourseItem> myCourses;
+    private ArrayList<ReviewItem> recentReviews;
     private Context context;
     private CardView[] courseCards = new CardView[3];
     private CardView[] reviewCards = new CardView[3];
 
+
+    // review related
+    private int avgRating = 0;
+    private String date = "";
+    private int firstRating = 0;
+    private String reviewContent = "";
+    private String reviewerName = "";
+    private int secondRating = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -64,12 +77,16 @@ public class HomeFragment extends Fragment {
         courseItem1 = new CourseItem();
         courseItem2 = new CourseItem();
         courseItem3 = new CourseItem();
+        reviewItem = new ReviewItem();
+        reviewItem1 = new ReviewItem();
+        reviewItem2 = new ReviewItem();
+        reviewItem3 = new ReviewItem();
+
         myCourses = new ArrayList<>();
+        recentReviews = new ArrayList<>();
 
         ImageView nothingCourses = (ImageView) myView.findViewById(R.id.nothing_1);
-        ImageView nothingReviews = (ImageView) myView.findViewById(R.id.nothing_2);
         TextView notCrsTxt = (TextView) myView.findViewById(R.id.course_stub);
-        TextView notRevTxt = (TextView) myView.findViewById(R.id.course_stub1);
 
 
         courseCards[0] = myView.findViewById(R.id.course1);
@@ -93,9 +110,12 @@ public class HomeFragment extends Fragment {
         // ArrayList<String> recentlyViewed = null;
         int count = 0;        
         ArrayList<String> recentlyViewed = myAct.user.getRecentlyViewedList();
+
         if (recentlyViewed != null) {
             findCourse(recentlyViewed, recentlyViewed.size(), myView, nothingCourses, notCrsTxt);
         }
+
+        fillReviews(myView);
 
 
 
@@ -122,6 +142,25 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 myAct.openCourseDetailFragment(courseItem3);
+            }
+        });
+
+        reviewCards[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAct.openReviewDetailFragment(reviewItem1);
+            }
+        });
+        reviewCards[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAct.openReviewDetailFragment(reviewItem2);
+            }
+        });
+        reviewCards[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAct.openReviewDetailFragment(reviewItem3);
             }
         });
 
@@ -512,9 +551,235 @@ public class HomeFragment extends Fragment {
             courseCards[1].setVisibility(View.GONE);
             courseCards[2].setVisibility(View.GONE);
         }
+    }
+
+    public void fillReviews(View myView) {
+        dbref.child("app_data").child("recentReviews").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterable<DataSnapshot> reviews = snapshot.getChildren();
+                for (DataSnapshot rev : reviews) {
+                    Iterable<DataSnapshot> currRev = rev.getChildren();
+                    for (DataSnapshot field : currRev) {
+                        if (field.getKey().equals("avgRating")) {
+                            avgRating = field.getValue(Integer.class);
+                        } else if (field.getKey().equals("date")) {
+                            date = field.getValue(String.class);
+                        } else if (field.getKey().equals("firstRating")) {
+                            firstRating = field.getValue(Integer.class);
+                        } else if (field.getKey().equals("reviewContent")) {
+                            reviewContent = field.getValue(String.class);
+                        } else if (field.getKey().equals("reviewerName")) {
+                            reviewerName = field.getValue(String.class);
+                        } else if (field.getKey().equals("secondRating")) {
+                            secondRating = field.getValue(Integer.class);
+                        }
+                    }
+                    ReviewItem newReview = new ReviewItem(avgRating, date, firstRating, reviewContent, reviewerName, secondRating);
+                    recentReviews.add(newReview);
+                }
+
+                fillReviewsHelper(myView);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void fillReviewsHelper(View myView) {
+        TextView nothing = (TextView) myView.findViewById(R.id.review_stub);
+        ImageView nothingImage = (ImageView) myView.findViewById(R.id.nothing_2);
+        int size = 0;
+        int avg = 0;
+        if (recentReviews == null || recentReviews.size() == 0) {
+            nothing.setVisibility(View.VISIBLE);
+            nothingImage.setVisibility(View.VISIBLE);
+            reviewCards[0].setVisibility(View.GONE);
+            reviewCards[1].setVisibility(View.GONE);
+            reviewCards[2].setVisibility(View.GONE);
+        } else {
+            nothing.setVisibility(View.GONE);
+            nothingImage.setVisibility(View.GONE);
+            size = recentReviews.size();
+            Collections.reverse(recentReviews);
+            if (size == 1) {
+                TextView username = (TextView) myView.findViewById(R.id.userName1);
+                TextView date = (TextView) myView.findViewById(R.id.date1);
+                TextView coursename = (TextView) myView.findViewById(R.id.nameHome4);
+                TextView content = (TextView) myView.findViewById(R.id.contentHome1);
+
+                ImageView[] avg_stars = new ImageView[5];
+                avg_stars[0] = (ImageView) myView.findViewById(R.id.avg_star1Home4);
+                avg_stars[1] = (ImageView) myView.findViewById(R.id.avg_star2Home4);
+                avg_stars[2] = (ImageView) myView.findViewById(R.id.avg_star3Home4);
+                avg_stars[3] = (ImageView) myView.findViewById(R.id.avg_star4Home4);
+                avg_stars[4] = (ImageView) myView.findViewById(R.id.avg_star5Home4);
+
+                username.setText(recentReviews.get(0).getReviewerName());
+                date.setText(recentReviews.get(0).getDate());
+                coursename.setText(recentReviews.get(0).getCourseName());
+                content.setText(recentReviews.get(0).getReviewContent());
+
+                avg = recentReviews.get(0).getAvgRating();
+                for (int i = 0; i < 5; i++) {
+                    if (i < avg) {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
+                    } else {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_unfilled));
+                    }
+                }
+                reviewItem1 = recentReviews.get(0);
+                reviewCards[0].setVisibility(View.VISIBLE);
+                reviewCards[1].setVisibility(View.GONE);
+                reviewCards[2].setVisibility(View.GONE);
+            } else if (size == 2) {
+                TextView username = (TextView) myView.findViewById(R.id.userName1);
+                TextView date = (TextView) myView.findViewById(R.id.date1);
+                TextView coursename = (TextView) myView.findViewById(R.id.nameHome4);
+                TextView content = (TextView) myView.findViewById(R.id.contentHome1);
+
+                ImageView[] avg_stars = new ImageView[5];
+                avg_stars[0] = (ImageView) myView.findViewById(R.id.avg_star1Home4);
+                avg_stars[1] = (ImageView) myView.findViewById(R.id.avg_star2Home4);
+                avg_stars[2] = (ImageView) myView.findViewById(R.id.avg_star3Home4);
+                avg_stars[3] = (ImageView) myView.findViewById(R.id.avg_star4Home4);
+                avg_stars[4] = (ImageView) myView.findViewById(R.id.avg_star5Home4);
+
+                username.setText(recentReviews.get(0).getReviewerName());
+                date.setText(recentReviews.get(0).getDate());
+                coursename.setText(recentReviews.get(0).getCourseName());
+                content.setText(recentReviews.get(0).getReviewContent());
+
+                avg = recentReviews.get(0).getAvgRating();
+                for (int i = 0; i < 5; i++) {
+                    if (i < avg) {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
+                    } else {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_unfilled));
+                    }
+                }
 
 
+                username = (TextView) myView.findViewById(R.id.userName2);
+                date = (TextView) myView.findViewById(R.id.date2);
+                coursename = (TextView) myView.findViewById(R.id.nameHome5);
+                content = (TextView) myView.findViewById(R.id.contentHome2);
 
+                avg_stars[0] = (ImageView) myView.findViewById(R.id.avg_star1Home5);
+                avg_stars[1] = (ImageView) myView.findViewById(R.id.avg_star2Home5);
+                avg_stars[2] = (ImageView) myView.findViewById(R.id.avg_star3Home5);
+                avg_stars[3] = (ImageView) myView.findViewById(R.id.avg_star4Home5);
+                avg_stars[4] = (ImageView) myView.findViewById(R.id.avg_star5Home5);
+
+                username.setText(recentReviews.get(1).getReviewerName());
+                date.setText(recentReviews.get(1).getDate());
+                coursename.setText(recentReviews.get(1).getCourseName());
+                content.setText(recentReviews.get(1).getReviewContent());
+
+                avg = recentReviews.get(1).getAvgRating();
+                for (int i = 0; i < 5; i++) {
+                    if (i < avg) {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
+                    } else {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_unfilled));
+                    }
+                }
+                reviewItem1 = recentReviews.get(0);
+                reviewItem2 = recentReviews.get(1);
+
+
+                reviewCards[0].setVisibility(View.VISIBLE);
+                reviewCards[1].setVisibility(View.VISIBLE);
+                reviewCards[2].setVisibility(View.GONE);
+            } else {
+                TextView username = (TextView) myView.findViewById(R.id.userName1);
+                TextView date = (TextView) myView.findViewById(R.id.date1);
+                TextView coursename = (TextView) myView.findViewById(R.id.nameHome4);
+                TextView content = (TextView) myView.findViewById(R.id.contentHome1);
+
+                ImageView[] avg_stars = new ImageView[5];
+                avg_stars[0] = (ImageView) myView.findViewById(R.id.avg_star1Home4);
+                avg_stars[1] = (ImageView) myView.findViewById(R.id.avg_star2Home4);
+                avg_stars[2] = (ImageView) myView.findViewById(R.id.avg_star3Home4);
+                avg_stars[3] = (ImageView) myView.findViewById(R.id.avg_star4Home4);
+                avg_stars[4] = (ImageView) myView.findViewById(R.id.avg_star5Home4);
+
+                username.setText(recentReviews.get(0).getReviewerName());
+                date.setText(recentReviews.get(0).getDate());
+                coursename.setText(recentReviews.get(0).getCourseName());
+                content.setText(recentReviews.get(0).getReviewContent());
+
+                avg = recentReviews.get(0).getAvgRating();
+                for (int i = 0; i < 5; i++) {
+                    if (i < avg) {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
+                    } else {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_unfilled));
+                    }
+                }
+
+
+                username = (TextView) myView.findViewById(R.id.userName2);
+                date = (TextView) myView.findViewById(R.id.date2);
+                coursename = (TextView) myView.findViewById(R.id.nameHome5);
+                content = (TextView) myView.findViewById(R.id.contentHome2);
+
+                avg_stars[0] = (ImageView) myView.findViewById(R.id.avg_star1Home5);
+                avg_stars[1] = (ImageView) myView.findViewById(R.id.avg_star2Home5);
+                avg_stars[2] = (ImageView) myView.findViewById(R.id.avg_star3Home5);
+                avg_stars[3] = (ImageView) myView.findViewById(R.id.avg_star4Home5);
+                avg_stars[4] = (ImageView) myView.findViewById(R.id.avg_star5Home5);
+
+                username.setText(recentReviews.get(1).getReviewerName());
+                date.setText(recentReviews.get(1).getDate());
+                coursename.setText(recentReviews.get(1).getCourseName());
+                content.setText(recentReviews.get(1).getReviewContent());
+
+                avg = recentReviews.get(1).getAvgRating();
+                for (int i = 0; i < 5; i++) {
+                    if (i < avg) {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
+                    } else {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_unfilled));
+                    }
+                }
+
+                username = (TextView) myView.findViewById(R.id.userName3);
+                date = (TextView) myView.findViewById(R.id.date3);
+                coursename = (TextView) myView.findViewById(R.id.nameHome6);
+                content = (TextView) myView.findViewById(R.id.contentHome3);
+
+                avg_stars[0] = (ImageView) myView.findViewById(R.id.avg_star1Home6);
+                avg_stars[1] = (ImageView) myView.findViewById(R.id.avg_star2Home6);
+                avg_stars[2] = (ImageView) myView.findViewById(R.id.avg_star3Home6);
+                avg_stars[3] = (ImageView) myView.findViewById(R.id.avg_star4Home6);
+                avg_stars[4] = (ImageView) myView.findViewById(R.id.avg_star5Home6);
+
+                username.setText(recentReviews.get(2).getReviewerName());
+                date.setText(recentReviews.get(2).getDate());
+                coursename.setText(recentReviews.get(2).getCourseName());
+                content.setText(recentReviews.get(2).getReviewContent());
+
+                avg = recentReviews.get(2).getAvgRating();
+                for (int i = 0; i < 5; i++) {
+                    if (i < avg) {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
+                    } else {
+                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_unfilled));
+                    }
+                }
+                reviewItem1 = recentReviews.get(0);
+                reviewItem2 = recentReviews.get(1);
+                reviewItem3 = recentReviews.get(2);
+
+                reviewCards[0].setVisibility(View.VISIBLE);
+                reviewCards[1].setVisibility(View.VISIBLE);
+                reviewCards[2].setVisibility(View.VISIBLE);
+            }
+        }
 
     }
 }
