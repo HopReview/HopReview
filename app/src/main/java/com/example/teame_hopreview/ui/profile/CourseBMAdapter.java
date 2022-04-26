@@ -42,7 +42,7 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
 
     private final View.OnClickListener mOnClickListener = (view) -> {
         CourseItem course = (CourseItem) view.getTag();
-        mainActivity.openCourseDetailFragment(course);
+        //mainActivity.openCourseDetailFragment(course);
     };
 
     public CourseBMAdapter(MainActivity mainActivity, Context context, ArrayList<CourseItem> items, List<CourseItem> itemsCopy) {

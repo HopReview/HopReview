@@ -265,7 +265,7 @@ public class ProfessorDetailFragment extends Fragment {
         myReviewsCopy.addAll(professor.getReviews());
 
         myReviews = new ArrayList<ReviewItem>();
-        ra = new ReviewAdapter(myAct, context, myReviews);
+        //ra = new ReviewAdapter(myAct, context, myReviews);
         myList.setAdapter(ra);
         myList.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
 

@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.teame_hopreview.database.Course;
 import com.example.teame_hopreview.ui.course.CourseDetailFragment;
 import com.example.teame_hopreview.ui.course.CourseFragment;
 import com.example.teame_hopreview.ui.course.CourseItem;
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         return false;
     }
 
-    public void openCourseDetailFragment(CourseItem courseName) {
+    public void openCourseDetailFragment(Course courseName) {
         transaction = getSupportFragmentManager().beginTransaction();
         CourseDetailFragment courseDetail = new CourseDetailFragment(courseName);
         transaction.replace(R.id.fragment_container, courseDetail).commit();
@@ -169,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         transaction.addToBackStack("createReviewDetailStack");
     }
 
-    public void openCreateReview(CourseItem course) {
+    public void openCreateReview(Course course) {
         createReview = new CreateReviewFragment();
         createReview.setDefaultCourseNumber(course.getCourseNumber());
         transaction = getSupportFragmentManager().beginTransaction();

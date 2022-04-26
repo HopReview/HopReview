@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +22,10 @@ import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewAdapter;
 import com.example.teame_hopreview.ReviewItem;
+import com.example.teame_hopreview.database.Course;
+import com.example.teame_hopreview.database.DbManager;
 import com.example.teame_hopreview.database.Professor;
+import com.example.teame_hopreview.database.Review;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,33 +38,37 @@ import java.util.ArrayList;
 public class CourseDetailFragment extends Fragment {
     private static final String TAG = "dbref: ";
 
+    //Views
     private RecyclerView myList;
     private CardView myCard;
     private MainActivity myAct;
     private FloatingActionButton myFab;
-    private CourseItem courseItem;
-    private int gradeRate;
-    private int knowledgeRate;
-    private ReviewItem ReviewItem;
-    protected ArrayList<ReviewItem> myReviews;
-    Context context;
-    String courseName;
-    private ReviewAdapter ra;
-    private String currProfessor;
-    DatabaseReference dbref;
+
+    //Models
+    private Course courseItem;
+    protected ArrayList<Review> myReviews;
     private ArrayList<String> reviewContents;
     private ArrayList<String> reviewUsers;
     private ArrayList<String> reviewDates;
+    private String currProfessor;
+    int workLoadRating;
+    int knowledgeRating;
 
-    public CourseDetailFragment(CourseItem course) {
+    //Adapter
+    private ReviewAdapter ra;
+
+    //Other stuff
+    Context context;
+    private DbManager dbManager;
+
+
+    public CourseDetailFragment(Course course) {
         this.courseItem = course;
-        this.courseName = course.getName();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbref = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -71,39 +79,56 @@ public class CourseDetailFragment extends Fragment {
 
         myAct = (MainActivity) getActivity();
         context = myAct.getApplicationContext();
-        myAct.user.addRecentlyViewed(courseItem.getName());
-        myAct.user.updateRecentlyViewedDatabase();
 
+        reviewContents = new ArrayList<>();
+        reviewUsers = new ArrayList<>();
+        reviewDates = new ArrayList<>();
+
+        updateRecentlyViewedCourses();
+
+        setUpViews(myView);
+        setBookmark(myView);
+
+        setupProfessorSelector(myView);
+
+
+        return myView;
+    }
+
+    private void updateRecentlyViewedCourses() {
+        myAct.user.addRecentlyViewed(courseItem.getCourseName());
+        myAct.user.updateRecentlyViewedDatabase();
+    }
+
+    private void setUpViews(View myView) {
         TextView designation = (TextView) myView.findViewById(R.id.course_designation);
         TextView courseName = (TextView) myView.findViewById(R.id.course_name);
         TextView courseNum = (TextView) myView.findViewById(R.id.course_num);
 
+        designation.setText(courseItem.getCourseDesignation());
+        courseName.setText(courseItem.getCourseName());
+        courseNum.setText(courseItem.getCourseNumber());
+
+        //Set up fab
+
+        myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton);
+
+        myFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAct.openCreateReview(courseItem);
+            }
+        });
+    }
+
+    private void setupProfessorSelector(View myView) {
         TextView[] professors = new TextView[4];
         professors[0] = (TextView) myView.findViewById(R.id.professor1);
         professors[1] = (TextView) myView.findViewById(R.id.professor2);
         professors[2] = (TextView) myView.findViewById(R.id.professor3);
         professors[3] = (TextView) myView.findViewById(R.id.professor4);
-        ImageButton bookmark = (ImageButton) myView.findViewById(R.id.bookmark_det);
 
-
-        myAct.user.retrieveUserData();
-        if (myAct.user.getBookmarkedCourses() != null) {
-            for (String crs : myAct.user.getBookmarkedCourses()) {
-                if (crs.equals(courseItem.getName())) {
-                    bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
-                    break;
-                } else {
-                    bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_unfilled));
-                }
-            }
-        }
-
-
-        designation.setText(courseItem.getDesignation());
-        courseName.setText(courseItem.getName());
-        courseNum.setText(courseItem.getCourseNumber());
-
-        ArrayList<String> professorsHolder = courseItem.getProfessors();
+        ArrayList<String> professorsHolder = courseItem.getProfessor();
         currProfessor = professorsHolder.get(0);
 
         int counter = 0;
@@ -117,197 +142,62 @@ public class CourseDetailFragment extends Fragment {
             counter++;
         }
 
-
-        reviewContents = new ArrayList<>();
-        reviewUsers = new ArrayList<>();
-        reviewDates = new ArrayList<>();
-
-
-
-        //
-        setCourseProfessors(currProfessor);
-        myDbHelper(myView, currProfessor);
-
-        System.out.println(professorsHolder.size());
-
         if (professorsHolder.size() > 1) {
             professors[0].setBackground(myAct.getResources().getDrawable(R.drawable.selected_item_background));
-            professors[0].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (professors[0].getVisibility() != View.GONE) {
-                        professors[0].setBackground(myAct.getResources().
-                                getDrawable(R.drawable.selected_item_background));
-                        professors[1].setBackground(null);
-                        professors[2].setBackground(null);
-                        professors[3].setBackground(null);
-                        currProfessor = professors[0].getText().toString();
-                        setCourseProfessors(currProfessor);
-                        myDbHelper(myView, currProfessor);
-                    }
-                }
-            });
-            professors[1].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (professors[1].getVisibility() != View.GONE) {
-                        professors[1].setBackground(myAct.getResources().
-                                getDrawable(R.drawable.selected_item_background));
-                        professors[0].setBackground(null);
-                        professors[2].setBackground(null);
-                        professors[3].setBackground(null);
-                        currProfessor = professors[1].getText().toString();
-                        setCourseProfessors(currProfessor);
-                        myDbHelper(myView, currProfessor);
-                    }
-                }
-            });
-            professors[2].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (professors[2].getVisibility() != View.GONE) {
-                        professors[2].setBackground(myAct.getResources().
-                                getDrawable(R.drawable.selected_item_background));
-                        professors[0].setBackground(null);
-                        professors[1].setBackground(null);
-                        professors[3].setBackground(null);
-                        currProfessor = professors[2].getText().toString();
-                        setCourseProfessors(currProfessor);
-                        myDbHelper(myView, currProfessor);
-                    }
-                }
-            });
-            professors[3].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (professors[3].getVisibility() != View.GONE) {
-                        professors[3].setBackground(myAct.getResources().
-                                getDrawable(R.drawable.selected_item_background));
-                        professors[0].setBackground(null);
-                        professors[1].setBackground(null);
-                        professors[2].setBackground(null);
-                        currProfessor = professors[3].getText().toString();
-                        setCourseProfessors(currProfessor);
-                        myDbHelper(myView, currProfessor);
-                    }
-                }
-            });
-
+            professors[0].setOnClickListener(new ProfessorButtonOnClickListener(0, professors));
+            professors[1].setOnClickListener(new ProfessorButtonOnClickListener(1, professors));
+            professors[2].setOnClickListener(new ProfessorButtonOnClickListener(2, professors));
+            professors[3].setOnClickListener(new ProfessorButtonOnClickListener(3, professors));
         }
 
+    }
 
-        myFab = (FloatingActionButton) myView.findViewById(R.id.floatingActionButton);
-
-
-        myFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myAct.openCreateReview(courseItem);
+    private void setBookmark(View myView) {
+        ImageButton bookmark = (ImageButton) myView.findViewById(R.id.bookmark_det);
+        myAct.user.retrieveUserData();
+        if (myAct.user.getBookmarkedCourses() != null) {
+            for (String crs : myAct.user.getBookmarkedCourses()) {
+                if (crs.equals(courseItem.getCourseName())) {
+                    bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
+                    break;
+                } else {
+                    bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_unfilled));
+                }
             }
-        });
+        }
 
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO: IMPLEMENT, change bookmark icon so its filled, etc.
-                if (myAct.user.getBookmarkedCourses().contains(courseItem.getName())) {
+                if (myAct.user.getBookmarkedCourses().contains(courseItem.getCourseName())) {
                     bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_unfilled));
-                    myAct.user.removeBookmarkedCourse(courseItem.getName());
+                    myAct.user.removeBookmarkedCourse(courseItem.getCourseName());
                     myAct.user.updateBookmarkedCoursesDatabase();
                     Toast.makeText(myAct, "Course Removed", Toast.LENGTH_LONG).show();
                 } else {
                     bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_filled));
-                    myAct.user.addBookmarkedCourse(courseItem.getName());
+                    myAct.user.addBookmarkedCourse(courseItem.getCourseName());
                     myAct.user.updateBookmarkedCoursesDatabase();
                     Toast.makeText(myAct, "Course Saved",
                             Toast.LENGTH_LONG).show();
                 }
             }
         });
-        return myView;
-    }
-
-
-    public void setCourseProfessors(String currProfessor) {
-        for (ReviewItem rev : courseItem.getReviews()) {
-            rev.setProfessorName(currProfessor);
-        }
-    }
-
-
-    public void myDbHelper(View myView, String currProfessor) {
-        reviewContents.clear();
-        reviewUsers.clear();
-        reviewDates.clear();
-
-        dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Professor count: " + snapshot.child("professors_data").getChildrenCount());
-
-                Iterable<DataSnapshot> professors = snapshot.child("professors_data").getChildren();
-
-
-                for (DataSnapshot profs : professors) {
-                    String professor = profs.getKey();
-                    if (professor.equals(currProfessor)) {
-                        Iterable<DataSnapshot> list = profs.getChildren();
-                        int counter = 1;
-                        for (DataSnapshot item : list) {
-                            if (counter == 4) {
-                                gradeRate = item.getValue(Integer.class);
-                            } else if (counter == 5) {
-                                knowledgeRate = item.getValue(Integer.class);
-                            } else if (counter == 6) {
-                                Iterable<DataSnapshot> revs = item.getChildren();
-                                for (DataSnapshot rev : revs) {
-                                    Iterable<DataSnapshot> revContent = rev.getChildren();
-                                    int counter2 = 1;
-                                    for (DataSnapshot content : revContent) {
-                                        if (counter2 == 2) {
-                                            reviewDates.add(content.getValue(String.class));
-                                        } else if (counter2 == 5) {
-                                            reviewContents.add(content.getValue(String.class));
-                                        } else if (counter2 == 6) {
-                                            reviewUsers.add(content.getValue(String.class));
-                                        }
-                                        counter2++;
-                                    }
-                                }
-                            }
-                            counter++;
-                        }
-                        break;
-                    }
-                }
-
-                setRatesHelper(myView);
-                updateRecycler(myView);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
     }
 
     public void updateRecycler(View myView) {
         myList = (RecyclerView) myView.findViewById(R.id.recyclerViewProf);
         myCard = (CardView) myView.findViewById(R.id.review_card);
-        ArrayList<ReviewItem> myReviewsCopy = new ArrayList<>();
-        myReviewsCopy.addAll(courseItem.getReviews());
+        ArrayList<Review> myReviewsCopy = new ArrayList<>();
+        myReviewsCopy.addAll(courseItem.getReviews().values());
 
-        myReviews = new ArrayList<ReviewItem>();
-
+        myReviews = new ArrayList<Review>();
 
         int len = reviewContents.size();
-        for (ReviewItem rev : myReviewsCopy) {
+        for (Review rev : myReviewsCopy) {
             for (int i = 0; i < len; i++) {
-                if (rev.getReviewContent().equals(reviewContents.get(i))) {
+                if (rev.getReviewerContent().equals(reviewContents.get(i))) {
                     if (rev.getReviewerName().equals(reviewUsers.get(i))) {
                         if (rev.getDate().equals(reviewDates.get(i))) {
                             if (!myReviews.contains(rev)) {
@@ -369,13 +259,13 @@ public class CourseDetailFragment extends Fragment {
                 avgStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
 
-            if (i < gradeRate) {
+            if (i < 5) {
                 gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
                 gradeStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
             }
 
-            if (i < knowledgeRate) {
+            if (i < 5) {
                 knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
                 knowStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
@@ -391,6 +281,38 @@ public class CourseDetailFragment extends Fragment {
                 funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
             } else {
                 funStars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
+            }
+        }
+    }
+
+
+    class ProfessorButtonOnClickListener implements View.OnClickListener {
+
+        private int index;
+        private TextView[] textViews;
+
+        ProfessorButtonOnClickListener(int index, TextView[] textViews) {
+            this.index = index;
+            this.textViews = textViews;
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (textViews[index].getVisibility() != View.GONE) {
+                textViews[index].setBackground(myAct.getResources().
+                        getDrawable(R.drawable.selected_item_background));
+
+                if (index != 0) textViews[0].setBackground(null);
+                if (index != 1) textViews[1].setBackground(null);
+                if (index != 2) textViews[2].setBackground(null);
+                if (index != 3) textViews[3].setBackground(null);
+
+                currProfessor = textViews[index].getText().toString();
+                reviewDates.clear();
+                reviewContents.clear();
+                reviewUsers.clear();
+                setRatesHelper(getView());
+                updateRecycler(getView());
             }
         }
     }

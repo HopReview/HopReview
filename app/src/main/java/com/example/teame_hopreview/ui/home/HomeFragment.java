@@ -107,21 +107,21 @@ public class HomeFragment extends Fragment {
         courseCards[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myAct.openCourseDetailFragment(courseItem1);
+                //myAct.openCourseDetailFragment(courseItem1);
             }
         });
 
         courseCards[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myAct.openCourseDetailFragment(courseItem2);
+                //myAct.openCourseDetailFragment(courseItem2);
             }
         });
 
         courseCards[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myAct.openCourseDetailFragment(courseItem3);
+                //myAct.openCourseDetailFragment(courseItem3);
             }
         });
 

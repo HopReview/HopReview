@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teame_hopreview.database.Review;
 import com.example.teame_hopreview.ui.course.CourseItem;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
-    private List<ReviewItem> reviewData;
+    private List<Review> reviewData;
     private LayoutInflater inflater;
     private AdapterView.OnItemClickListener clickListener;
     private MainActivity mainActivity;
@@ -35,7 +36,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         mainActivity.openReviewDetailFragment(review);
     };
 
-    public ReviewAdapter(MainActivity mainActivity, Context context, List<ReviewItem> items) {
+    public ReviewAdapter(MainActivity mainActivity, Context context, List<Review> items) {
         this.inflater = LayoutInflater.from(context);
         this.reviewData = items;
         this.mainActivity = mainActivity;
@@ -51,14 +52,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ReviewAdapter.ViewHolder holder, int position) {
-        ReviewItem currReview = reviewData.get(position);
+        Review currReview = reviewData.get(position);
         Log.d("REVIEWER NAME", currReview.getReviewerName());
         Log.d("REVIEWER DATE", currReview.getDate());
-        Log.d("REVIEWER CONTENT", currReview.getReviewContent());
+        Log.d("REVIEWER CONTENT", currReview.getReviewerContent());
 
         holder.getReviewer().setText(currReview.getReviewerName());
         holder.getDate().setText(currReview.getDate());
-        holder.getComment().setText(currReview.getReviewContent());
+        holder.getComment().setText(currReview.getReviewerContent());
 
         int avgRating = currReview.getAvgRating();
         System.out.println("AVGRATING FOR REVIEW: " + avgRating);

@@ -48,7 +48,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
 
     private final View.OnClickListener mOnClickListener = (view) -> {
-        CourseItem course = (CourseItem) view.getTag();
+        Course course = (Course) view.getTag();
         mainActivity.openCourseDetailFragment(course);
     };
 
