@@ -15,6 +15,9 @@ public class ReviewItem extends Profile {
     private String date;
     private String course = new String();
     private String professor = new String();
+    private int helperRating1; // funRating
+    private int helperRating2; // workRating
+    private boolean setHome = false;
 
 
     /**
@@ -39,6 +42,14 @@ public class ReviewItem extends Profile {
         secondRating = secondRate;
     }
 
+    public void setHome() {
+        this.setHome = true;
+    }
+
+    public boolean getSetHome() {
+        return setHome;
+    }
+
 
     public void setCourseName(String course) {
         this.course = course;
@@ -56,6 +67,30 @@ public class ReviewItem extends Profile {
         return this.professor;
     }
 
+    public void setHelperRating1(int r) {
+        helperRating1 = r;
+    }
+
+    public void setHelperRating2(int r) {
+        helperRating2 = r;
+    }
+
+
+    public int getFirstRating() {
+        return firstRating;
+    }
+
+    public int getSecondRating() {
+        return secondRating;
+    }
+
+    public int getHelperRating1() {
+        return helperRating1;
+    }
+
+    public int getHelperRating2() {
+        return helperRating2;
+    }
 
 
     /**

@@ -66,6 +66,7 @@ public class ReviewDetailFragment extends Fragment {
         myAct.getSupportActionBar().setTitle("Review");
         context = myAct.getApplicationContext();
 
+
         TextView userName = (TextView) myView.findViewById(R.id.review_by);
         userName.setText("Review by: " + reviewerName);
 
@@ -77,6 +78,15 @@ public class ReviewDetailFragment extends Fragment {
 
         TextInputEditText comment = (TextInputEditText) myView.findViewById(R.id.create_review_comment);
         comment.setText(reviewContent);
+
+        if (reviewItem.getSetHome()) {
+            funRate = reviewItem.getHelperRating1();
+            workRate = reviewItem.getHelperRating2();
+            gradeRate = reviewItem.getFirstRating();
+            knowRate = reviewItem.getSecondRating();
+            setupReviews(myView);
+            setRatings();
+        }
 
         setupReviews(myView);
 
@@ -197,6 +207,10 @@ public class ReviewDetailFragment extends Fragment {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
+    }
+
+    public void setUpHelper(View myView) {
 
     }
 }

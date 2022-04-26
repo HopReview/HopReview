@@ -21,7 +21,7 @@ import com.example.teame_hopreview.MainActivity;
 import com.example.teame_hopreview.R;
 import com.example.teame_hopreview.ReviewItem;
 import com.example.teame_hopreview.User;
-import com.example.teame_hopreview.databinding.FragmentHomeBinding;
+// import com.example.teame_hopreview.databinding.FragmentHomeBinding;
 import com.example.teame_hopreview.ui.course.CourseItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,6 +63,10 @@ public class HomeFragment extends Fragment {
     private String reviewContent = "";
     private String reviewerName = "";
     private int secondRating = 0;
+    private String courseName = "";
+    private String professorName = "";
+    private int workRating = 0;
+    private int funRating = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -573,9 +577,22 @@ public class HomeFragment extends Fragment {
                             reviewerName = field.getValue(String.class);
                         } else if (field.getKey().equals("secondRating")) {
                             secondRating = field.getValue(Integer.class);
+                        } else if (field.getKey().equals("courseName")) {
+                            courseName = field.getValue(String.class);
+                        } else if (field.getKey().equals("professorName")) {
+                            professorName = field.getValue(String.class);
+                        } else if (field.getKey().equals("funRating")) {
+                            funRating = field.getValue(Integer.class);
+                        } else if (field.getKey().equals("workRating")) {
+                            workRating = field.getValue(Integer.class);
                         }
                     }
                     ReviewItem newReview = new ReviewItem(avgRating, date, firstRating, reviewContent, reviewerName, secondRating);
+                    newReview.setProfessorName(professorName);
+                    newReview.setCourseName(courseName);
+                    newReview.setHelperRating1(funRating);
+                    newReview.setHelperRating2(workRating);
+                    newReview.setHome();
                     recentReviews.add(newReview);
                 }
 
