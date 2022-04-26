@@ -318,42 +318,20 @@ public class CreateReviewFragment extends Fragment {
 
         int firstRating = funRating;
         int secondRating = gradingRating;
-        int avgRating = (funRating + gradingRating) /2;
+        int avgRating = (funRating + workloadRating) /2;
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String reviewerName = user.getEmail();
 
         Integer reviewId = selectedCourse.getReviews().size()+1;
-        /*Task<Void> task1 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("reviewContent").setValue(reviewContent);
-        Task<Void> task2 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("date").setValue(date);
-        Task<Void> task3 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("avgRating").setValue(avgRating);
-        Task<Void> task4 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("firstRating").setValue(firstRating);
-        Task<Void> task5 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("reviewerName").setValue(reviewerName);
-        Task<Void> task6 = dbref.child("courses_data").child(selectedCourse.getId()).child("reviews").child(reviewId.toString()).child("secondRating").setValue(secondRating);*/
-
-        //DatabaseReference profReviews = dbref.child("professors_data").child(selectedProfessor).child("reviews").child(reviewId.toString());
-        /*Task<Void> task7 = profReviews.child("reviewContent").setValue(reviewContent);
-        Task<Void> task8 = profReviews.child("date").setValue(date);
-        Task<Void> task9 = profReviews.child("avgRating").setValue(avgRating);
-        Task<Void> task10 = profReviews.child("firstRating").setValue(firstRating);
-        Task<Void> task11 = profReviews.child("reviewerName").setValue(reviewerName);
-        Task<Void> task12 = profReviews.child("secondRating").setValue(secondRating);*/
 
         DbReview review = new DbReview(reviewContent, date, avgRating, firstRating, reviewerName, secondRating);
-        DbProfReview profReview = new DbProfReview(reviewContent, date, avgRating, firstRating, reviewerName, secondRating);
+        DbProfReview profReview = new DbProfReview(reviewContent, date, (knowledgeRating + gradingRating) / 2, knowledgeRating, reviewerName, gradingRating);
         createReview(review, profReview, selectedCourse.getId(), selectedProfessor);
 
         MainActivity myAct = (MainActivity) getActivity();
         ReviewItem toAdd = new ReviewItem(avgRating, date, firstRating, reviewContent, reviewerName, secondRating);
         myAct.user.addUserReview(toAdd);
-
-        /*Task<Void> mainTask = Tasks.whenAll(task1, task2, task3, task4, task5, task6, task7, task8, task9, task10, task11, task12);
-        mainTask.addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                showToast("Review published!");
-            }
-        });*/
     }
 
     private void createReview(DbReview review, DbProfReview profReview, String courseKey, String professorKey) {
@@ -368,6 +346,8 @@ public class CreateReviewFragment extends Fragment {
         childUpdates.put("/professors_data/" + professorKey + "/reviews/" + professorReviewKey, professorReviewValues);
 
         dbref.updateChildren(childUpdates);
+
+        showToast("Review published!");
     }
 
     public void reset() {
