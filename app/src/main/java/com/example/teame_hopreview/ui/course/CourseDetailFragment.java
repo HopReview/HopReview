@@ -42,6 +42,7 @@ public class CourseDetailFragment extends Fragment {
     private int gradeRate;
     private int knowledgeRate;
     private ReviewItem ReviewItem;
+    private View myView;
     protected ArrayList<ReviewItem> myReviews;
     Context context;
     String courseName;
@@ -67,7 +68,7 @@ public class CourseDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View myView = inflater.inflate(R.layout.course_detail_frag, container, false);
+        myView = inflater.inflate(R.layout.course_detail_frag, container, false);
 
         myAct = (MainActivity) getActivity();
         context = myAct.getApplicationContext();

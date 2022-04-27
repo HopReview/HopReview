@@ -332,6 +332,7 @@ public class CreateReviewFragment extends Fragment {
         MainActivity myAct = (MainActivity) getActivity();
         ReviewItem toAdd = new ReviewItem(avgRating, date, firstRating, reviewContent, reviewerName, secondRating);
         myAct.user.addUserReview(toAdd);
+        myAct.returnToHome();
     }
 
     private void createReview(DbReview review, DbProfReview profReview, String courseKey, String professorKey) {
@@ -356,6 +357,9 @@ public class CreateReviewFragment extends Fragment {
         recentReviewValues.put("knowRating", professorReviewValues.get("secondRating"));
         childUpdates.put("/app_data/recentReviews/" + courseReviewKey, recentReviewValues);
 
+
+        String userReviewsKey = dbref.child("user_data").child(mainActivity.user.getUserId()).child("userReviews").push().getKey();
+        childUpdates.put("/user_data/" + mainActivity.user.getUserId() + "/userReviews/" + userReviewsKey, recentReviewValues);
 
 
         dbref.updateChildren(childUpdates);

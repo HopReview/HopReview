@@ -538,11 +538,11 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
+        android:clickable="true"
+        android:focusable="true"
         app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
-        android:clickable="true"
-        android:focusable="true"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -550,7 +550,7 @@
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.750">
+        app:layout_constraintVertical_bias="0.775">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -673,11 +673,11 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
+        android:clickable="true"
+        android:focusable="true"
         app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
-        android:clickable="true"
-        android:focusable="true"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -685,7 +685,7 @@
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.875">
+        app:layout_constraintVertical_bias="0.925">
 
         <LinearLayout
             android:layout_width="match_parent"
