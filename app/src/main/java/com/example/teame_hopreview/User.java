@@ -33,6 +33,9 @@ public class User {
     Stack<String> rVHelper;
     ArrayList<String> toReturn;
 
+    // review related
+
+
 
 
 
@@ -93,7 +96,54 @@ public class User {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ReviewItem newRev = new ReviewItem();
+                        int avgRating = 0;
+                        String date = "";
+                        int firstRating = 0;
+                        String reviewContent = "";
+                        String reviewerName = "";
+                        int secondRating = 0;
+                        String courseName = "";
+                        String professorName = "";
+                        int workRating = 0;
+                        int funRating = 0;
+                        Iterable<DataSnapshot> reviews = snapshot.getChildren();
+                        for (DataSnapshot rev : reviews) {
+                            Iterable<DataSnapshot> currRev = rev.getChildren();
+                            for (DataSnapshot field : currRev) {
+                                if (field.getKey().equals("avgRating")) {
+                                    avgRating = field.getValue(Integer.class);
+                                } else if (field.getKey().equals("date")) {
+                                    date = field.getValue(String.class);
+                                } else if (field.getKey().equals("firstRating")) {
+                                    firstRating = field.getValue(Integer.class);
+                                } else if (field.getKey().equals("reviewContent")) {
+                                    reviewContent = field.getValue(String.class);
+                                } else if (field.getKey().equals("reviewerName")) {
+                                    reviewerName = field.getValue(String.class);
+                                } else if (field.getKey().equals("secondRating")) {
+                                    secondRating = field.getValue(Integer.class);
+                                } else if (field.getKey().equals("courseName")) {
+                                    courseName = field.getValue(String.class);
+                                } else if (field.getKey().equals("professorName")) {
+                                    professorName = field.getValue(String.class);
+                                } else if (field.getKey().equals("funRating")) {
+                                    funRating = field.getValue(Integer.class);
+                                } else if (field.getKey().equals("workRating")) {
+                                    workRating = field.getValue(Integer.class);
+                                }
+                            }
+                            ReviewItem newReview = new ReviewItem(avgRating, date, firstRating, reviewContent, reviewerName, secondRating);
+                            newReview.setProfessorName(professorName);
+                            newReview.setCourseName(courseName);
+                            newReview.setHelperRating1(funRating);
+                            newReview.setHelperRating2(workRating);
+                            newReview.setHome();
+                            addUserReview(newReview);
+                        }
+
+
+
+                        /* ReviewItem newRev = new ReviewItem();
                         int avgRating = 0;
                         String date = "";
                         int firstRating = 0;
@@ -126,7 +176,7 @@ public class User {
                         if (!isEmpty) {
                             newRev = new ReviewItem(avgRating, date, firstRating, revMessage, revUser, secondRating);
                             addUserReview(newRev);
-                        }
+                        } */
                     }
 
                     @Override
@@ -160,13 +210,19 @@ public class User {
         }
     }
 
-    public ArrayList<String> getBookmarkedCourses() { return bookmarkedCourses; }
+    public ArrayList<String> getBookmarkedCourses() {
+        if (bookmarkedCourses == null) {
+            bookmarkedCourses = new ArrayList<>();
+        }
+        return bookmarkedCourses;
+    }
 
     public void addUserReview (ReviewItem newReview) {
         if (userReviews == null) {
             userReviews = new ArrayList<>();
         }
         userReviews.add(newReview);
+
     }
 
     public ArrayList<ReviewItem> getUserReviews() {
@@ -253,10 +309,56 @@ public class User {
                             addRecentlyViewed(crs.getValue(String.class));
                         }
                     } else if (data.getKey().equals("userReviews")) {
+                        if (userReviews != null && userReviews.size() > 0) {
+                            userReviews.clear();
+                        } else {
+                            userReviews = new ArrayList<>();
+                        }
                         Iterable<DataSnapshot> reviews = data.getChildren();
-                        // for (DataSnapshot rev : reviews) {
-                        //     for now omitted
-                        // }
+                        int avgRating = 0;
+                        String date = "";
+                        int firstRating = 0;
+                        String reviewContent = "";
+                        String reviewerName = "";
+                        int secondRating = 0;
+                        String courseName = "";
+                        String professorName = "";
+                        int workRating = 0;
+                        int funRating = 0;
+                        for (DataSnapshot rev : reviews) {
+                            Iterable<DataSnapshot> currRev = rev.getChildren();
+                            for (DataSnapshot field : currRev) {
+                                if (field.getKey().equals("avgRating")) {
+                                    avgRating = field.getValue(Integer.class);
+                                } else if (field.getKey().equals("date")) {
+                                    date = field.getValue(String.class);
+                                } else if (field.getKey().equals("firstRating")) {
+                                    firstRating = field.getValue(Integer.class);
+                                } else if (field.getKey().equals("reviewContent")) {
+                                    reviewContent = field.getValue(String.class);
+                                } else if (field.getKey().equals("reviewerName")) {
+                                    reviewerName = field.getValue(String.class);
+                                } else if (field.getKey().equals("secondRating")) {
+                                    secondRating = field.getValue(Integer.class);
+                                } else if (field.getKey().equals("courseName")) {
+                                    courseName = field.getValue(String.class);
+                                } else if (field.getKey().equals("professorName")) {
+                                    professorName = field.getValue(String.class);
+                                } else if (field.getKey().equals("funRating")) {
+                                    funRating = field.getValue(Integer.class);
+                                } else if (field.getKey().equals("workRating")) {
+                                    workRating = field.getValue(Integer.class);
+                                }
+                            }
+                            ReviewItem newReview = new ReviewItem(avgRating, date, firstRating, reviewContent, reviewerName, secondRating);
+                            newReview.setProfessorName(professorName);
+                            newReview.setCourseName(courseName);
+                            newReview.setHelperRating1(funRating);
+                            newReview.setHelperRating2(workRating);
+                            newReview.setHome();
+                            addUserReview(newReview);
+                        }
+
                     } else if (data.getKey().equals("username")) {
                         userName = data.getValue(String.class);
                     }

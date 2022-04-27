@@ -206,4 +206,11 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         transaction.replace(R.id.fragment_container, updatePass).commit();
         transaction.addToBackStack("updatePassStack");
     }
+
+    public void returnToHome() {
+        getSupportFragmentManager().popBackStack();
+        getSupportFragmentManager().popBackStack();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, this.home).addToBackStack(null).commit();
+    }
+
 }

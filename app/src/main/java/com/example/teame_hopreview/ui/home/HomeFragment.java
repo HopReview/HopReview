@@ -643,9 +643,9 @@ public class HomeFragment extends Fragment {
                 avg = recentReviews.get(0).getAvgRating();
                 for (int i = 0; i < 5; i++) {
                     if (i < avg) {
-                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_filled));
+                        avg_stars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_filled));
                     } else {
-                        avg_stars[i].setImageDrawable(getResources().getDrawable(R.drawable.star_unfilled));
+                        avg_stars[i].setImageDrawable(context.getResources().getDrawable(R.drawable.star_unfilled));
                     }
                 }
                 reviewItem1 = recentReviews.get(0);
