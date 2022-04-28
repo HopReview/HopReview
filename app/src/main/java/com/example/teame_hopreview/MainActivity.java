@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     public void returnToHome() {
         getSupportFragmentManager().popBackStack();
         getSupportFragmentManager().popBackStack();
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, this.home).addToBackStack(null).commit();
     }
 
