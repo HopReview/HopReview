@@ -34,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
@@ -41,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
@@ -85,6 +87,8 @@ public class CreateReviewFragment extends Fragment {
 
     // if 0, coming from a course; if 1, coming from a professor
     private int setValue = 0;
+
+    private Map<String, Object> professorsData;
 
     public String getDefaultCourseNumber() {
         return defaultCourseNumber;
@@ -316,8 +320,7 @@ public class CreateReviewFragment extends Fragment {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         String date = dateFormat.format(Calendar.getInstance().getTime());
 
-        int firstRating = funRating;
-        int secondRating = gradingRating;
+
         int avgRating = (funRating + workloadRating) /2;
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -325,12 +328,12 @@ public class CreateReviewFragment extends Fragment {
 
         Integer reviewId = selectedCourse.getReviews().size()+1;
 
-        DbReview review = new DbReview(reviewContent, date, avgRating, firstRating, reviewerName, secondRating);
+        DbReview review = new DbReview(reviewContent, date, (funRating + workloadRating) /2, workloadRating, reviewerName, funRating);
         DbProfReview profReview = new DbProfReview(reviewContent, date, (knowledgeRating + gradingRating) / 2, knowledgeRating, reviewerName, gradingRating);
         createReview(review, profReview, selectedCourse.getId(), selectedProfessor);
 
         MainActivity myAct = (MainActivity) getActivity();
-        ReviewItem toAdd = new ReviewItem(avgRating, date, firstRating, reviewContent, reviewerName, secondRating);
+        ReviewItem toAdd = new ReviewItem((funRating + workloadRating) /2, date, workloadRating, reviewContent, reviewerName, funRating);
         myAct.user.addUserReview(toAdd);
         myAct.returnToHome();
     }
@@ -348,6 +351,29 @@ public class CreateReviewFragment extends Fragment {
         childUpdates.put("/courses_data/" + courseKey + "/reviews/" + courseReviewKey, courseReviewValues);
         childUpdates.put("/professors_data/" + professorKey + "/reviews/" + professorReviewKey, professorReviewValues);
 
+        //We also need to update the average rating for the course and professor
+        long newCourseAverageRating = computeAverageRating(selectedCourse.getAverageRating(), selectedCourse.getReviews().size(), review.getAvgRating());
+        long newCourseWorkloadRating = computeAverageRating(selectedCourse.getWorkloadRating(), selectedCourse.getReviews().size(), review.getFirstRating());
+        long newCourseFunRating = computeAverageRating(selectedCourse.getFunRating(), selectedCourse.getReviews().size(), review.getSecondRating());
+        childUpdates.put("/courses_data/" + courseKey + "/averageRating/", newCourseAverageRating);
+        childUpdates.put("/courses_data/" + courseKey + "/workloadRating/", newCourseWorkloadRating);
+        childUpdates.put("/courses_data/" + courseKey + "/funRating/", newCourseFunRating);
+
+        HashMap<String, Object> professor = getProfessorByName(selectedProfessor);
+        if (professor != null) {
+            long profCurrentAvg = (long) professor.get("avg_rating");
+            long profCurrentGrading = (long) professor.get("grading_rating");
+            long profCurrentKnowledge = (long) professor.get("knowledge_rating");
+            HashMap<String, Object> profReviews = (HashMap<String, Object>) professor.get("reviews");
+            long profNewAvg = computeAverageRating(profCurrentAvg, profReviews.size(), profReview.getAvgRating());
+            long profNewGrading = computeAverageRating(profCurrentGrading, profReviews.size(), profReview.getGradingRating());
+            long profNewKnowledge = computeAverageRating(profCurrentKnowledge, profReviews.size(), profReview.getKnowledgeRating());
+            childUpdates.put("/professors_data/" + professorKey + "/avg_rating/", profNewAvg);
+            childUpdates.put("/professors_data/" + professorKey + "/grading_rating/", profNewGrading);
+            childUpdates.put("/professors_data/" + professorKey + "/knowledge_rating/", profNewKnowledge);
+        }
+
+
         Map<String, Object> recentReviewValues = review.toMap();
         recentReviewValues.put("courseName", selectedCourse.getName());
         recentReviewValues.put("professorName", selectedProfessor);
@@ -362,22 +388,24 @@ public class CreateReviewFragment extends Fragment {
         childUpdates.put("/user_data/" + mainActivity.user.getUserId() + "/userReviews/" + userReviewsKey, recentReviewValues);
 
 
+        //int newProfessorAverageRating = ((selectedProfessor.getAverageRating() * selectedCourse.getReviews().size()) + review.getAvgRating()) / (selectedCourse.getReviews().size() + 1);
+
         dbref.updateChildren(childUpdates);
 
         showToast("Review published!");
     }
 
-    public void reset() {
-        selectedCourse = null;
-        workloadRating = 0;
-        funRating = 0;
-        gradingRating = 0;
-        knowledgeRating = 0;
-        if (professorDropdown != null) professorDropdown.setText(null);
-        if (courseDropdown != null) {
-            courseDropdown.setText(null);
-            courseDropdown.setFocusable(false);
+    private HashMap<String, Object> getProfessorByName(String name) {
+        if (professorsData == null) return null;
+        Object data = professorsData.get(name);
+        if (data.getClass() == HashMap.class) {
+            return (HashMap<String, Object>) data;
         }
+        return null;
+    }
+
+    private long computeAverageRating(long currentAverage, long ratingsCount, int addedAvg) {
+        return ((currentAverage * ratingsCount) + addedAvg) / (ratingsCount + 1);
     }
 
     private void showToast(String message) {
@@ -411,6 +439,11 @@ public class CreateReviewFragment extends Fragment {
             listManager.getCourseWrappers().clear();
             Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
             ArrayList<ReviewItem> reviewsHolder = new ArrayList<ReviewItem>();
+
+            //Set professors
+            GenericTypeIndicator<Map<String, Object>> t = new GenericTypeIndicator<Map<String, Object>>() {};
+            professorsData = snapshot.child("professors_data").getValue(t);
+
 
             for (DataSnapshot crs : courses) {
                 reviewsHolder.clear();
