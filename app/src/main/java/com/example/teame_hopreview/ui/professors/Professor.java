@@ -36,7 +36,6 @@ public class Professor extends Profile {
     public Professor(String name, String department, int grading, int knowledge, int avg) {
         this.professorName = name;
         this.department = department;
-        // TODO: might remove courses parameter as requirement
         String[] names = name.split(" ");
         this.initials = "";
         this.reviews = new ArrayList<>();
@@ -109,16 +108,6 @@ public class Professor extends Profile {
         if (mixedRatings == null) mixedRatings = new HashMap<>();
         mixedRatings.put(crs, holderRatings);
     }
-
-//    /**
-//     * Method to remove a specific course from a Professor's course list
-//     * Accordingly removes ratings for the course
-//     * @param crs the Course to remove
-//     */
-//    public void removeCourse(CourseItem crs) {
-//        courses.remove(crs);
-//        mixedRatings.remove(crs);
-//    }
 
     /**
      * Method for adding ratings from a user for a specific course taught by the professor
@@ -226,8 +215,6 @@ public class Professor extends Profile {
      */
     private Map<String, Integer> getEmptyMap() {
         Map<String, Integer> holderRatings = new HashMap<String, Integer>();
-        //        holderRatings.put("Workload", 0);
-        //        holderRatings.put("Fun", 0);
         holderRatings.put("Grading", 0);
         holderRatings.put("Knowledge", 0);
         holderRatings.put("RateCount", 0);

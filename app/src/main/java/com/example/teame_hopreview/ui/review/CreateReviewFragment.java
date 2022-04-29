@@ -323,8 +323,9 @@ public class CreateReviewFragment extends Fragment {
 
         int avgRating = (funRating + workloadRating) /2;
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String reviewerName = user.getEmail();
+        // FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        MainActivity myAct = (MainActivity) getActivity();
+        String reviewerName = myAct.user.getUserId();
 
         Integer reviewId = selectedCourse.getReviews().size()+1;
 
@@ -332,7 +333,7 @@ public class CreateReviewFragment extends Fragment {
         DbProfReview profReview = new DbProfReview(reviewContent, date, (knowledgeRating + gradingRating) / 2, knowledgeRating, reviewerName, gradingRating);
         createReview(review, profReview, selectedCourse.getId(), selectedProfessor);
 
-        MainActivity myAct = (MainActivity) getActivity();
+
         ReviewItem toAdd = new ReviewItem((funRating + workloadRating) /2, date, workloadRating, reviewContent, reviewerName, funRating);
         myAct.user.addUserReview(toAdd);
         myAct.returnToHome();
@@ -432,8 +433,6 @@ public class CreateReviewFragment extends Fragment {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             long count = snapshot.getChildrenCount();
-            Log.d(TAG, "Children count: " + count);
-            Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
 
             listManager.getCourses().clear();
             listManager.getCourseWrappers().clear();
@@ -447,11 +446,6 @@ public class CreateReviewFragment extends Fragment {
 
             for (DataSnapshot crs : courses) {
                 reviewsHolder.clear();
-                //System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
-                //System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
-                //System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
-                //System.out.println("CourseNum: " + crs.getValue(CourseItem.class).getCourseNumber());
-                //System.out.println("CourseDes: " + crs.getValue(CourseItem.class).getDesignation());
                 String id = (String) crs.getKey();
                 Iterable<DataSnapshot> list = crs.getChildren();
                 String name = " ";

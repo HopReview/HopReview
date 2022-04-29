@@ -56,7 +56,6 @@ public class CourseFragment extends Fragment {
 
         myAct = (MainActivity) getActivity();
         myAct.getSupportActionBar().setTitle("Courses");
-        System.out.println("Reached here");
         myList = (RecyclerView) myView.findViewById(R.id.myReviewsList);
         myCard = (CardView) myView.findViewById(R.id.course_card);
         myCourses = new ArrayList<CourseItem>();
@@ -75,8 +74,6 @@ public class CourseFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
 
                 myCourses.clear();
 

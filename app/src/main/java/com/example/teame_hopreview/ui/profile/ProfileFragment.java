@@ -64,30 +64,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 myAct.openMyReviews();
-
-//                Intent intent = new Intent(context, LoginActivity.class);
-//                startActivity(intent);
             }
         });
-
-        /*SwitchMaterial toggleThemeBtn = myView.findViewById(R.id.toggle_theme);
-        toggleThemeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-//                Intent intent = new Intent(context, LoginActivity.class);
-//                startActivity(intent);
-            }
-        });*/
 
         Button updatePassBtn = myView.findViewById(R.id.change_pass_btn);
         updatePassBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Intent intent = new Intent(context, UpdatePasswordFragment.class);
-                // startActivity(intent);
-                // myAct.openUpdatePass();
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -174,7 +157,6 @@ public class ProfileFragment extends Fragment {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: add "Are you sure?" pop-up before performing action
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle("Delete Account");
                 builder.setMessage("Are you sure that you want to delete your account?" + "\n\n"
@@ -214,9 +196,6 @@ public class ProfileFragment extends Fragment {
                 });
                 alert.show();
 
-
-                /*Intent intent = new Intent(getActivity().getApplicationContext(), DeleteAccountActivity.class);
-                myAct.startActivity(intent);*/
             }
         });
 

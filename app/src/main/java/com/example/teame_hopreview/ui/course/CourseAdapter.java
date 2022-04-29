@@ -34,16 +34,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private MainActivity mainActivity;
     Context context;
 
-    /*private final View.OnClickListener bookmarkListener = (view) -> {
-        CourseItem course = (CourseItem) view.getTag();
-
-        // TODO: add to user's dataset
-
-        Toast.makeText(mainActivity, "COURSE SAVED",
-                Toast.LENGTH_LONG).show();
-    };*/
-
-
     private final View.OnClickListener mOnClickListener = (view) -> {
         CourseItem course = (CourseItem) view.getTag();
         mainActivity.openCourseDetailFragment(course);
@@ -67,7 +57,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
         CourseItem currCourse = courseData.get(position);
         holder.getDesignation().setText(currCourse.getDesignation());
-        System.out.println(currCourse.getName());
         holder.getName().setText(currCourse.getName());
         holder.getNum().setText(currCourse.getCourseNumber());
 
@@ -77,7 +66,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         int counter = 1;
         int len = professors.size();
         for (String prof : professors) {
-            System.out.println("Professors " + counter + " : " + prof);
             if (counter == len) {
                 profNamesStr.append(prof);
             } else {
@@ -86,13 +74,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             counter++;
         }
 
-
-
         holder.getProfessorNames().setText(profNamesStr.toString());
-
-
-
-        // holder.getReviewNum().setText(currCourse.getReviews().size() + " reviews");
 
         ImageView[] avgStars = holder.getAvgImages();
         ImageView[] workStars = holder.getWorkImages();
@@ -126,9 +108,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         if (currCourse.getReviews() == null) {
             holder.getReviewNum().setText("0 reviews");
         } else {
-            for (ReviewItem rev : currCourse.getReviews()) {
-                System.out.println("THIS IS THE CURRENT REV: " + rev.getReviewContent());
-            }
             holder.getReviewNum().setText(currCourse.getReviews().size() + " reviews");
         }
 

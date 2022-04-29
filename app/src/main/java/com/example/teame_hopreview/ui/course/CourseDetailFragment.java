@@ -124,13 +124,8 @@ public class CourseDetailFragment extends Fragment {
         reviewUsers = new ArrayList<>();
         reviewDates = new ArrayList<>();
 
-
-
-        //
         setCourseProfessors(currProfessor);
         myDbHelper(myView, currProfessor);
-
-        System.out.println(professorsHolder.size());
 
         if (professorsHolder.size() > 1) {
             professors[0].setBackground(myAct.getResources().getDrawable(R.drawable.selected_item_background));
@@ -211,7 +206,6 @@ public class CourseDetailFragment extends Fragment {
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: IMPLEMENT, change bookmark icon so its filled, etc.
                 if (myAct.user.getBookmarkedCourses().contains(courseItem.getName())) {
                     bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_unfilled));
                     myAct.user.removeBookmarkedCourse(courseItem.getName());
@@ -246,8 +240,6 @@ public class CourseDetailFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Professor count: " + snapshot.child("professors_data").getChildrenCount());
 
                 Iterable<DataSnapshot> professors = snapshot.child("professors_data").getChildren();
 

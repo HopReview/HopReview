@@ -45,7 +45,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
-            // currentUser.reload();
             updateUI(currentUser);
         }
 
@@ -71,12 +70,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if(currentUser != null){
-//            currentUser.reload();
-//            updateUI(currentUser);
-//        }
     }
 
     private void createAccount(String email, String password) {
@@ -95,14 +88,12 @@ public class CreateAccountActivity extends AppCompatActivity {
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
-                        // updateUI(null);
                     }
                 }
             });
     }
 
     private void updateUI(FirebaseUser user) {
-        // TODO: pass user!
         Intent intent = new Intent(context, MainActivity.class);
         startActivity(intent);
     }
@@ -127,14 +118,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         if (!email.equals(emailConfirm) || !password.equals(passwordConfirm)) {
             Toast.makeText(context, "Email and/or password could not be verified successfully", Toast.LENGTH_SHORT).show();
         }
-        //        else if(!password.equals(passwordConfirm)) {
-        //            // TO DO: check whether username or email already exists
-        //            Toast.makeText(context, "Username already exists", Toast.LENGTH_SHORT).show();
-        //            Toast.makeText(context, "Email already registered", Toast.LENGTH_SHORT).show();
-        //        } else if() {
-        //            // TO DO: check whether password is appropriate
-        //            Toast.makeText(context, "Password is inadequate", Toast.LENGTH_SHORT).show();
-        //        }
         else {
             createAccount(email,password);
         }

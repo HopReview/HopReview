@@ -141,42 +141,6 @@ public class User {
                             addUserReview(newReview);
                         }
 
-
-
-                        /* ReviewItem newRev = new ReviewItem();
-                        int avgRating = 0;
-                        String date = "";
-                        int firstRating = 0;
-                        String revMessage = "";
-                        String revUser = userName;
-                        int secondRating = 0;
-
-                        Iterable<DataSnapshot> reviews = snapshot.getChildren();
-                        boolean isEmpty = true;
-                        for (DataSnapshot rev : reviews) {
-                            Iterable<DataSnapshot> revContent = rev.getChildren();
-                            int counter = 1;
-                            for (DataSnapshot content : revContent) {
-                                isEmpty = false;
-                                if (counter == 1) {
-                                    avgRating = content.getValue(Integer.class);
-                                } else if (counter == 2) {
-                                    date = content.getValue(String.class);
-                                } else if (counter == 3) {
-                                    firstRating = content.getValue(Integer.class);
-                                } else if (counter == 4) {
-                                    revMessage = content.getValue(String.class);
-                                } else if (counter == 6) {
-                                    secondRating = content.getValue(Integer.class);
-                                }
-                                counter++;
-                            }
-                        }
-
-                        if (!isEmpty) {
-                            newRev = new ReviewItem(avgRating, date, firstRating, revMessage, revUser, secondRating);
-                            addUserReview(newRev);
-                        } */
                     }
 
                     @Override
@@ -383,7 +347,6 @@ public class User {
                 System.out.println("The read failed: " + error.getCode());
             }
         });
-        // updateFromDatabase();
     }
 
     public String getUserId() {
