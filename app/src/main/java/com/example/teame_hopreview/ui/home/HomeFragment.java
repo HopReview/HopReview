@@ -110,15 +110,16 @@ public class HomeFragment extends Fragment {
         String firstCourse = "";
         String secondCourse = "";
         String thirdCourse = "";
-        myAct.user.retrieveUserData();
+        // myAct.user.retrieveUserData();
         // ArrayList<String> recentlyViewed = null;
         int count = 0;        
-        ArrayList<String> recentlyViewed = myAct.user.getRecentlyViewedList();
+        // ArrayList<String> recentlyViewed = myAct.user.getRecentlyViewedList();
 
-        if (recentlyViewed != null) {
-            findCourse(recentlyViewed, recentlyViewed.size(), myView, nothingCourses, notCrsTxt);
-        }
+        // if (recentlyViewed != null) {
+        //}
 
+        System.out.println("USERID" + myAct.user.getUserId());
+        findUser(myAct.user.getUserId(), myView, notCrsTxt, nothingCourses);
         fillReviews(myView);
 
 
@@ -169,6 +170,28 @@ public class HomeFragment extends Fragment {
         });
 
         return myView;
+    }
+
+    public void findUser(String userId, View myView, TextView notCrsTxt, ImageView nothingCourses) {
+        dbref.child("user_data").child(userId).child("recentlyViewed").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterable<DataSnapshot> recent = snapshot.getChildren();
+                for (DataSnapshot course : recent) {
+                    System.out.println("Course Name: " + course.getValue(String.class));
+                    myAct.user.addRecentlyViewed(course.getValue(String.class));
+                }
+                ArrayList<String> courseNames = new ArrayList<>();
+                courseNames.addAll(myAct.user.getRecentlyViewedList());
+                int size = courseNames.size();
+                findCourse(courseNames, size, myView, nothingCourses, notCrsTxt);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void findCourse(ArrayList<String >courseNames, int size, View myView, ImageView nothingCourses, TextView notCrsTxt) {
