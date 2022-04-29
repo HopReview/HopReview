@@ -122,12 +122,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             }
         }
 
-        ArrayList<ReviewItem> reviews = currCourse.getReviews();
 
-        if (reviews == null) {
+        if (currCourse.getReviews() == null) {
             holder.getReviewNum().setText("0 reviews");
         } else {
-            holder.getReviewNum().setText(reviews.size() + " reviews");
+            for (ReviewItem rev : currCourse.getReviews()) {
+                System.out.println("THIS IS THE CURRENT REV: " + rev.getReviewContent());
+            }
+            holder.getReviewNum().setText(currCourse.getReviews().size() + " reviews");
         }
 
         holder.itemView.setTag(courseData.get(position));

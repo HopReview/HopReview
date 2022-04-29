@@ -383,30 +383,7 @@ public class User {
                 System.out.println("The read failed: " + error.getCode());
             }
         });
-        updateFromDatabase();
-    }
-
-
-    public ArrayList<String> retrieveUserDataRV() {
-        dbref.child("user_data").child(userId).child("recentlyViewed").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    toReturn = new ArrayList<>();
-                    Iterable<DataSnapshot> rvCourses = snapshot.getChildren();
-                    for (DataSnapshot crs : rvCourses) {
-                        addRecentlyViewed(crs.getValue(String.class));
-                        toReturn = getRecentlyViewedList();
-                    }
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("The read failed: " + error.getCode());
-            }
-        });
-
-
-        return toReturn;
+        // updateFromDatabase();
     }
 
     public String getUserId() {
