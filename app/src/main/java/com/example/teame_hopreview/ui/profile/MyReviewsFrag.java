@@ -53,8 +53,10 @@ public class MyReviewsFrag extends Fragment {
         setHasOptionsMenu(true);
         myAct.user.retrieveUserData();
 
+        if (myAct.user.getUserReviews() != null) {
+            myReviews.addAll(myAct.user.getUserReviews());
+        }
 
-        myReviews.addAll(myAct.user.getUserReviews());
         rua = new ReviewUserAdapter(myAct, context, myReviews);
         myList.setAdapter(rua);
         myList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));

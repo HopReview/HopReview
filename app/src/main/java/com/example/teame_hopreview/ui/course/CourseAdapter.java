@@ -34,16 +34,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private MainActivity mainActivity;
     Context context;
 
-    /*private final View.OnClickListener bookmarkListener = (view) -> {
-        CourseItem course = (CourseItem) view.getTag();
-
-        // TODO: add to user's dataset
-
-        Toast.makeText(mainActivity, "COURSE SAVED",
-                Toast.LENGTH_LONG).show();
-    };*/
-
-
     private final View.OnClickListener mOnClickListener = (view) -> {
         CourseItem course = (CourseItem) view.getTag();
         mainActivity.openCourseDetailFragment(course);
@@ -84,13 +74,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             counter++;
         }
 
-
-
         holder.getProfessorNames().setText(profNamesStr.toString());
-
-
-
-        // holder.getReviewNum().setText(currCourse.getReviews().size() + " reviews");
 
         ImageView[] avgStars = holder.getAvgImages();
         ImageView[] workStars = holder.getWorkImages();

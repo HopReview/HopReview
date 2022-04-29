@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         assert currentUser != null;
         user = new User(currentUser.getEmail());
         user.retrieveUserData();
-        // return user;
     }
 
 

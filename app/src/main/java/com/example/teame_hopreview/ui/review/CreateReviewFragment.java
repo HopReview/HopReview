@@ -323,8 +323,9 @@ public class CreateReviewFragment extends Fragment {
 
         int avgRating = (funRating + workloadRating) /2;
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String reviewerName = user.getEmail();
+        // FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        MainActivity myAct = (MainActivity) getActivity();
+        String reviewerName = myAct.user.getUserId();
 
         Integer reviewId = selectedCourse.getReviews().size()+1;
 
@@ -332,7 +333,7 @@ public class CreateReviewFragment extends Fragment {
         DbProfReview profReview = new DbProfReview(reviewContent, date, (knowledgeRating + gradingRating) / 2, knowledgeRating, reviewerName, gradingRating);
         createReview(review, profReview, selectedCourse.getId(), selectedProfessor);
 
-        MainActivity myAct = (MainActivity) getActivity();
+
         ReviewItem toAdd = new ReviewItem((funRating + workloadRating) /2, date, workloadRating, reviewContent, reviewerName, funRating);
         myAct.user.addUserReview(toAdd);
         myAct.returnToHome();

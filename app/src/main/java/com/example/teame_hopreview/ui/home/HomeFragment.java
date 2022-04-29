@@ -118,8 +118,7 @@ public class HomeFragment extends Fragment {
 
 
         // For now, otherwise have a shared preference for it
-        // and create or initilize from database upon login/signup
-        User currUser = new User("bluejay01", "bluejay01@jhu.edu");
+        // and create or initialize from database upon login/signup
 
         courseCards[0].setOnClickListener(new View.OnClickListener() {
             @Override

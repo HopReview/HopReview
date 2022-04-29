@@ -206,7 +206,6 @@ public class CourseDetailFragment extends Fragment {
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: IMPLEMENT, change bookmark icon so its filled, etc.
                 if (myAct.user.getBookmarkedCourses().contains(courseItem.getName())) {
                     bookmark.setImageDrawable(getResources().getDrawable(R.drawable.bm_unfilled));
                     myAct.user.removeBookmarkedCourse(courseItem.getName());

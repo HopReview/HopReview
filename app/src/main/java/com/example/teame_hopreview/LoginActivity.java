@@ -89,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                         Toast.makeText(LoginActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
-                        // updateUI(null);
                     }
                 }
             });
@@ -97,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void updateUI(FirebaseUser user) {
-        // TODO: pass user!
         Intent intent = new Intent(context, MainActivity.class);
         startActivity(intent);
     }

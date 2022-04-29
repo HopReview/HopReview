@@ -86,7 +86,6 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
 
         holder.itemView.setTag(courseData.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);
-        // holder.bookmark.setOnClickListener(bookmarkListener);
     }
 
     @Override
@@ -105,7 +104,6 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
         private final TextView name;
         private final TextView professorNames;
         private final ImageView avgStar1, avgStar2, avgStar3, avgStar4, avgStar5;
-        // private final ImageButton bookmark;
 
         public ViewHolder(@NonNull View courseView) {
             super(courseView);
@@ -113,7 +111,6 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
             designation = (TextView) courseView.findViewById(R.id.designationBM);
             name = (TextView) courseView.findViewById(R.id.courseNameBM);
             professorNames = (TextView) courseView.findViewById(R.id.profsBM);
-            // bookmark = (ImageButton) courseView.findViewById(R.id.bookmarkBM);
             avgStar1 = (ImageView) courseView.findViewById(R.id.avg_star1BM);
             avgStar2 = (ImageView) courseView.findViewById(R.id.avg_star2BM);
             avgStar3 = (ImageView) courseView.findViewById(R.id.avg_star3BM);
@@ -144,9 +141,6 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
             return avg;
         }
 
-//        public ImageButton getBookmark() {
-//            return bookmark;
-//        }
     }
     private Filter courseFilter = new Filter() {
 

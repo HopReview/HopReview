@@ -92,14 +92,6 @@ public class ReviewItem extends Profile {
         return helperRating2;
     }
 
-
-    /**
-     * Method for getting parent Course/Professor name
-     * @return String name of the parent
-     */
-    // public String getParentName() { return this.parentName; }
-
-
     /**
      * Method for getting a reviewers user name
      * @return String userName
@@ -126,8 +118,5 @@ public class ReviewItem extends Profile {
      * @return String date
      */
     public String getDate() { return this.date;}
-
-
-    // TODO: methods for getting and setting other important review items
 
 }

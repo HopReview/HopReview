@@ -70,7 +70,6 @@ public class ProfessorDetailFragment extends Fragment {
         TextView initials = (TextView) myView.findViewById(R.id.initialsDet);
         TextView courseName = (TextView) myView.findViewById(R.id.prof_nameDet);
         TextView department = (TextView) myView.findViewById(R.id.prof_departmentDet);
-        // TextView professorView = (TextView) myView.findViewById(R.id.taught_coursesDet);
 
         TextView[] courses = new TextView[4];
         courses[0] = (TextView) myView.findViewById(R.id.course1);
@@ -83,7 +82,6 @@ public class ProfessorDetailFragment extends Fragment {
         department.setText(professor.getDepartment());
 
         // implement later with a spinner
-        // professorView.setText("Teaches: " + professor.getCourseNames());
         ArrayList<String> coursesHolder = professor.getCourseNames();
         currCourse = coursesHolder.get(0);
 

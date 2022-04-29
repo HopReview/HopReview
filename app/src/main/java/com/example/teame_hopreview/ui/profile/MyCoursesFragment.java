@@ -81,8 +81,6 @@ public class MyCoursesFragment extends Fragment {
 
                 myCourses.clear();
 
-                // TODO: IMPORTANT, GET COURSES FOR SPECIFIC USER!
-
                 Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
 
                 for (DataSnapshot crs : courses) {
@@ -96,7 +94,6 @@ public class MyCoursesFragment extends Fragment {
                     Iterable<DataSnapshot> list = crs.getChildren();
                     String name = " ";
                     String num = " ";
-                    // String prof = new String();
                     String designation = " ";
                     int avgRate = 0;
                     int funRate = 0;

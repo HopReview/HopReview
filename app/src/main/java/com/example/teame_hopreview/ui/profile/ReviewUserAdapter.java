@@ -97,7 +97,6 @@ public class ReviewUserAdapter extends RecyclerView.Adapter<ReviewUserAdapter.Vi
         private final TextView courseName;
         private final TextView revContent;
         private final ImageView avgStar1, avgStar2, avgStar3, avgStar4, avgStar5;
-        // private final ImageButton bookmark;
 
         public ViewHolder(@NonNull View userReviewView) {
             super(userReviewView);
