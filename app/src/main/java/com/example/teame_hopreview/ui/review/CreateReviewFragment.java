@@ -432,8 +432,6 @@ public class CreateReviewFragment extends Fragment {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             long count = snapshot.getChildrenCount();
-            Log.d(TAG, "Children count: " + count);
-            Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
 
             listManager.getCourses().clear();
             listManager.getCourseWrappers().clear();
@@ -447,11 +445,6 @@ public class CreateReviewFragment extends Fragment {
 
             for (DataSnapshot crs : courses) {
                 reviewsHolder.clear();
-                //System.out.println("Avg: " + crs.getValue(CourseItem.class).getAverageRating());
-                //System.out.println("Fun: " + crs.getValue(CourseItem.class).getFunRating());
-                //System.out.println("Work: " + crs.getValue(CourseItem.class).getWorkloadRating());
-                //System.out.println("CourseNum: " + crs.getValue(CourseItem.class).getCourseNumber());
-                //System.out.println("CourseDes: " + crs.getValue(CourseItem.class).getDesignation());
                 String id = (String) crs.getKey();
                 Iterable<DataSnapshot> list = crs.getChildren();
                 String name = " ";

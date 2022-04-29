@@ -53,18 +53,12 @@ public class ReviewUserAdapter extends RecyclerView.Adapter<ReviewUserAdapter.Vi
     @Override
     public ReviewUserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.frag_user_review, parent, false);
-        Log.d("REVIEWER NAME", "HELLO");
         return new ReviewUserAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ReviewUserAdapter.ViewHolder holder, int position) {
         ReviewItem currReview = reviewData.get(position);
-        Log.d("REVIEWER NAME", currReview.getReviewerName());
-        Log.d("REVIEWER DATE", currReview.getDate());
-        Log.d("REVIEWER CONTENT", currReview.getReviewContent());
-
-        System.out.println("I am here!");
 
         holder.getUserName().setText(currReview.getReviewerName());
         holder.getDate().setText(currReview.getDate());
@@ -72,7 +66,6 @@ public class ReviewUserAdapter extends RecyclerView.Adapter<ReviewUserAdapter.Vi
         holder.getCourseName().setText(currReview.getCourseName());
 
         int avgRating = currReview.getAvgRating();
-        System.out.println("AVGRATING FOR REVIEW: " + avgRating);
 
         context = mainActivity.getApplicationContext();
         ImageView[] stars = holder.getAvgImages();

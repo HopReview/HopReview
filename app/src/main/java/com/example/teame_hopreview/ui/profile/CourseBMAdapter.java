@@ -30,16 +30,6 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
     private MainActivity mainActivity;
     Context context;
 
-//    private final View.OnClickListener bookmarkListener = (view) -> {
-//        CourseItem course = (CourseItem) view.getTag();
-//
-//        // TODO: add to user's dataset
-//
-//        Toast.makeText(mainActivity, "COURSE SAVED",
-//                Toast.LENGTH_LONG).show();
-//    };
-
-
     private final View.OnClickListener mOnClickListener = (view) -> {
         CourseItem course = (CourseItem) view.getTag();
         mainActivity.openCourseDetailFragment(course);
@@ -63,7 +53,6 @@ public class CourseBMAdapter extends RecyclerView.Adapter<CourseBMAdapter.ViewHo
     public void onBindViewHolder(@NonNull CourseBMAdapter.ViewHolder holder, int position) {
         CourseItem currCourse = courseData.get(position);
         holder.getDesignation().setText(currCourse.getDesignation());
-        System.out.println(currCourse.getName());
         holder.getName().setText(currCourse.getName());
 
         ArrayList<String> professors = currCourse.getProfessors();

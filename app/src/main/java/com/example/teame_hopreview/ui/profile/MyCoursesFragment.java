@@ -66,7 +66,6 @@ public class MyCoursesFragment extends Fragment {
         setHasOptionsMenu(true);
 
         user = myAct.user;
-        System.out.println(user.getBookmarkedCourses());
 
         ca = new CourseBMAdapter(myAct, context, myCourses, myCoursesCopy);
         myList = (RecyclerView) myView.findViewById(R.id.myCoursesList);
@@ -79,8 +78,6 @@ public class MyCoursesFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
 
                 myCourses.clear();
 

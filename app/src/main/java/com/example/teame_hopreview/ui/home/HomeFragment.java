@@ -110,15 +110,7 @@ public class HomeFragment extends Fragment {
         String firstCourse = "";
         String secondCourse = "";
         String thirdCourse = "";
-        // myAct.user.retrieveUserData();
-        // ArrayList<String> recentlyViewed = null;
-        int count = 0;        
-        // ArrayList<String> recentlyViewed = myAct.user.getRecentlyViewedList();
 
-        // if (recentlyViewed != null) {
-        //}
-
-        System.out.println("USERID" + myAct.user.getUserId());
         findUser(myAct.user.getUserId(), myView, notCrsTxt, nothingCourses);
         fillReviews(myView);
 
@@ -178,7 +170,6 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Iterable<DataSnapshot> recent = snapshot.getChildren();
                 for (DataSnapshot course : recent) {
-                    System.out.println("Course Name: " + course.getValue(String.class));
                     myAct.user.addRecentlyViewed(course.getValue(String.class));
                 }
                 ArrayList<String> courseNames = new ArrayList<>();
@@ -573,7 +564,6 @@ public class HomeFragment extends Fragment {
 
             }
         } else {
-            System.out.println("REACHED HERE");
             courseCards[0].setVisibility(View.GONE);
             courseCards[1].setVisibility(View.GONE);
             courseCards[2].setVisibility(View.GONE);

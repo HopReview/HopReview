@@ -204,8 +204,6 @@ public class ProfessorDetailFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 long count = snapshot.getChildrenCount();
-                Log.d(TAG, "Children count: " + count);
-                Log.d(TAG, "Course count: " + snapshot.child("courses_data").getChildrenCount());
 
                 Iterable<DataSnapshot> courses = snapshot.child("courses_data").getChildren();
 

@@ -67,7 +67,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
         CourseItem currCourse = courseData.get(position);
         holder.getDesignation().setText(currCourse.getDesignation());
-        System.out.println(currCourse.getName());
         holder.getName().setText(currCourse.getName());
         holder.getNum().setText(currCourse.getCourseNumber());
 
@@ -77,7 +76,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         int counter = 1;
         int len = professors.size();
         for (String prof : professors) {
-            System.out.println("Professors " + counter + " : " + prof);
             if (counter == len) {
                 profNamesStr.append(prof);
             } else {
@@ -126,9 +124,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         if (currCourse.getReviews() == null) {
             holder.getReviewNum().setText("0 reviews");
         } else {
-            for (ReviewItem rev : currCourse.getReviews()) {
-                System.out.println("THIS IS THE CURRENT REV: " + rev.getReviewContent());
-            }
             holder.getReviewNum().setText(currCourse.getReviews().size() + " reviews");
         }
 
